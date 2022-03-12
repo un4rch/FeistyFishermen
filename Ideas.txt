@@ -6,7 +6,13 @@
 +---------------+
 | Ideas de Unai |
 +---------------+
-1)
+1) Highscore list con nombres random y graciosos (archivo txt como database)
+2) gifs, png y sonido
+3) Ambientes/Tematicas de tablero
+4) Modos de juego(facil, normal, dificil...)
+   Random number del 1 al 10 (por ejemplo, si es nivel medio, la maquina tiene 50% de posibilidades (numero 1-5) para atacar barco al azar y 50% (numero 6-10) para que ataque 
+   aposta para ganar(ya que sabe las posiciones del jugador))
+5) Cuando se haga un ataque que aparezca una ventana con un video del ataque (cuando se termine el ataque se cierra la ventana sola)
 
 +---------------+
 | Ideas de Eder |
