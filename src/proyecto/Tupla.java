@@ -33,5 +33,5 @@ public class Tupla
 	{
 		this.tocado = !this.tocado;
 	}
-	
+
 }
