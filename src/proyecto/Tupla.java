@@ -29,4 +29,9 @@ public class Tupla
 		return this.tocado;
 	}
 	
+	public void complementarTocado()
+	{
+		this.tocado = !this.tocado;
+	}
+	
 }
