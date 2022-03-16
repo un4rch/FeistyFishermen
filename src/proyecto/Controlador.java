@@ -1,5 +1,7 @@
 package proyecto;
 
+import java.util.ArrayList;
+
 public class Controlador {
 
     private static Controlador miControlador;
