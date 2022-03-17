@@ -6,7 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
+import java.util.ArrayList;
 import packModeloControlador.Controlador;
 
 import java.awt.GridLayout;
@@ -19,6 +19,8 @@ import javax.swing.SwingConstants;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class BaseTablero extends JFrame implements Observer {
 
@@ -145,6 +147,8 @@ public class BaseTablero extends JFrame implements Observer {
 		JPanel usuario = new JPanel();
 		tableros.add(usuario);
 		usuario.setLayout(new GridLayout(10, 10, 0, 0));
+		ArrayList<JLabel> listaRival = new ArrayList<JLabel>();
+		ArrayList<JLabel> listaUsuario = new ArrayList<JLabel>();
 		int i,j;
 		for(i=0; i<10;i++) {
 			for(j=0; j<10;j++) {
@@ -152,10 +156,25 @@ public class BaseTablero extends JFrame implements Observer {
 				lbl1.setBorder(BorderFactory.createLineBorder(Color.white));
 				lbl1.setOpaque(true);
 				lbl1.setBackground(Color.gray);
+				listaRival.add(lbl1);
+				lbl1.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						Controlador.getMiControlador().casillaRivalPulsada(listaRival.indexOf(e.getComponent()));
+					}
+				});
 				JLabel lbl2 = new JLabel("");
 				lbl2.setBorder(BorderFactory.createLineBorder(Color.white));
 				lbl2.setOpaque(true);
 				lbl2.setBackground(Color.blue);
+				listaUsuario.add(lbl2);
+				lbl2.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						//lbl2.setBackground(Color.red);
+						Controlador.getMiControlador().casillaUsuarioPulsada(listaUsuario.indexOf(e.getComponent()));
+					}
+				});
 				rival.add(lbl1);
 				usuario.add(lbl2);
 			}
