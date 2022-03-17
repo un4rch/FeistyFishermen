@@ -61,5 +61,22 @@ public class Barco
 		}
 		return !salir; 
 	}
+	
+	public boolean tieneEstaPos(int pPos)
+	{
+		Iterator<Tupla> itr = this.info.iterator()
+		boolean enc = false;
+
+		
+		while(itr.hasNext() && !enc)
+		{
+			Tupla unaTupla = itr.next();
+			if(unaTupla.tieneEstaPos(pPos))
+			{
+				enc = true;
+			}
+		}
+		return enc;
+	}
 
 }
