@@ -3,25 +3,18 @@ package packModeloControlador;
 public class Tupla 
 {
 	
-	private int x;
-	private int y;
+	private int pos;
 	private boolean tocado;
 	
-	public Tupla(int pX, int pY, boolean pTocado)
+	public Tupla(int pPos, boolean pTocado)
 	{
-		this.x = pX;
-		this.y = pY;
+		this.pos = pPos;
 		this.tocado = pTocado;
 	}
 	
-	public int getX()
+	public int getPos()
 	{
-		return this.x;
-	}
-	
-	public int getY()
-	{
-		return this.y;
+		return this.pos;
 	}
 	
 	public boolean estaTocado()
@@ -29,9 +22,9 @@ public class Tupla
 		return this.tocado;
 	}
 	
-	public void complementarTocado()
+	public void tocar()
 	{
-		this.tocado = !this.tocado;
+		this.tocado = true;
 	}
 
 }
