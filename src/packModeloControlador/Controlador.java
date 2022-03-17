@@ -1,5 +1,6 @@
 package packModeloControlador;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
@@ -80,36 +81,64 @@ public class Controlador extends Observable {
 
         return(ganador);    //Devuelve el booleano que indica si ha de terminar la partida
     }
-    
-    public boolean casillaRivalPulsada(int pos) {
-    	System.out.print(pos);
-    	return true;
+
+    public Color casillaRivalPulsada(int pPos) {       //Si en esta posición hay un barco, hay que cambiarlo a tocado (de momento porque solo hay bombas), si hay un barco devolver rojo y si hay agua devolver azul
+        System.out.print(pPos);
+        ArrayList<Integer> posisBarco = new ArrayList<Integer>();
+
+        Iterator<Barco> itr = this.getItrBarcosEnemigo();
+        boolean enc = false;
+        Barco unBarco = null;
+        while(itr.hasNext() && !enc)
+        {
+            unBarco = itr.next();
+            if(unBarco.tieneEstaPos(pPos))
+            {
+                enc = true;
+            }
+        }
+
+        Color unColor = null;
+
+        if(enc)     //Ha encontrado el barco, hay que tocarlo y devolver el color rojo
+        {
+            unBarco.tocar(pPos);
+            unColor = Color.red;
+        }
+
+        else        //No ha encontrado el barco, por lo tanto, es agua
+        {
+            unColor = Color.blue;
+        }
+
+
+        return unColor;
     }
-    
+
     public ArrayList<Integer> casillaUsuarioPulsada(int pos) {
-    	ArrayList<Integer> posisBarco = new ArrayList<Integer>();
-    	int x = pos%10;
-    	int y = pos/10;
-    	System.out.println(x+"-"+y);
-    	posisBarco.add(pos);
-    	if (this.direccion == 1) {
-    		for (int i=1; i<=tipoBarco; i++) {
-    			posisBarco.add(x+(10*y+i));
-    		}
-    	} else if (this.direccion == 2) {
-    		for (int i=1; i<=tipoBarco; i++) {
-    			posisBarco.add(x+i+10*y);
-    		}
-    	} else if (this.direccion == 3) {
-    		for (int i=1; i<=tipoBarco; i++) {
-    			posisBarco.add(x+(10*y+i));
-    		}
-    	} else {
-    		for (int i=1; i<=tipoBarco; i++) {
-    			posisBarco.add(x+(10*y+i));
-    		}
-    	}
-    	return posisBarco;
+        ArrayList<Integer> posisBarco = new ArrayList<Integer>();
+        int x = pos%10;
+        int y = pos/10;
+        System.out.println(x+"-"+y);
+        posisBarco.add(pos);
+        if (this.direccion == 1) {
+            for (int i=1; i<=tipoBarco; i++) {
+                posisBarco.add(x+(10*y+i));
+            }
+        } else if (this.direccion == 2) {
+            for (int i=1; i<=tipoBarco; i++) {
+                posisBarco.add(x+i+10*y);
+            }
+        } else if (this.direccion == 3) {
+            for (int i=1; i<=tipoBarco; i++) {
+                posisBarco.add(x+(10*y+i));
+            }
+        } else {
+            for (int i=1; i<=tipoBarco; i++) {
+                posisBarco.add(x+(10*y+i));
+            }
+        }
+        return posisBarco;
     }
 
 }
