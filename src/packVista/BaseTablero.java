@@ -1,12 +1,14 @@
-package proyecto;
+package packVista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import packModeloControlador.Controlador;
+
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
@@ -15,7 +17,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.SwingConstants;
 
-public class BaseTablero extends JFrame {
+import java.util.Observable;
+import java.util.Observer;
+
+public class BaseTablero extends JFrame implements Observer {
 
 	private JPanel main;
 	private final ButtonGroup acciones = new ButtonGroup();
@@ -28,7 +33,7 @@ public class BaseTablero extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BaseTablero frame = new BaseTablero();
+					BaseTablero frame = new BaseTablero(Controlador.getMiControlador());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +45,8 @@ public class BaseTablero extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BaseTablero() {
+	public BaseTablero(Observable gestorTablebro) {
+		gestorTablebro.addObserver(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 596, 426);
 		main = new JPanel();
@@ -154,6 +160,13 @@ public class BaseTablero extends JFrame {
 				usuario.add(lbl2);
 			}
 		}
+	}
+	
+	/**
+	 * Se reciben los datos del observable para actualizarlos en la vista
+	 */
+	public void update(Observable obserable, Object obj) {
+		
 	}
 
 }

@@ -1,9 +1,10 @@
-package proyecto;
+package packModeloControlador;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
-public class Controlador {
+public class Controlador extends Observable{
 
     private static Controlador miControlador;
     private ArrayList<Barco> listaBarcosJugador;

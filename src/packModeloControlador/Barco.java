@@ -1,4 +1,4 @@
-package proyecto;
+package packModeloControlador;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,6 +44,10 @@ public class Barco
 		if (enc) {   return unaTupla;  }
 		else	 {   return null;	   }
 		
+	}
+	
+	public boolean estaHundido() {
+		return true; //TODO
 	}
 
 }

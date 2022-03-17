@@ -1,4 +1,4 @@
-package proyecto;
+package packModeloControlador;
 
 public class Tupla 
 {
