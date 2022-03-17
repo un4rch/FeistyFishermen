@@ -46,8 +46,20 @@ public class Barco
 		
 	}
 	
-	public boolean estaHundido() {
-		return true; //TODO
+	public boolean estaHundido() 
+	{
+		Iterator<Tupla> itr = this.info.iterator()
+		boolean salir = false;
+		
+		while(itr.hasNext() && !salir)
+		{
+			Tupla unaTupla = itr.next();
+			if(! unaTupla.estaTocado())
+			{
+				salir = true;
+			}
+		}
+		return !salir; 
 	}
 
 }
