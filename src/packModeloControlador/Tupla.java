@@ -26,5 +26,9 @@ public class Tupla
 	{
 		this.tocado = true;
 	}
-
+	
+	public boolean tieneEstaPos(int pPos)
+	{
+		return this.pos == pPos;
+	}
 }
