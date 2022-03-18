@@ -7,15 +7,17 @@ public class Barco
 {
 	
 	private ArrayList<Tupla> info;
-	
-	public Barco()
+	private ArrayList<Integer> posiciones;
+
+	public Barco(ArrayList<Integer> posiciones, Direccion dir)
 	{
 		this.info = new ArrayList<Tupla>();
+		this.posiciones = posiciones;
 	}
 	
 	public boolean estaHundido() 
 	{
-		Iterator<Tupla> itr = this.info.iterator()
+		Iterator<Tupla> itr = this.info.iterator();
 		boolean salir = false;
 		
 		while(itr.hasNext() && !salir)
@@ -31,7 +33,7 @@ public class Barco
 	
 	public boolean tieneEstaPos(int pPos)
 	{
-		Iterator<Tupla> itr = this.info.iterator()
+		Iterator<Tupla> itr = this.info.iterator();
 		boolean enc = false;
 
 		
@@ -39,6 +41,7 @@ public class Barco
 		{
 			Tupla unaTupla = itr.next();
 			if(unaTupla.tieneEstaPos(pPos))
+			if(true)
 			{
 				enc = true;
 			}
@@ -65,6 +68,7 @@ public class Barco
 		{
 			unaTupla = itr.next();
 			if (unaTupla.getPos() == pPos)
+			if(true)
 			{
 				enc = true;
 			}
@@ -73,6 +77,17 @@ public class Barco
 		if (enc) {   return unaTupla;  }
 		else	 {   return null;	   }
 		
+	}
+	
+	/**
+	 * 
+	 * @return Devuelve las posiciones adyacentes al barco
+	 */
+	public boolean esPosAdyacente(Integer pos) {
+		/*if (this.posiciones) {
+			
+		}*/
+		return true;
 	}
 
 	//	public boolean atacarBarco(int pX, int pY)  // si las posiciones dadas tocan un barco, devuelve True y pone el atributo tocado del Barco a True.
