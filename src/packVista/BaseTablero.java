@@ -27,6 +27,8 @@ public class BaseTablero extends JFrame implements Observer {
 	private JPanel main;
 	private final ButtonGroup acciones = new ButtonGroup();
 	private final ButtonGroup tipoBarco = new ButtonGroup();
+	private ArrayList<JLabel> listaRival;
+	private ArrayList<JLabel> listaUsuario;
 
 	/**
 	 * Launch the application.
@@ -147,8 +149,8 @@ public class BaseTablero extends JFrame implements Observer {
 		JPanel usuario = new JPanel();
 		tableros.add(usuario);
 		usuario.setLayout(new GridLayout(10, 10, 0, 0));
-		ArrayList<JLabel> listaRival = new ArrayList<JLabel>();
-		ArrayList<JLabel> listaUsuario = new ArrayList<JLabel>();
+		listaRival = new ArrayList<JLabel>();
+		listaUsuario = new ArrayList<JLabel>();
 		int i,j;
 		for(i=0; i<10;i++) {
 			for(j=0; j<10;j++) {
@@ -160,7 +162,7 @@ public class BaseTablero extends JFrame implements Observer {
 				lbl1.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						Controlador.getMiControlador().casillaRivalPulsada(listaRival.indexOf(e.getComponent()));
+						//Controlador.getMiControlador().casillaRivalPulsada(listaRival.indexOf(e.getComponent()));
 					}
 				});
 				JLabel lbl2 = new JLabel("");
@@ -171,7 +173,7 @@ public class BaseTablero extends JFrame implements Observer {
 				lbl2.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						//lbl2.setBackground(Color.red);
+						//Hay que ponerle al Controlador el tipo de barco y la direccion aqui 
 						Controlador.getMiControlador().casillaUsuarioPulsada(listaUsuario.indexOf(e.getComponent()));
 					}
 				});
@@ -184,8 +186,13 @@ public class BaseTablero extends JFrame implements Observer {
 	/**
 	 * Se reciben los datos del observable para actualizarlos en la vista
 	 */
-	public void update(Observable obserable, Object obj) {
-		
+	public void update(Observable obserable, Object posisBarco) {
+		ArrayList<Integer> posisBarcoArray = (ArrayList<Integer>)posisBarco;
+		if (posisBarcoArray instanceof ArrayList<Integer>) {
+			for (Integer pos : posisBarcoArray) { //Update barcos en la vista
+				listaUsuario.get(pos).setBackground(Color.RED);
+			}
+		}
 	}
 
 }
