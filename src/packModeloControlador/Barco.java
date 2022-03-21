@@ -7,16 +7,20 @@ public class Barco
 {
 	
 	private ArrayList<Tupla> info;
-	private ArrayList<Integer> posiciones;
 
 	public Barco(ArrayList<Integer> posiciones)
 	{
 		this.info = new ArrayList<Tupla>();
-		this.posiciones = posiciones;
+		Iterator<Integer> itr = posiciones.iterator();
+		while(itr.hasNext())
+		{
+			Integer act = itr.next();
+			info.add(new Tupla(act,false));
+		}
 	}
 	
-	public ArrayList<Integer> getPosiciones() {
-		return this.posiciones;
+	public int getTamano() {
+		return (this.info.size());
 	}
 	
 	public boolean estaHundido() 
@@ -44,11 +48,7 @@ public class Barco
 		while(itr.hasNext() && !enc)
 		{
 			Tupla unaTupla = itr.next();
-			if(unaTupla.tieneEstaPos(pPos))
-			if(true)
-			{
-				enc = true;
-			}
+			enc = unaTupla.tieneEstaPos(pPos);
 		}
 		return enc;
 	}
