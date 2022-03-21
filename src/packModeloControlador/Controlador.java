@@ -32,7 +32,7 @@ public class Controlador extends Observable {
         return(Controlador.miControlador);
     }
 
-    /*public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÂ¡s de indicar por pantalla quiÃƒÂ©n es el ganador
+    /*public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã‚Â¡s de indicar por pantalla quiÃƒÆ’Ã‚Â©n es el ganador
     {
         boolean ganador = true;
         Iterator<Barco> itr = this.getItrBarcosJugador();
@@ -40,7 +40,7 @@ public class Controlador extends Observable {
         while (itr.hasNext() && ganador)
         {
             unBarco = itr.next();
-            if(!unBarco.estaHundido()) //si un barco no estÃƒÂ¡ hundido
+            if(!unBarco.estaHundido()) //si un barco no esta hundido
             {
                 ganador = false;
             }
@@ -57,7 +57,7 @@ public class Controlador extends Observable {
             while (itr.hasNext() && ganador)
             {
                 unBarco = itr.next();
-                if(!unBarco.estaHundido()) //si un barco no estÃƒÂ¡ hundido
+                if(!unBarco.estaHundido()) //si un barco no estÃƒÆ’Ã‚Â¡ hundido
                 {
                     ganador = false;
                 }
@@ -72,7 +72,7 @@ public class Controlador extends Observable {
         return(ganador);    //Devuelve el booleano que indica si ha de terminar la partida
     }
     
-    public Color casillaRivalPulsada(int pPos) {       //Si en esta posiciÃ³n hay un barco, hay que cambiarlo a tocado (de momento porque solo hay bombas), si hay un barco devolver rojo y si hay agua devolver azul
+    public Color casillaRivalPulsada(int pPos) {       //Si en esta posicion hay un barco, hay que cambiarlo a tocado (de momento porque solo hay bombas), si hay un barco devolver rojo y si hay agua devolver azul
         Iterator<Barco> itr = this.getItrBarcosEnemigo();
         boolean enc = false;
         Barco unBarco = null;
@@ -103,36 +103,37 @@ public class Controlador extends Observable {
     }*/
     
     public void casillaUsuarioPulsada(int pos) {
-    	ArrayList<Integer> posisBarco = new ArrayList<Integer>();
-    	int x = pos%10;
-    	int y = pos/10;
-    	posisBarco.add(pos);
-    	if (this.direccion == Direccion.Arriba && y-tipoBarco+1>=0) { //Arriba
-    		for (int i=0; i<tipoBarco; i++) {
-    			posisBarco.add(10*(y-i)+x);
+    	if (listaBarcosJugador.comprobarCantidad(this.tipoBarco)) //Comprueba que se pueda anadir un barco del tipo seleccionado
+    	{
+    		ArrayList<Integer> posisBarco = new ArrayList<Integer>();
+    		int x = pos%10;
+    		int y = pos/10;
+    		if (this.direccion == Direccion.Arriba && y-tipoBarco+1>=0) { //Arriba
+    			for (int i=0; i<tipoBarco; i++) {
+    				posisBarco.add(10*(y-i)+x);
+    			}
+    		} else if (this.direccion == Direccion.Derecha && x+tipoBarco-1<=9) { //Derecha
+    			for (int i=0; i<tipoBarco; i++) {
+    				posisBarco.add(10*y+x+i);
+    			}
+    		} else if (this.direccion == Direccion.Abajo && y+tipoBarco-1<=9) { //Abajo
+    			for (int i=0; i<tipoBarco; i++) {
+    				posisBarco.add(10*(y+i)+x);
+    			}
+    		} else if (this.direccion == Direccion.Izquierda && x-tipoBarco+1>=0) { //izquierda
+    			for (int i=0; i<tipoBarco; i++) {
+    				posisBarco.add(10*y+x-i);
+    			}
+    		}else {
+    			posisBarco = null;
     		}
-    	} else if (this.direccion == Direccion.Derecha && x+tipoBarco-1<=9) { //Derecha
-    		for (int i=0; i<tipoBarco; i++) {
-    			posisBarco.add(10*y+x+i);
+    		if (posisBarco != null) {
+    			if (!listaBarcosJugador.tieneAlgunAdyacente(posisBarco, this.direccion)) {
+    				listaBarcosJugador.anadirBarco(posisBarco);
+    				setChanged();
+    				notifyObservers(posisBarco);
+    			}
     		}
-    	} else if (this.direccion == Direccion.Abajo && y+tipoBarco-1<=9) { //Abajo
-    		for (int i=0; i<tipoBarco; i++) {
-    			posisBarco.add(10*(y+i)+x);
-    		}
-    	} else if (this.direccion == Direccion.Izquierda && x-tipoBarco+1>=0) { //izquierda
-    		for (int i=0; i<tipoBarco; i++) {
-    			posisBarco.add(10*y+x-i);
-    		}
-    	}else {
-			posisBarco = null;
-		}
-    	if (posisBarco != null) {
-    		Barco barcoNuevo = new Barco(posisBarco);
-        	if (!listaBarcosJugador.tieneAlgunAdyacente(barcoNuevo, this.direccion)) {
-        		listaBarcosJugador.anadirBarco(barcoNuevo);
-        		setChanged();
-        		notifyObservers(posisBarco);
-        	}
     	}
     }
 
