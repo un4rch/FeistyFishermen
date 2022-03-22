@@ -6,16 +6,16 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Random;
 
-public class Controlador extends Observable {
+public class ModeloTablero extends Observable {
 
-    private static Controlador miControlador;
+    private static ModeloTablero miModeloTablero;
     private ListaBarcos listaBarcosJugador;
     private ListaBarcos listaBarcosEnemigo;
     private int tipoBarco; //Longitud del barco
     private Direccion direccion;
     private int tipoArma;
 
-    private Controlador()
+    private ModeloTablero()
     {
         this.listaBarcosJugador = new ListaBarcos();
         this.listaBarcosEnemigo = new ListaBarcos();
@@ -25,13 +25,13 @@ public class Controlador extends Observable {
         this.tipoArma = 1;
     }
 
-    public static Controlador getMiControlador()
+    public static ModeloTablero getMiModeloTablero()
     {
-        if (Controlador.miControlador == null)
+        if (ModeloTablero.miModeloTablero == null)
         {
-            Controlador.miControlador = new Controlador();
+            ModeloTablero.miModeloTablero = new ModeloTablero();
         }
-        return(Controlador.miControlador);
+        return(ModeloTablero.miModeloTablero);
     }
 
     /*public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã‚Â¡s de indicar por pantalla quiÃƒÆ’Ã‚Â©n es el ganador
