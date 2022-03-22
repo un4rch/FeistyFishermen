@@ -72,37 +72,14 @@ public class Controlador extends Observable {
         }
 
         return(ganador);    //Devuelve el booleano que indica si ha de terminar la partida
-    }
+    } */
     
-    public Color casillaRivalPulsada(int pPos) {       //Si en esta posicion hay un barco, hay que cambiarlo a tocado (de momento porque solo hay bombas), si hay un barco devolver rojo y si hay agua devolver azul
-        Iterator<Barco> itr = this.getItrBarcosEnemigo();
-        boolean enc = false;
-        Barco unBarco = null;
-        while(itr.hasNext() && !enc)
-        {
-            unBarco = itr.next();
-            if(unBarco.tieneEstaPos(pPos))
-            {
-                enc = true;
-            }
-        }
-
-        Color unColor = null;
-
-        if(enc)     //Ha encontrado el barco, hay que tocarlo y devolver el color rojo
-        {
-            unBarco.tocar(pPos);
-            unColor = Color.red;
-        }
-
-        else        //No ha encontrado el barco, por lo tanto, es agua
-        {
-            unColor = Color.blue;
-        }
-
-
-        return unColor;
-    }*/
+    public void casillaRivalPulsada(int pPos) {       //Si en esta posicion hay un barco, hay que cambiarlo a tocado (de momento porque solo hay bombas), si hay un barco devolver rojo y si hay agua devolver azul
+		boolean hayBarco = this.listaBarcosEnemigo.tocarBarco(pPos);	//toca el barco que esta en la posicion dada, y devuelve un booleano que dice si hay un barco en esa pos o no
+        //TODO el rival te tiene que devolver el ataque
+		setChanged();
+		notifyObservers(new Tupla(pPos, hayBarco)); //El color se elige dentro
+    }
     
     public void casillaUsuarioPulsada(int pos) {
     	if (listaBarcosJugador.comprobarCantidad(this.tipoBarco)) //Comprueba que se pueda anadir un barco del tipo seleccionado
