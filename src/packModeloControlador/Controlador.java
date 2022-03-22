@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.Random;
 
 public class Controlador extends Observable {
 
@@ -18,7 +19,8 @@ public class Controlador extends Observable {
     {
         this.listaBarcosJugador = new ListaBarcos();
         this.listaBarcosEnemigo = new ListaBarcos();
-        this.tipoBarco = 3;
+		this.ponerBarcosEnemigo();
+        this.tipoBarco = 1;
         this.direccion = Direccion.Abajo;
         this.tipoArma = 1;
     }
@@ -105,28 +107,7 @@ public class Controlador extends Observable {
     public void casillaUsuarioPulsada(int pos) {
     	if (listaBarcosJugador.comprobarCantidad(this.tipoBarco)) //Comprueba que se pueda anadir un barco del tipo seleccionado
     	{
-    		ArrayList<Integer> posisBarco = new ArrayList<Integer>();
-    		int x = pos%10;
-    		int y = pos/10;
-    		if (this.direccion == Direccion.Arriba && y-tipoBarco+1>=0) { //Arriba
-    			for (int i=0; i<tipoBarco; i++) {
-    				posisBarco.add(10*(y-i)+x);
-    			}
-    		} else if (this.direccion == Direccion.Derecha && x+tipoBarco-1<=9) { //Derecha
-    			for (int i=0; i<tipoBarco; i++) {
-    				posisBarco.add(10*y+x+i);
-    			}
-    		} else if (this.direccion == Direccion.Abajo && y+tipoBarco-1<=9) { //Abajo
-    			for (int i=0; i<tipoBarco; i++) {
-    				posisBarco.add(10*(y+i)+x);
-    			}
-    		} else if (this.direccion == Direccion.Izquierda && x-tipoBarco+1>=0) { //izquierda
-    			for (int i=0; i<tipoBarco; i++) {
-    				posisBarco.add(10*y+x-i);
-    			}
-    		}else {
-    			posisBarco = null;
-    		}
+    		ArrayList<Integer> posisBarco = this.ponerBarco(pos);
     		if (posisBarco != null) {
     			if (!listaBarcosJugador.tieneAlgunAdyacente(posisBarco, this.direccion)) {
     				listaBarcosJugador.anadirBarco(posisBarco);
@@ -136,5 +117,72 @@ public class Controlador extends Observable {
     		}
     	}
     }
+
+	private void ponerBarcosEnemigo()
+	{
+		//1 barco de longitud 4
+		this.tipoBarco = 4;
+		this.ponerBarcosAlAzar(1); //Cont es el número de barcos de ese tipo que tiene que poner
+
+		//2 barcos de longitud 3
+		this.tipoBarco = 3;
+		this.ponerBarcosAlAzar(2);
+
+		//3 barcos de longitud 2
+		this.tipoBarco = 2;
+		this.ponerBarcosAlAzar(3);
+
+		//4 barcos de longitud 1
+		this.tipoBarco = 1;
+		this.ponerBarcosAlAzar(4);
+	}
+
+	private void ponerBarcosAlAzar(int cont)
+	{
+		while(cont > 0)
+		{
+			int pos = new Random().nextInt(99);	//Coge un número al azar del 0 al 99
+			this.direccion = this.cogerDireccionAlAzar();
+			ArrayList<Integer> lista = this.ponerBarco(pos);	//Si devuelve null significa que no se puede poner el barco (porque no es posible ponerlo en esas posiciones)
+			if(lista != null && !this.listaBarcosEnemigo.tieneAlgunAdyacente(lista, this.direccion))
+			{
+				this.listaBarcosEnemigo.anadirBarco(lista);
+				cont--;
+			}
+		}
+	}
+
+	private ArrayList<Integer> ponerBarco(int pos)
+	{
+		ArrayList<Integer> posisBarco = new ArrayList<Integer>();
+		int x = pos%10;
+		int y = pos/10;
+		if (this.direccion == Direccion.Arriba && y-tipoBarco+1>=0) { //Arriba
+			for (int i=0; i<tipoBarco; i++) {
+				posisBarco.add(10*(y-i)+x);
+			}
+		} else if (this.direccion == Direccion.Derecha && x+tipoBarco-1<=9) { //Derecha
+			for (int i=0; i<tipoBarco; i++) {
+				posisBarco.add(10*y+x+i);
+			}
+		} else if (this.direccion == Direccion.Abajo && y+tipoBarco-1<=9) { //Abajo
+			for (int i=0; i<tipoBarco; i++) {
+				posisBarco.add(10*(y+i)+x);
+			}
+		} else if (this.direccion == Direccion.Izquierda && x-tipoBarco+1>=0) { //izquierda
+			for (int i=0; i<tipoBarco; i++) {
+				posisBarco.add(10*y+x-i);
+			}
+		}else {
+			posisBarco = null;
+		}
+		return posisBarco;
+	}
+
+	private Direccion cogerDireccionAlAzar()
+	{
+		int num = new Random().nextInt(Direccion.values().length);
+		return Direccion.values()[num];
+	}
 
 }
