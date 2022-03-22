@@ -6,8 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import packModeloControlador.ModeloTablero;
+
 import java.util.ArrayList;
-import packModeloControlador.Controlador;
 
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
@@ -19,8 +21,11 @@ import javax.swing.SwingConstants;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class BaseTablero extends JFrame implements Observer {
 
@@ -29,6 +34,7 @@ public class BaseTablero extends JFrame implements Observer {
 	private final ButtonGroup tipoBarco = new ButtonGroup();
 	private ArrayList<JLabel> listaRival;
 	private ArrayList<JLabel> listaUsuario;
+	private Controlador controlador = null;
 
 	/**
 	 * Launch the application.
@@ -37,7 +43,7 @@ public class BaseTablero extends JFrame implements Observer {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BaseTablero frame = new BaseTablero(Controlador.getMiControlador());
+					BaseTablero frame = new BaseTablero(ModeloTablero.getMiModeloTablero());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,18 +69,22 @@ public class BaseTablero extends JFrame implements Observer {
 		barcos.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JRadioButton portaaviones = new JRadioButton("Portaaviones");
+		portaaviones.addActionListener(getControlador());
 		tipoBarco.add(portaaviones);
 		barcos.add(portaaviones);
 		
-		JRadioButton sumbarino = new JRadioButton("Submarino");
-		tipoBarco.add(sumbarino);
-		barcos.add(sumbarino);
+		JRadioButton submarino = new JRadioButton("Submarino");
+		submarino.addActionListener(getControlador());
+		tipoBarco.add(submarino);
+		barcos.add(submarino);
 		
 		JRadioButton destructor = new JRadioButton("Destructor");
+		destructor.addActionListener(getControlador());
 		tipoBarco.add(destructor);
 		barcos.add(destructor);
 		
 		JRadioButton fragata = new JRadioButton("Fragata");
+		fragata.addActionListener(getControlador());
 		tipoBarco.add(fragata);
 		barcos.add(fragata);
 		
@@ -170,17 +180,58 @@ public class BaseTablero extends JFrame implements Observer {
 				lbl2.setOpaque(true);
 				lbl2.setBackground(Color.blue);
 				listaUsuario.add(lbl2);
-				lbl2.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						//Hay que ponerle al Controlador el tipo de barco y la direccion aqui 
-						Controlador.getMiControlador().casillaUsuarioPulsada(listaUsuario.indexOf(e.getComponent()));
-					}
-				});
+				lbl2.addMouseListener(getControlador());
 				rival.add(lbl1);
 				usuario.add(lbl2);
 			}
 		}
+	}
+	
+	private Controlador getControlador() {
+		if (controlador==null)
+		{
+			controlador = new Controlador();
+		}
+		return controlador;
+	}
+	
+	private class Controlador implements MouseListener,ActionListener {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			//Hay que ponerle al Controlador el tipo de barco y la direccion aqui 
+			packModeloControlador.ModeloTablero.getMiModeloTablero().casillaUsuarioPulsada(listaUsuario.indexOf(e.getComponent()));
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	
 	/**
