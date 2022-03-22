@@ -62,7 +62,7 @@ public class Barco
 		}
 	}
 			
-	public Tupla buscarPos(int pPos)  // si la posiciones dadas coinciden con las de una Tupla, la devuelve.
+	private Tupla buscarPos(int pPos)  // si la posiciones dadas coinciden con las de una Tupla, la devuelve.
 	{											   // en caso contrario devuelve null.
 		Iterator<Tupla> itr = this.info.iterator();     // pasar a java8 ****
 		boolean enc = false;
