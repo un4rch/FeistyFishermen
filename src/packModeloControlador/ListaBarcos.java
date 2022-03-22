@@ -14,7 +14,7 @@ public class ListaBarcos {
 		this.listaBarcos.add(new Barco(posiciones));
 	}
 	
-	public boolean comprobarCantidad(int tipoBarco) //Comprueba que no haya más barcos de los posibles de cada tipo
+	public boolean comprobarCantidad(int tipoBarco) //Comprueba que no haya mÃ¡s barcos de los posibles de cada tipo
 	{
 		boolean valido=true;
 		int cont=4-(tipoBarco-1);
@@ -41,79 +41,108 @@ public class ListaBarcos {
 		if (dir == Direccion.Arriba) {
 			int x = pos%10;
 	    	int y = pos/10;
-			posicionesAdyacentes.add(10*(y+1)+x-1); //Posicion abajo-izquierda
-			posicionesAdyacentes.add(10*(y+1)+x); //Posicion abajo
-			posicionesAdyacentes.add(10*(y+1)+x+1); //Posicion abajo-derecha
+
+	    	if (y!=9)
+	    	{
+	    		if (x!=0) { posicionesAdyacentes.add(10*(y+1)+x-1);} //Posicion abajo-izquierda
+				posicionesAdyacentes.add(10*(y+1)+x); //Posicion abajo
+				if (x!=9) { posicionesAdyacentes.add(10*(y+1)+x+1); } //Posicion abajo-derecha	    		
+	    	}
 			for (Integer posM : barco) {
 				x = posM%10;
 		    	y = posM/10;
-		    	posicionesAdyacentes.add(10*(y)+x-1); //Posicion de la izquierda
-		    	posicionesAdyacentes.add(10*(y)+x+1); //Posicion de la derecha
+		    	if (x !=0) {posicionesAdyacentes.add(10*(y)+x-1); }//Posicion de la izquierda
+		    	
+		    	if (x!=9){ 	posicionesAdyacentes.add(10*(y)+x+1); } //Posicion de la derecha
 				
 			}
 			pos = barco.get(barco.size()-1); //Ultima posicion
 			x = pos%10;
 	    	y = pos/10;
-			posicionesAdyacentes.add(10*(y-1)+x-1); //Posicion arriba-izquierda
-			posicionesAdyacentes.add(10*(y-1)+x); //Posicion arrriba
-			posicionesAdyacentes.add(10*(y-1)+x+1); //Posicion arriba-derecha
+	    	if (y!=0)
+	    	{
+	    		if (x!=0) { posicionesAdyacentes.add(10*(y-1)+x-1); } //Posicion arriba-izquierda
+				posicionesAdyacentes.add(10*(y-1)+x); //Posicion arrriba
+				if (x!=9) { posicionesAdyacentes.add(10*(y-1)+x+1); }//Posicion arriba-derecha
+	    	}
+	    	
 		} else if (dir == Direccion.Derecha) {
 			int x = pos%10;
 	    	int y = pos/10;
-	    	posicionesAdyacentes.add(10*(y-1)+x-1); //Posicion arriba-izquierda
-	    	posicionesAdyacentes.add(10*(y)+x-1); //Posicion izquierda
-	    	posicionesAdyacentes.add(10*(y+1)+x-1); //Posicion abajo-izquierda
+	    	if (x!=0) 
+	    	{
+	    		if (y!=0) { posicionesAdyacentes.add(10*(y-1)+x-1); } //Posicion arriba-izquierda
+	    		posicionesAdyacentes.add(10*(y)+x-1); //Posicion izquierda
+	    		if (y!=9) {posicionesAdyacentes.add(10*(y+1)+x-1); } //Posicion abajo-izquierda
+	    	}
 			for (Integer posM : barco) {
 				x = posM%10;
 		    	y = posM/10;
-		    	posicionesAdyacentes.add(10*(y-1)+x); //Posicion de arriba
-		    	posicionesAdyacentes.add(10*(y+1)+x); //Posicion de abajo
+		    	if (y!=0) {posicionesAdyacentes.add(10*(y-1)+x); }//Posicion de arriba
+		    	if (y!=9) {posicionesAdyacentes.add(10*(y+1)+x); }//Posicion de abajo
 				
 			}
 			pos = barco.get(barco.size()-1); //Ultima posicion
 			x = pos%10;
 	    	y = pos/10;
-	    	posicionesAdyacentes.add(10*(y+1)+x+1); //Posicion abajo-derecha
-			posicionesAdyacentes.add(10*(y)+x+1); //Posicion de la derecha
-			posicionesAdyacentes.add(10*(y-1)+x+1); //Posicion arriba-derecha
+	    	if (x!=9)
+	    	{
+	    		if (y!=9) {posicionesAdyacentes.add(10*(y+1)+x+1);} //Posicion abajo-derecha
+				posicionesAdyacentes.add(10*(y)+x+1); //Posicion de la derecha
+				if (y!=0) { posicionesAdyacentes.add(10*(y-1)+x+1); }//Posicion arriba-derecha
+	    	}
+	    	
 		} else if (dir == Direccion.Abajo) {
 			int x = pos%10;
 	    	int y = pos/10;
-	    	posicionesAdyacentes.add(10*(y-1)+x-1); //Posicion arriba-izquierda
-			posicionesAdyacentes.add(10*(y-1)+x); //Posicion arrriba
-			posicionesAdyacentes.add(10*(y-1)+x+1); //Posicion arriba-derecha
+	    	if (y!=0)
+	    	{
+	    		if (x!=0) { posicionesAdyacentes.add(10*(y-1)+x-1); } //Posicion arriba-izquierda
+				posicionesAdyacentes.add(10*(y-1)+x); //Posicion arrriba
+				if (x!=9) { posicionesAdyacentes.add(10*(y-1)+x+1); }//Posicion arriba-derecha
+	    	}
 			for (Integer posM : barco) {
 				x = posM%10;
 		    	y = posM/10;
-		    	posicionesAdyacentes.add(10*(y)+x-1); //Posicion de la izquierda
-		    	posicionesAdyacentes.add(10*(y)+x+1); //Posicion de la derecha
-				
+		    	if (x !=0) {posicionesAdyacentes.add(10*(y)+x-1); }//Posicion de la izquierda
+		    	
+		    	if (x!=9){ 	posicionesAdyacentes.add(10*(y)+x+1); } //Posicion de la derecha
+		    	
 			}
 			pos = barco.get(barco.size()-1); //Ultima posicion
 			x = pos%10;
 	    	y = pos/10;
-	    	posicionesAdyacentes.add(10*(y+1)+x-1); //Posicion abajo-izquierda
-			posicionesAdyacentes.add(10*(y+1)+x); //Posicion abajo
-			posicionesAdyacentes.add(10*(y+1)+x+1); //Posicion abajo-derecha
+	    	if (y!=9)
+	    	{
+	    		if (x!=0) { posicionesAdyacentes.add(10*(y+1)+x-1);} //Posicion abajo-izquierda
+				posicionesAdyacentes.add(10*(y+1)+x); //Posicion abajo
+				if (x!=9) { posicionesAdyacentes.add(10*(y+1)+x+1); } //Posicion abajo-derecha	    		
+	    	}
 		} else {
 			int x = pos%10;
 	    	int y = pos/10;
-	    	posicionesAdyacentes.add(10*(y+1)+x+1); //Posicion abajo-derecha
-			posicionesAdyacentes.add(10*(y)+x+1); //Posicion de la derecha
-			posicionesAdyacentes.add(10*(y-1)+x+1); //Posicion arriba-derecha
+	    	if (x!=9)
+	    	{
+	    		if (y!=9) {posicionesAdyacentes.add(10*(y+1)+x+1);} //Posicion abajo-derecha
+				posicionesAdyacentes.add(10*(y)+x+1); //Posicion de la derecha
+				if (y!=0) { posicionesAdyacentes.add(10*(y-1)+x+1); }//Posicion arriba-derecha
+	    	}
 			for (Integer posM : barco) {
 				x = posM%10;
 		    	y = posM/10;
-		    	posicionesAdyacentes.add(10*(y-1)+x); //Posicion de arriba
-		    	posicionesAdyacentes.add(10*(y+1)+x); //Posicion de abajo
+		    	if (y!=0) {posicionesAdyacentes.add(10*(y-1)+x); }//Posicion de arriba
+		    	if (y!=9) {posicionesAdyacentes.add(10*(y+1)+x); }//Posicion de abajo
 				
 			}
 			pos = barco.get(barco.size()-1); //Ultima posicion
 			x = pos%10;
 	    	y = pos/10;
-	    	posicionesAdyacentes.add(10*(y-1)+x-1); //Posicion arriba-izquierda
-	    	posicionesAdyacentes.add(10*(y)+x-1); //Posicion izquierda
-	    	posicionesAdyacentes.add(10*(y+1)+x-1); //Posicion abajo-izquierda
+	    	if (x!=0) 
+	    	{
+	    		if (y!=0) { posicionesAdyacentes.add(10*(y-1)+x-1); } //Posicion arriba-izquierda
+	    		posicionesAdyacentes.add(10*(y)+x-1); //Posicion izquierda
+	    		if (y!=9) {posicionesAdyacentes.add(10*(y+1)+x-1); } //Posicion abajo-izquierda
+	    	}
 		}
 		Iterator<Barco> itrBarco = listaBarcos.iterator();
 		while (itrBarco.hasNext()&&!tieneAdyacente) {
@@ -121,7 +150,7 @@ public class ListaBarcos {
 			Iterator<Integer> itrPos = posicionesAdyacentes.iterator();
 			while (itrPos.hasNext()&&!tieneAdyacente) {
 				Integer actP = itrPos.next();
-				tieneAdyacente=actB.tieneEstaPos(actP);
+				tieneAdyacente=actB.tieneEstaPos(actP);					
 			}
 		}
 		return tieneAdyacente;
