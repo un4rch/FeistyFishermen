@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import packModeloControlador.Direccion;
 import packModeloControlador.ModeloTablero;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class BaseTablero extends JFrame implements Observer {
 	private JPanel main;
 	private final ButtonGroup acciones = new ButtonGroup();
 	private final ButtonGroup tipoBarco = new ButtonGroup();
+	private ArrayList<JLabel> listaDirecciones;
 	private ArrayList<JLabel> listaRival;
 	private ArrayList<JLabel> listaUsuario;
 	private Controlador controlador = null;
@@ -91,34 +93,43 @@ public class BaseTablero extends JFrame implements Observer {
 		JPanel direcciones = new JPanel();
 		barcos.add(direcciones);
 		direcciones.setLayout(new GridLayout(3, 3, 0, 0));
+		this.listaDirecciones = new ArrayList<JLabel>();
 		
 		JLabel blank1 = new JLabel("");
 		direcciones.add(blank1);
 		
 		JLabel arriba = new JLabel("A");
 		arriba.setHorizontalAlignment(SwingConstants.CENTER);
+		arriba.addMouseListener(getControlador());
 		direcciones.add(arriba);
+		listaDirecciones.add(arriba);
 		
 		JLabel blank2 = new JLabel("");
 		direcciones.add(blank2);
 		
 		JLabel izquierda = new JLabel("<--");
 		izquierda.setHorizontalAlignment(SwingConstants.CENTER);
+		izquierda.addMouseListener(getControlador());
 		direcciones.add(izquierda);
+		listaDirecciones.add(izquierda);
 		
 		JLabel blank3 = new JLabel("");
 		direcciones.add(blank3);
 		
 		JLabel derecha = new JLabel("-->");
 		derecha.setHorizontalAlignment(SwingConstants.CENTER);
+		derecha.addMouseListener(getControlador());
 		direcciones.add(derecha);
+		listaDirecciones.add(derecha);
 		
 		JLabel blank4 = new JLabel("");
 		direcciones.add(blank4);
 		
 		JLabel abajo = new JLabel("V");
 		abajo.setHorizontalAlignment(SwingConstants.CENTER);
+		abajo.addMouseListener(getControlador());
 		direcciones.add(abajo);
+		listaDirecciones.add(abajo);
 		
 		JLabel blank5 = new JLabel("");
 		direcciones.add(blank5);
@@ -199,7 +210,34 @@ public class BaseTablero extends JFrame implements Observer {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			//Hay que ponerle al Controlador el tipo de barco y la direccion aqui 
-			packModeloControlador.ModeloTablero.getMiModeloTablero().casillaUsuarioPulsada(listaUsuario.indexOf(e.getComponent()));
+			System.out.println((JLabel)e.getComponent());
+			if (((JLabel)e.getComponent()).getText().equals("A")) {
+				ModeloTablero.getMiModeloTablero().setDireccion(Direccion.Arriba);
+				for (JLabel direccion : listaDirecciones) {
+					direccion.setForeground(Color.BLACK);
+				}
+				((JLabel)e.getComponent()).setForeground(Color.GREEN);
+			} else if (((JLabel)e.getComponent()).getText().equals("-->")) {
+				ModeloTablero.getMiModeloTablero().setDireccion(Direccion.Derecha);
+				for (JLabel direccion : listaDirecciones) {
+					direccion.setForeground(Color.BLACK);
+				}
+				((JLabel)e.getComponent()).setForeground(Color.GREEN);
+			} else if (((JLabel)e.getComponent()).getText().equals("V")) {
+				ModeloTablero.getMiModeloTablero().setDireccion(Direccion.Abajo);
+				for (JLabel direccion : listaDirecciones) {
+					direccion.setForeground(Color.BLACK);
+				}
+				((JLabel)e.getComponent()).setForeground(Color.GREEN);
+			} else if (((JLabel)e.getComponent()).getText().equals("<--")) {
+				ModeloTablero.getMiModeloTablero().setDireccion(Direccion.Izquierda);
+				for (JLabel direccion : listaDirecciones) {
+					direccion.setForeground(Color.BLACK);
+				}
+				((JLabel)e.getComponent()).setForeground(Color.GREEN);
+			} else if (listaUsuario.contains((JLabel)e.getComponent())) {
+				packModeloControlador.ModeloTablero.getMiModeloTablero().casillaUsuarioPulsada(listaUsuario.indexOf((JLabel)e.getComponent()));
+			}
 		}
 
 		@Override
@@ -228,7 +266,15 @@ public class BaseTablero extends JFrame implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			if (e.getActionCommand().equals("Portaaviones")) {
+				ModeloTablero.getMiModeloTablero().setTipoBarco(1);
+			} else if (e.getActionCommand().equals("Submarino")) {
+				ModeloTablero.getMiModeloTablero().setTipoBarco(2);
+			} else if (e.getActionCommand().equals("Destructor")) {
+				ModeloTablero.getMiModeloTablero().setTipoBarco(3);
+			} else if (e.getActionCommand().equals("Fragata")) {
+				ModeloTablero.getMiModeloTablero().setTipoBarco(4);
+			}
 			
 		}
 		

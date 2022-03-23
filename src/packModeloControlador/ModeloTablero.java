@@ -20,9 +20,9 @@ public class ModeloTablero extends Observable {
         this.listaBarcosJugador = new ListaBarcos();
         this.listaBarcosEnemigo = new ListaBarcos();
 		this.ponerBarcosEnemigo();
-        this.tipoBarco = 1;
-        this.direccion = Direccion.Abajo;
-        this.tipoArma = 1;
+        //this.tipoBarco = 1;
+        //this.direccion = Direccion.Arriba;
+        //this.tipoArma = 1;
     }
 
     public static ModeloTablero getMiModeloTablero()
@@ -32,6 +32,14 @@ public class ModeloTablero extends Observable {
             ModeloTablero.miModeloTablero = new ModeloTablero();
         }
         return(ModeloTablero.miModeloTablero);
+    }
+    
+    public void setTipoBarco(int tipoBarco) {
+    	this.tipoBarco = tipoBarco;
+    }
+    
+    public void setDireccion(Direccion dir) {
+    	this.direccion = dir;
     }
 
     /*public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã‚Â¡s de indicar por pantalla quiÃƒÆ’Ã‚Â©n es el ganador
