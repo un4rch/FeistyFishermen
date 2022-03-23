@@ -267,13 +267,13 @@ public class BaseTablero extends JFrame implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("Portaaviones")) {
-				ModeloTablero.getMiModeloTablero().setTipoBarco(1);
-			} else if (e.getActionCommand().equals("Submarino")) {
-				ModeloTablero.getMiModeloTablero().setTipoBarco(2);
-			} else if (e.getActionCommand().equals("Destructor")) {
-				ModeloTablero.getMiModeloTablero().setTipoBarco(3);
-			} else if (e.getActionCommand().equals("Fragata")) {
 				ModeloTablero.getMiModeloTablero().setTipoBarco(4);
+			} else if (e.getActionCommand().equals("Submarino")) {
+				ModeloTablero.getMiModeloTablero().setTipoBarco(3);
+			} else if (e.getActionCommand().equals("Destructor")) {
+				ModeloTablero.getMiModeloTablero().setTipoBarco(2);
+			} else if (e.getActionCommand().equals("Fragata")) {
+				ModeloTablero.getMiModeloTablero().setTipoBarco(1);
 			}
 			
 		}
@@ -287,7 +287,7 @@ public class BaseTablero extends JFrame implements Observer {
 		ArrayList<Integer> posisBarcoArray = (ArrayList<Integer>)posisBarco;
 		if (posisBarcoArray instanceof ArrayList<Integer>) {
 			for (Integer pos : posisBarcoArray) { //Update barcos en la vista
-				listaUsuario.get(pos).setBackground(Color.RED);
+				listaUsuario.get(pos).setBackground(Color.WHITE);
 			}
 		}
 	}
