@@ -7,16 +7,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import packModeloControlador.Dificultad;
 import packModeloControlador.Direccion;
 import packModeloControlador.ModeloTablero;
 
 import java.util.ArrayList;
+import packModeloControlador.Tupla;
 
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
+import javax.swing.SpringLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.SwingConstants;
 
@@ -46,12 +50,75 @@ public class BaseTablero extends JFrame implements Observer {
 			public void run() {
 				try {
 					BaseTablero frame = new BaseTablero(ModeloTablero.getMiModeloTablero());
-					frame.setVisible(true);
+					frame.mainMenu(frame);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public void mainMenu(BaseTablero frame) {
+		JFrame mainMenu = new JFrame();
+		mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel menu = new JPanel(new BorderLayout());
+		mainMenu.setSize(600,400);
+		mainMenu.add(menu);
+		JPanel dificultadesPanel = new JPanel(new GridLayout(3,0));
+		JPanel dificultades = new JPanel();
+		dificultades.setLayout(new BoxLayout(dificultades, BoxLayout.Y_AXIS));
+		ButtonGroup difGroup = new ButtonGroup();
+		JRadioButton facil = new JRadioButton("Facil");
+		facil.setActionCommand("Facil");
+		dificultades.add(facil);
+		difGroup.add(facil);
+		JRadioButton medio = new JRadioButton("Medio");
+		medio.setActionCommand("Medio");
+		dificultades.add(medio);
+		difGroup.add(medio);
+		JRadioButton dificil = new JRadioButton("Dificil");
+		dificil.setActionCommand("Dificil");
+		dificultades.add(dificil);
+		difGroup.add(dificil);
+		JRadioButton demente = new JRadioButton("Demente");
+		demente.setActionCommand("Demente");
+		dificultades.add(demente);
+		difGroup.add(demente);
+		JButton b = new JButton("Play");
+		b.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String dif = "";
+				try {
+					dif = difGroup.getSelection().getActionCommand();
+				} catch (Exception ex) {
+					dif = "";
+				}
+				if (!dif.equals("")) {
+					if (dif.equals("Facil")) {
+						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Facil);
+					} else if (dif.equals("Medio")) {
+						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Medio);
+					} else if (dif.equals("Difil")) {
+						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Dificil);
+					} else if (dif.equals("Demente")) {
+						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Demente);
+					}
+					mainMenu.setVisible(false);
+					frame.setVisible(true);
+				}
+			}
+		});
+		dificultadesPanel.add(new JPanel());
+		dificultadesPanel.add(dificultades);
+		dificultadesPanel.add(new JPanel());
+		JPanel highscore = new JPanel();
+		highscore.add(new JLabel("HighScores"));
+		menu.add(b, BorderLayout.CENTER);
+		menu.add(dificultadesPanel, BorderLayout.WEST);
+		menu.add(highscore, BorderLayout.EAST);
+		mainMenu.setVisible(true);
 	}
 
 	/**
@@ -139,24 +206,29 @@ public class BaseTablero extends JFrame implements Observer {
 		inventario.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JButton tienda = new JButton("Tienda");
+		//Anadir event listener
 		inventario.add(tienda);
 		
 		JLabel espacio = new JLabel("");
 		inventario.add(espacio);
 		
 		JRadioButton bomba = new JRadioButton("Bomba");
+		bomba.addActionListener(getControlador());
 		acciones.add(bomba);
 		inventario.add(bomba);
 		
 		JRadioButton escudo = new JRadioButton("Escudo");
+		escudo.addActionListener(getControlador());
 		acciones.add(escudo);
 		inventario.add(escudo);
 		
 		JRadioButton misil = new JRadioButton("Misil");
+		misil.addActionListener(getControlador());
 		acciones.add(misil);
 		inventario.add(misil);
 		
 		JRadioButton radar = new JRadioButton("Radar");
+		radar.addActionListener(getControlador());
 		acciones.add(radar);
 		inventario.add(radar);
 		
@@ -180,12 +252,7 @@ public class BaseTablero extends JFrame implements Observer {
 				lbl1.setOpaque(true);
 				lbl1.setBackground(Color.gray);
 				listaRival.add(lbl1);
-				lbl1.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						//Controlador.getMiControlador().casillaRivalPulsada(listaRival.indexOf(e.getComponent()));
-					}
-				});
+				lbl1.addMouseListener(getControlador());
 				JLabel lbl2 = new JLabel("");
 				lbl2.setBorder(BorderFactory.createLineBorder(Color.white));
 				lbl2.setOpaque(true);
@@ -202,6 +269,7 @@ public class BaseTablero extends JFrame implements Observer {
 		if (controlador==null)
 		{
 			controlador = new Controlador();
+			ModeloTablero.getMiModeloTablero().setDireccion(null); //No dejar que se ponga un barco al principio (arreglo de bug)
 		}
 		return controlador;
 	}
@@ -209,8 +277,6 @@ public class BaseTablero extends JFrame implements Observer {
 	private class Controlador implements MouseListener,ActionListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			//Hay que ponerle al Controlador el tipo de barco y la direccion aqui 
-			System.out.println((JLabel)e.getComponent());
 			if (((JLabel)e.getComponent()).getText().equals("A")) {
 				ModeloTablero.getMiModeloTablero().setDireccion(Direccion.Arriba);
 				for (JLabel direccion : listaDirecciones) {
@@ -237,6 +303,18 @@ public class BaseTablero extends JFrame implements Observer {
 				((JLabel)e.getComponent()).setForeground(Color.GREEN);
 			} else if (listaUsuario.contains((JLabel)e.getComponent())) {
 				packModeloControlador.ModeloTablero.getMiModeloTablero().casillaUsuarioPulsada(listaUsuario.indexOf((JLabel)e.getComponent()));
+				tipoBarco.clearSelection();
+				for (JLabel direccion : listaDirecciones) {
+					direccion.setForeground(Color.BLACK);
+				}
+				ModeloTablero.getMiModeloTablero().setDireccion(null);
+			} else if (listaRival.contains((JLabel)e.getComponent())) {
+				if (!ModeloTablero.getMiModeloTablero().partidaLista()) { //No se han puesto los barcos usuario
+					System.out.println("Para atacar hay que poner todos los barcos");
+				} else {
+					packModeloControlador.ModeloTablero.getMiModeloTablero().casillaRivalPulsada(listaRival.indexOf((JLabel)e.getComponent()));
+					ModeloTablero.getMiModeloTablero().setTipoArma(-1);
+				}
 			}
 		}
 
@@ -274,6 +352,14 @@ public class BaseTablero extends JFrame implements Observer {
 				ModeloTablero.getMiModeloTablero().setTipoBarco(2);
 			} else if (e.getActionCommand().equals("Fragata")) {
 				ModeloTablero.getMiModeloTablero().setTipoBarco(1);
+			} else if (e.getActionCommand().equals("Bomba")) {
+				ModeloTablero.getMiModeloTablero().setTipoArma(1);
+			} else if (e.getActionCommand().equals("Escudo")) {
+				ModeloTablero.getMiModeloTablero().setTipoArma(2);
+			} else if (e.getActionCommand().equals("Misil")) {
+				ModeloTablero.getMiModeloTablero().setTipoArma(3);
+			} else if (e.getActionCommand().equals("Radar")) {
+				ModeloTablero.getMiModeloTablero().setTipoArma(4);
 			}
 			
 		}
@@ -283,12 +369,17 @@ public class BaseTablero extends JFrame implements Observer {
 	/**
 	 * Se reciben los datos del observable para actualizarlos en la vista
 	 */
-	public void update(Observable obserable, Object posisBarco) {
-		ArrayList<Integer> posisBarcoArray = (ArrayList<Integer>)posisBarco;
-		if (posisBarcoArray instanceof ArrayList<Integer>) {
-			for (Integer pos : posisBarcoArray) { //Update barcos en la vista
+	public void update(Observable obserable, Object arg) {
+		if (arg instanceof ArrayList) {
+			for (Integer pos : (ArrayList<Integer>)arg) { //Update barcos en la vista
 				listaUsuario.get(pos).setBackground(Color.WHITE);
 			}
+		} else if (arg instanceof Tupla) {
+			if (((Tupla)arg).estaTocado()) {
+				listaRival.get(((Tupla)arg).getPos()).setBackground(Color.GREEN);
+			}
+		} else if (arg instanceof Integer) {
+			listaUsuario.get((int)arg).setBackground(Color.RED);
 		}
 	}
 

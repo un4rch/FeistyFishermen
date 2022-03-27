@@ -2,6 +2,7 @@ package packModeloControlador;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class ListaBarcos {
 	private ArrayList<Barco> listaBarcos;
@@ -37,6 +38,10 @@ public class ListaBarcos {
 			}
 		}
 		return valido;
+	}
+	
+	public Barco getBarcoAleatorio() {
+		return this.listaBarcos.get(new Random().nextInt(this.listaBarcos.size()-1));
 	}
 
 	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos había un Barco

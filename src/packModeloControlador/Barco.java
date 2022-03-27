@@ -2,6 +2,7 @@ package packModeloControlador;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Barco
 {
@@ -51,6 +52,10 @@ public class Barco
 			enc = unaTupla.tieneEstaPos(pPos);
 		}
 		return enc;
+	}
+	
+	public Tupla getPosAleatoria() {
+		return this.info.get(new Random().nextInt(this.info.size()));
 	}
 	
 	public void tocar(int pPos)

@@ -14,15 +14,15 @@ public class ModeloTablero extends Observable {
     private int tipoBarco; //Longitud del barco
     private Direccion direccion;
     private int tipoArma;
+    private Dificultad dificultad;
+    private boolean partidaLista;
 
     private ModeloTablero()
     {
         this.listaBarcosJugador = new ListaBarcos();
         this.listaBarcosEnemigo = new ListaBarcos();
 		this.ponerBarcosEnemigo();
-        //this.tipoBarco = 1;
-        //this.direccion = Direccion.Arriba;
-        //this.tipoArma = 1;
+		this.partidaLista = false;
     }
 
     public static ModeloTablero getMiModeloTablero()
@@ -38,8 +38,16 @@ public class ModeloTablero extends Observable {
     	this.tipoBarco = tipoBarco;
     }
     
+    public void setTipoArma(int tipoArma) {
+    	this.tipoArma = tipoArma;
+    }
+    
     public void setDireccion(Direccion dir) {
     	this.direccion = dir;
+    }
+    
+    public void setDificultad(Dificultad dif) {
+    	this.dificultad = dif;
     }
 
     /*public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã‚Â¡s de indicar por pantalla quiÃƒÆ’Ã‚Â©n es el ganador
@@ -82,11 +90,55 @@ public class ModeloTablero extends Observable {
         return(ganador);    //Devuelve el booleano que indica si ha de terminar la partida
     } */
     
+    public void rivalAtaca() {
+    	int pos = 0;
+    	Tupla posAleatoria;
+    	boolean posRandom = true;
+    	int prob = new Random().nextInt(9); //Numero aleatorio que si se encuentra en el rango de la dificultad la IA acierta si o si, sino escoje posicion random
+    	
+    	if (this.dificultad == Dificultad.Facil && prob>=0 && prob<=1) {
+    		posRandom = false;
+    	} else if (this.dificultad == Dificultad.Medio && prob>=0 && prob<=3) {
+    		posRandom = false;
+    	} else if (this.dificultad == Dificultad.Dificil && prob>=0 && prob<=5) {
+    		posRandom = false;
+    	} else if (this.dificultad == Dificultad.Demente && prob>=0 && prob<=7) {
+    		posRandom = false;
+    	}
+    	
+    	try {
+    		System.out.println("La IA est� pensando"); //Ponerlo en la pantalla no consola
+    		Thread.sleep(3000);
+    	} catch (Exception e) {
+    		
+    	}
+    	
+    	if (posRandom) {
+    		pos = new Random().nextInt(99);
+    	} else {
+    		posAleatoria = listaBarcosJugador.getBarcoAleatorio().getPosAleatoria();
+    		while (posAleatoria.estaTocado()) {
+    			posAleatoria = listaBarcosJugador.getBarcoAleatorio().getPosAleatoria();
+    		}
+    		pos = posAleatoria.getPos();
+    	}
+    	
+    	if (listaBarcosJugador.tocarBarco(pos)) {
+    		System.out.println("La IA ha tocado, turno del usuario");
+    		setChanged();
+    		notifyObservers(pos);
+    	} else {
+    		System.out.println("La IA no ha tocado, turno del usuario");
+    	}
+    }
+    
     public void casillaRivalPulsada(int pPos) {       //Si en esta posicion hay un barco, hay que cambiarlo a tocado (de momento porque solo hay bombas), si hay un barco devolver rojo y si hay agua devolver azul
 		boolean hayBarco = this.listaBarcosEnemigo.tocarBarco(pPos);	//toca el barco que esta en la posicion dada, y devuelve un booleano que dice si hay un barco en esa pos o no
-        //TODO el rival te tiene que devolver el ataque
 		setChanged();
 		notifyObservers(new Tupla(pPos, hayBarco)); //El color se elige dentro
+		this.rivalAtaca(); //El rival nos devuelve el ataque
+		
+		
     }
     
     public void casillaUsuarioPulsada(int pos) {
@@ -101,6 +153,14 @@ public class ModeloTablero extends Observable {
     			}
     		}
     	}
+    	if (!(listaBarcosJugador.comprobarCantidad(4) || listaBarcosJugador.comprobarCantidad(3) || listaBarcosJugador.comprobarCantidad(2) || listaBarcosJugador.comprobarCantidad(1))) {
+    		this.partidaLista = true;
+    		System.out.println("Partida lista");
+    	}
+    }
+    
+    public boolean partidaLista() {
+    	return this.partidaLista;
     }
 
 	private void ponerBarcosEnemigo()
