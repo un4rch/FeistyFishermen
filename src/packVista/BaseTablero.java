@@ -303,11 +303,11 @@ public class BaseTablero extends JFrame implements Observer {
 				((JLabel)e.getComponent()).setForeground(Color.GREEN);
 			} else if (listaUsuario.contains((JLabel)e.getComponent())) {
 				packModeloControlador.ModeloTablero.getMiModeloTablero().casillaUsuarioPulsada(listaUsuario.indexOf((JLabel)e.getComponent()));
-				tipoBarco.clearSelection();
+				/*tipoBarco.clearSelection();
 				for (JLabel direccion : listaDirecciones) {
 					direccion.setForeground(Color.BLACK);
 				}
-				ModeloTablero.getMiModeloTablero().setDireccion(null);
+				ModeloTablero.getMiModeloTablero().setDireccion(null);*/
 			} else if (listaRival.contains((JLabel)e.getComponent())) {
 				if (!ModeloTablero.getMiModeloTablero().partidaLista()) { //No se han puesto los barcos usuario
 					System.out.println("Para atacar hay que poner todos los barcos");
@@ -376,10 +376,27 @@ public class BaseTablero extends JFrame implements Observer {
 			}
 		} else if (arg instanceof Tupla) {
 			if (((Tupla)arg).estaTocado()) {
-				listaRival.get(((Tupla)arg).getPos()).setBackground(Color.GREEN);
+				listaRival.get(((Tupla)arg).getPos()).setBackground(Color.RED);
 			}
-		} else if (arg instanceof Integer) {
-			listaUsuario.get((int)arg).setBackground(Color.RED);
+			else {
+				listaRival.get(((Tupla)arg).getPos()).setBackground(Color.BLUE);
+			}
+		} else if (arg instanceof String) {
+			String[] posis = ((String)arg).split("_");
+			if (posis[1].equals("t")) {
+				listaUsuario.get(Integer.parseInt(posis[0])).setBackground(Color.RED);
+			}
+			else
+			{
+				listaUsuario.get(Integer.parseInt(posis[0])).setBackground(Color.GREEN);
+			}
+		} else if (arg instanceof Boolean) {
+			try {
+				PopupGanador frame = new PopupGanador((boolean)arg);
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
 		}
 	}
 
