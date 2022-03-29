@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Random;
 
+import packVista.PopupGanador;
+
 public class ModeloTablero extends Observable {
 
     private static ModeloTablero miModeloTablero;
@@ -16,6 +18,7 @@ public class ModeloTablero extends Observable {
     private int tipoArma;
     private Dificultad dificultad;
     private boolean partidaLista;
+    private boolean partidaTerminada;
 
     private ModeloTablero()
     {
@@ -23,6 +26,7 @@ public class ModeloTablero extends Observable {
         this.listaBarcosEnemigo = new ListaBarcos();
 		this.ponerBarcosEnemigo();
 		this.partidaLista = false;
+		this.partidaTerminada = false;
     }
 
     public static ModeloTablero getMiModeloTablero()
@@ -50,51 +54,29 @@ public class ModeloTablero extends Observable {
     	this.dificultad = dif;
     }
 
-    /*public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã‚Â¡s de indicar por pantalla quiÃƒÆ’Ã‚Â©n es el ganador
+    public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã‚Â¡s de indicar por pantalla quiÃƒÆ’Ã‚Â©n es el ganador
     {
-        boolean ganador = true;
-        Iterator<Barco> itr = this.getItrBarcosJugador();
-        Barco unBarco = null;
-        while (itr.hasNext() && ganador)
+    	boolean ganador = false;
+        if(listaBarcosJugador.flotaHundida())     //Ha ganado el Enemigo
         {
-            unBarco = itr.next();
-            if(!unBarco.estaHundido()) //si un barco no esta hundido
-            {
-                ganador = false;
-            }
+        	ganador = true;
+        	setChanged();
+    		notifyObservers(false);
         }
-
-        if(ganador)     //Ha ganado el Enemigo
+        else if(listaBarcosEnemigo.flotaHundida())     //Ha ganado el Jugador
         {
-            //TODO (Pop-up para el Enemigo)
+        	ganador = true;
+        	setChanged();
+    		notifyObservers(true);
         }
-        else            //No ha ganado el enemigo, comprobamos si ha ganado el jugador
-        {
-            ganador = true;     //porque tenemos que volver a comprobar para jugador
-            itr = this.getItrBarcosEnemigo();
-            while (itr.hasNext() && ganador)
-            {
-                unBarco = itr.next();
-                if(!unBarco.estaHundido()) //si un barco no estÃƒÆ’Ã‚Â¡ hundido
-                {
-                    ganador = false;
-                }
-            }
-
-            if(ganador)     //Ha ganado el Jugador
-            {
-                //TODO (Pop-up para el Jugador)
-            }
-        }
-
-        return(ganador);    //Devuelve el booleano que indica si ha de terminar la partida
-    } */
+        return ganador;    //Devuelve el booleano que indica si ha de terminar la partida
+    }
     
     public void rivalAtaca() {
     	int pos = 0;
     	Tupla posAleatoria;
     	boolean posRandom = true;
-    	int prob = new Random().nextInt(9); //Numero aleatorio que si se encuentra en el rango de la dificultad la IA acierta si o si, sino escoje posicion random
+    	int prob = new Random().nextInt(19); //Numero aleatorio que si se encuentra en el rango de la dificultad la IA acierta si o si, sino escoje posicion random
     	
     	if (this.dificultad == Dificultad.Facil && prob>=0 && prob<=1) {
     		posRandom = false;
@@ -106,12 +88,12 @@ public class ModeloTablero extends Observable {
     		posRandom = false;
     	}
     	
-    	try {
+    	/*try {
     		System.out.println("La IA est� pensando"); //Ponerlo en la pantalla no consola
     		Thread.sleep(3000);
     	} catch (Exception e) {
     		
-    	}
+    	}*/
     	
     	if (posRandom) {
     		pos = new Random().nextInt(99);
@@ -126,19 +108,23 @@ public class ModeloTablero extends Observable {
     	if (listaBarcosJugador.tocarBarco(pos)) {
     		System.out.println("La IA ha tocado, turno del usuario");
     		setChanged();
-    		notifyObservers(pos);
+    		notifyObservers(pos+"_t");
     	} else {
     		System.out.println("La IA no ha tocado, turno del usuario");
+    		setChanged();
+    		notifyObservers(pos+"_f");
     	}
     }
     
     public void casillaRivalPulsada(int pPos) {       //Si en esta posicion hay un barco, hay que cambiarlo a tocado (de momento porque solo hay bombas), si hay un barco devolver rojo y si hay agua devolver azul
-		boolean hayBarco = this.listaBarcosEnemigo.tocarBarco(pPos);	//toca el barco que esta en la posicion dada, y devuelve un booleano que dice si hay un barco en esa pos o no
-		setChanged();
-		notifyObservers(new Tupla(pPos, hayBarco)); //El color se elige dentro
-		this.rivalAtaca(); //El rival nos devuelve el ataque
-		
-		
+		if (!partidaTerminada)
+		{
+			boolean hayBarco = this.listaBarcosEnemigo.tocarBarco(pPos);	//toca el barco que esta en la posicion dada, y devuelve un booleano que dice si hay un barco en esa pos o no
+			setChanged();
+			notifyObservers(new Tupla(pPos, hayBarco)); //El color se elige dentro
+			this.rivalAtaca(); //El rival nos devuelve el ataque
+			this.partidaTerminada=this.verSiHayGanador();
+		}
     }
     
     public void casillaUsuarioPulsada(int pos) {

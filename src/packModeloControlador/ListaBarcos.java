@@ -43,6 +43,18 @@ public class ListaBarcos {
 	public Barco getBarcoAleatorio() {
 		return this.listaBarcos.get(new Random().nextInt(this.listaBarcos.size()-1));
 	}
+	
+	public boolean flotaHundida()
+	{
+		boolean derrotado = true;
+		Iterator<Barco> itr = this.getIterador();
+		while (itr.hasNext()&&derrotado)
+		{
+			Barco act = itr.next();
+			derrotado=act.estaHundido();
+		}
+		return derrotado;
+	}
 
 	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos había un Barco
 	{
@@ -58,7 +70,6 @@ public class ListaBarcos {
                 enc = true;
             }
         }
-
 		//si hay barco en la pos lo toca
 		if(enc)
 		{
