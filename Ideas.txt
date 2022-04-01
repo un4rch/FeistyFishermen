@@ -17,7 +17,8 @@
 +---------------+
 | Ideas de Eder |
 +---------------+
-1)
+1) Cuando el radar detecta un barco enemigo lo indica en un color parpadeando
+2) Que la IA no dispare las armas de daño en área de forma estúpida (que el ataque no se salga del mapa)
 
 +--------------+
 | Ideas de Jon |
