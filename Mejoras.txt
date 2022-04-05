@@ -1,0 +1,10 @@
+Muy centralizado (seprar tareas (armas, jugadores, barcos(herencia)(atibuto estaHundido), etc...)) Diagrama de clases y secuencias
+  No hay tablero (array 10x10)
+  
+Estimacion de tareas (horas)
+
+Arreglar bug al poner barcos
+
+Contadores de barcos en vista
+
+Dificultades (Mejorar la IA a inteligente en vez de tramposa)
