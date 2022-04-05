@@ -8,3 +8,5 @@ Arreglar bug al poner barcos
 Contadores de barcos en vista
 
 Dificultades (Mejorar la IA a inteligente en vez de tramposa)
+
+Usar Java8
