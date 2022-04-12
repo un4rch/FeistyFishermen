@@ -1,0 +1,4 @@
+Ruben: Separar usuarios y listas
+Unai: Convertir la lista de barcos en matrices (clase Combate)
+Eder: Lo que hace jugador (rival incluido): llamadas a Combate (aunque no funcione) y modificar/añadir cosas del Arsenal
+Jon: Meter el MainMenu en el controlador
