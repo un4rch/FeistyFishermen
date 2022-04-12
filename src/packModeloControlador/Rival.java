@@ -8,4 +8,9 @@ public class Rival extends Jugador
     }
 
     //tienen distintos metodos
+
+    public void anadirBarco()
+    {
+
+    }
 }
