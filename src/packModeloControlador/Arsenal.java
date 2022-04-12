@@ -20,13 +20,33 @@ public class Arsenal {
         this.escudos = this.escudos + pCant;
     }
 
-    public void usarRadar()
+    public void consumirRadar()
     {
         this.radares--;
     }
 
-    public void usarEscudo()
+    public void consumirEscudo()
     {
         this.escudos--;
+    }
+
+    public boolean tieneSuficientesRadares()
+    {
+        boolean tieneRadares = false;
+        if(this.radares >= 1)
+        {
+            tieneRadares = true;
+        }
+        return tieneRadares;
+    }
+
+    public boolean tieneSuficientesEscudos()
+    {
+        boolean tieneEscudos = false;
+        if(this.escudos >= 1)
+        {
+            tieneEscudos = true;
+        }
+        return tieneEscudos;
     }
 }
