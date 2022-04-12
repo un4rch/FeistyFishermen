@@ -8,4 +8,10 @@ public class Usuario extends Jugador
     }
 
     //tienen distintos metodos
+
+    public void anadirBarco(int pPos, Direccion pDir, int pTipo)
+    {
+        //TODO (sin terminar)
+        this.getFlota().comprobarCantidad(pTipo);
+    }
 }
