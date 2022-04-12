@@ -89,7 +89,7 @@ public class ModeloTablero extends Observable {
     	}
     	
     	/*try {
-    		System.out.println("La IA está pensando"); //Ponerlo en la pantalla no consola
+    		System.out.println("La IA estï¿½ pensando"); //Ponerlo en la pantalla no consola
     		Thread.sleep(3000);
     	} catch (Exception e) {
     		
@@ -125,24 +125,38 @@ public class ModeloTablero extends Observable {
 			this.rivalAtaca(); //El rival nos devuelve el ataque
 			this.partidaTerminada=this.verSiHayGanador();
 		}
+
+
+		//Llama a ljugadores y recibe un booleano de vuelta
     }
     
-    public void casillaUsuarioPulsada(int pos) {
-    	if (listaBarcosJugador.comprobarCantidad(this.tipoBarco)) //Comprueba que se pueda anadir un barco del tipo seleccionado
-    	{
-    		ArrayList<Integer> posisBarco = this.ponerBarco(pos);
-    		if (posisBarco != null) {
-    			if (!listaBarcosJugador.tieneAlgunAdyacente(posisBarco, this.direccion)) {
-    				listaBarcosJugador.anadirBarco(posisBarco);
-    				setChanged();
-    				notifyObservers(posisBarco);
-    			}
-    		}
-    	}
-    	if (!(listaBarcosJugador.comprobarCantidad(4) || listaBarcosJugador.comprobarCantidad(3) || listaBarcosJugador.comprobarCantidad(2) || listaBarcosJugador.comprobarCantidad(1))) {
-    		this.partidaLista = true;
-    		System.out.println("Partida lista");
-    	}
+    public void casillaUsuarioPulsada(int pPos) { //TODO va a ir al usuario si partida no lista, si esta lista (poner escudo o reparar) a listajugadores
+    	//if (listaBarcosJugador.comprobarCantidad(this.tipoBarco)) //Comprueba que se pueda anadir un barco del tipo seleccionado
+    	//{
+    	//	ArrayList<Integer> posisBarco = this.ponerBarco(pPos);
+    	//	if (posisBarco != null) {
+    	//		if (!listaBarcosJugador.tieneAlgunAdyacente(posisBarco, this.direccion)) {
+    	//			listaBarcosJugador.anadirBarco(posisBarco);
+    	//			setChanged();
+    	//			notifyObservers(posisBarco);
+    	//		}
+    	//	}
+    	//}
+    	//if (!(listaBarcosJugador.comprobarCantidad(4) || listaBarcosJugador.comprobarCantidad(3) || listaBarcosJugador.comprobarCantidad(2) || listaBarcosJugador.comprobarCantidad(1))) {
+    	//	this.partidaLista = true;
+    	//	System.out.println("Partida lista");
+    	//}
+
+
+		///
+		if(!this.partidaLista) //Se ha pulsado la casilla para poner barcos
+		{
+			ListaJugadores.getMiListaJ()[0].anadirBarco(pPos, this.direccion, this.tipoBarco); //Le pasas al USUARIO la posicion y la direccion
+		}
+		else //Se ha pulsado la casilla para poner ESCUDO o REPARAR barco
+		{
+			this.partidaTerminada = ListaJugadores.getMiListaJ().jugarRonda(pPos, this.tipoArma); //Al final de la ronda te dice si ha ganado alguien o no
+		}
     }
     
     public boolean partidaLista() {
