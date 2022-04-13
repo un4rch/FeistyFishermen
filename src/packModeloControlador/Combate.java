@@ -47,5 +47,5 @@ public class Combate {
     /*public boolean comprobarAdyacentes(ArrayList<Integer> pPosis, boolean turno) {*/    
     
     //Hay que implementarlo: dado una lista de posiciones coloca un barco en esas posiciones.
-    /*public void colocarBarco(ArrayList<Integer> pPosis, boolean turno) {/*
+    /*public void colocarBarco(ArrayList<Integer> pPosis, boolean turno) {*/
 }
