@@ -46,6 +46,6 @@ public class Combate {
     //Hay que implementarlo: dado una lista de posiciones devuelve si se puede poner el barco o si hay algún otro barco adyacente
     /*public boolean comprobarAdyacentes(ArrayList<Integer> pPosis, boolean turno) {*/    
     
-    //Hay que implementarlo: dado una lista de posiciones coloca un barco en esas posiciones.
+    //Hay que implementarlo: dado una lista de posiciones coloca un barco en esas posiciones. Este método también se encarga de hacer el notifyObservers.
     /*public void colocarBarco(ArrayList<Integer> pPosis, boolean turno) {*/
 }
