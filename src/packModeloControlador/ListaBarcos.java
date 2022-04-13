@@ -6,9 +6,11 @@ import java.util.Random;
 
 public class ListaBarcos {
 	private ArrayList<Barco> listaBarcos;
+	private int cantCasillas;
 
 	public ListaBarcos() {
 		this.listaBarcos = new ArrayList<Barco>();
+		this.cantCasillas = 0;
 	}
 
 	public void anadirBarco(ArrayList<Integer> pPosiciones)
@@ -30,6 +32,7 @@ public class ListaBarcos {
 		{
 			this.listaBarcos.add(new Portaaviones(pPosiciones));
 		}
+		cantCasillas = cantCasillas + tamano;		
 	}
 
 	private Iterator<Barco> getIterador()
@@ -37,7 +40,7 @@ public class ListaBarcos {
 		return this.listaBarcos.iterator();
 	}
 
-	public boolean comprobarCantidad(int tipoBarco) //Comprueba que no haya mÃ¡s barcos de los posibles de cada tipo
+	public boolean comprobarCantidad(int tipoBarco) //Comprueba que no haya mas barcos de los posibles de cada tipo
 	{
 		boolean valido=true;
 		int cont=4-(tipoBarco-1);
@@ -75,17 +78,18 @@ public class ListaBarcos {
 	
 	public boolean flotaHundida()
 	{
-		boolean derrotado = true;
+		/*boolean derrotado = true;
 		Iterator<Barco> itr = this.getIterador();
 		while (itr.hasNext()&&derrotado) //TODO JAVA 8
 		{
 			Barco act = itr.next();
 			derrotado = act.estaHundido();
 		}
-		return derrotado;
+		return derrotado;*/
+		return (this.cantCasillas <= 0);
 	}
 
-	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos había un Barco
+	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos habÃ­a un Barco
 	{
 		//ve si hay barco en esa pos
 		Iterator<Barco> itr = this.getIterador();
