@@ -15,7 +15,7 @@ public class ModeloTablero extends Observable {
     private ListaBarcos listaBarcosEnemigo;
     private int tipoBarco; //Longitud del barco
     private Direccion direccion;
-    private int tipoArma;
+    private Arma tipoArma;
     private Dificultad dificultad;
     private boolean partidaLista;
     private boolean partidaTerminada;
@@ -42,7 +42,7 @@ public class ModeloTablero extends Observable {
     	this.tipoBarco = tipoBarco;
     }
     
-    public void setTipoArma(int tipoArma) {
+    public void setTipoArma(Arma tipoArma) {
     	this.tipoArma = tipoArma;
     }
     
@@ -54,7 +54,7 @@ public class ModeloTablero extends Observable {
     	this.dificultad = dif;
     }
 
-    public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã‚Â¡s de indicar por pantalla quiÃƒÆ’Ã‚Â©n es el ganador
+    public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡s de indicar por pantalla quiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©n es el ganador
     {
     	boolean ganador = false;
         if(listaBarcosJugador.flotaHundida())     //Ha ganado el Enemigo
@@ -89,8 +89,8 @@ public class ModeloTablero extends Observable {
     	}
     	
     	/*try {
-    		System.out.println("La IA est� pensando"); //Ponerlo en la pantalla no consola
-    		Thread.sleep(3000);
+    		System.out.println("La IA esta pensando"); //Ponerlo en la pantalla no consola
+    		Thread.sleep(500);
     	} catch (Exception e) {
     		
     	}*/
@@ -151,7 +151,7 @@ public class ModeloTablero extends Observable {
 		///
 		if(!this.partidaLista) //Se ha pulsado la casilla para poner barcos
 		{
-			ListaJugadores.getMiListaJ()[0].anadirBarco(pPos, this.direccion, this.tipoBarco); //Le pasas al USUARIO la posicion y la direccion
+			ListaJugadores.getMiListaJ().getUnJugador(0).ponerBarco(pPos, this.direccion, this.tipoBarco); //Le pasas al USUARIO la posicion y la direccion
 		}
 		else //Se ha pulsado la casilla para poner ESCUDO o REPARAR barco
 		{
@@ -167,7 +167,7 @@ public class ModeloTablero extends Observable {
 	{
 		//1 barco de longitud 4
 		this.tipoBarco = 4;
-		this.ponerBarcosAlAzar(1); //Cont es el número de barcos de ese tipo que tiene que poner
+		this.ponerBarcosAlAzar(1); //Cont es el nÃºmero de barcos de ese tipo que tiene que poner
 
 		//2 barcos de longitud 3
 		this.tipoBarco = 3;
@@ -186,7 +186,7 @@ public class ModeloTablero extends Observable {
 	{
 		while(cont > 0)
 		{
-			int pos = new Random().nextInt(99);	//Coge un número al azar del 0 al 99
+			int pos = new Random().nextInt(99);	//Coge un nÃºmero al azar del 0 al 99
 			this.direccion = this.cogerDireccionAlAzar();
 			ArrayList<Integer> lista = this.ponerBarco(pos);	//Si devuelve null significa que no se puede poner el barco (porque no es posible ponerlo en esas posiciones)
 			if(lista != null && !this.listaBarcosEnemigo.tieneAlgunAdyacente(lista, this.direccion))
