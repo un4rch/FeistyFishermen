@@ -24,6 +24,11 @@ public class ListaJugadores
 		return ListaJugadores.miLista;
 	}
 	
+	public Jugador getUnJugador(int pNum)
+	{
+		return ListaJugadores.getMiListaJ().listaJ.get(pNum);
+	}
+	
 	/**
 	 * se juega la ronda cuando el jugador pulsa una casilla despues de haber puesto todos los barcos
 	 * @param pPos la casilla que ha pulsado el jugador
@@ -36,7 +41,7 @@ public class ListaJugadores
 		turnoJugado = this.listaJ.get(0).actuar(pPos,pArma);
 		if (turnoJugado)
 		{
-			this.listaJ.get(1).actuar();
+			this.listaJ.get(1).actuar(pPos,pArma);
 		}
 		return this.partidaTerminada();
 	}
