@@ -12,6 +12,14 @@ public class Usuario extends Jugador
     public void anadirBarco(int pPos, Direccion pDir, int pTipo)
     {
         //TODO (sin terminar)
-        this.getFlota().comprobarCantidad(pTipo);
+        if (this.getFlota().comprobarCantidad(pTipo))
+        {
+            ArrayList<Integer> unBarco = super.ponerBarco(pPos,pDir,pTipo);
+            if (Combate.getMiCombate().comprobarAdyacentes(unBarco,true))
+            {
+                Combate.getMiCombate().colocarBarco(unBarco,true));
+                this.getFlota().anadirBarco(unBarco);
+            }
+        }
     }
 }
