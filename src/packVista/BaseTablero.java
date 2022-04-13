@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import packModeloControlador.Arma;
 import packModeloControlador.Dificultad;
 import packModeloControlador.Direccion;
 import packModeloControlador.ModeloTablero;
@@ -236,7 +237,7 @@ public class BaseTablero extends JFrame implements Observer {
 					System.out.println("Para atacar hay que poner todos los barcos");
 				} else {
 					packModeloControlador.ModeloTablero.getMiModeloTablero().casillaRivalPulsada(listaRival.indexOf((JLabel)e.getComponent()));
-					ModeloTablero.getMiModeloTablero().setTipoArma(-1);
+					ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Bomba);
 				}
 			}
 		}
@@ -276,13 +277,13 @@ public class BaseTablero extends JFrame implements Observer {
 			} else if (e.getActionCommand().equals("Fragata")) {
 				ModeloTablero.getMiModeloTablero().setTipoBarco(1);
 			} else if (e.getActionCommand().equals("Bomba")) {
-				ModeloTablero.getMiModeloTablero().setTipoArma(1);
+				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Bomba);
 			} else if (e.getActionCommand().equals("Escudo")) {
-				ModeloTablero.getMiModeloTablero().setTipoArma(2);
+				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Escudo);
 			} else if (e.getActionCommand().equals("Misil")) {
-				ModeloTablero.getMiModeloTablero().setTipoArma(3);
+				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Misil);
 			} else if (e.getActionCommand().equals("Radar")) {
-				ModeloTablero.getMiModeloTablero().setTipoArma(4);
+				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Radar);
 			} 
 			
 		}
