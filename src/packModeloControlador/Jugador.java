@@ -48,9 +48,16 @@ public abstract class Jugador
         return posisBarco;
 
         //TODO pone el barco en Combate (esta sin terminar)
-
-
-
+    }
+    
+    public boolean actuar(int pPos, Arma pArma) 
+    {
+    	return false;
+    }
+    
+    public boolean flotaHundida()
+    {
+    	return (this.flota.flotaHundida());
     }
 
 }
