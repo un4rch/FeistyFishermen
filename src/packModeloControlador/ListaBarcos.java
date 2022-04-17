@@ -13,6 +13,26 @@ public class ListaBarcos {
 		this.cantCasillas = 0;
 	}
 
+	private Iterator<Barco> getIterador()
+	{
+		return this.listaBarcos.iterator();
+	}
+
+	public void sumarCasillas(int pCant)
+	{
+		this.cantCasillas += pCant;
+	}
+
+	public void restarCasillas(int pCant)
+	{
+		this.cantCasillas -= pCant;
+	}
+
+	public boolean flotaHundida()
+	{
+		return (this.cantCasillas <= 0);
+	}
+
 	public void anadirBarco(ArrayList<Integer> pPosiciones)
 	{
 		int tamano = pPosiciones.size();
@@ -35,17 +55,12 @@ public class ListaBarcos {
 		cantCasillas = cantCasillas + tamano;		
 	}
 
-	private Iterator<Barco> getIterador()
-	{
-		return this.listaBarcos.iterator();
-	}
-
 	public boolean comprobarCantidad(int tipoBarco) //Comprueba que no haya mas barcos de los posibles de cada tipo
 	{
 		boolean valido=true;
 		int cont=4-(tipoBarco-1);
 		Iterator<Barco> itr=this.listaBarcos.iterator();
-		while (itr.hasNext() && valido) //TODO JAVA 8
+		while (itr.hasNext() && valido) //TODO JAVA 8 y todos los else if se pueden meter como un OR en la misma expr
 		{
 			Barco unBarco = itr.next();
 			if(tipoBarco==1 && Fragata.class.isInstance(unBarco))
@@ -74,19 +89,6 @@ public class ListaBarcos {
 	
 	public Barco getBarcoAleatorio() {
 		return this.listaBarcos.get(new Random().nextInt(this.listaBarcos.size()-1));
-	}
-	
-	public boolean flotaHundida()
-	{
-		/*boolean derrotado = true;
-		Iterator<Barco> itr = this.getIterador();
-		while (itr.hasNext()&&derrotado) //TODO JAVA 8
-		{
-			Barco act = itr.next();
-			derrotado = act.estaHundido();
-		}
-		return derrotado;*/
-		return (this.cantCasillas <= 0);
 	}
 
 	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos habÃ­a un Barco
