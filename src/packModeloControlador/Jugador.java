@@ -19,12 +19,24 @@ public abstract class Jugador
         return this.flota;
     }
 
-    public ArrayList<Integer> ponerBarco(int pPos, Direccion pDir, int pTipoBarco)
+    public void sumarCasillas(int pCant)
     {
-        //TODO pone el barco en la this.FLOTA (esta sin terminar)
+        this.flota.sumarCasillas(pCant);
+    }
+
+    public void restarCasillas(int pCant)
+    {
+        this.flota.restarCasillas(pCant);
+    }
+
+    public ArrayList<Integer> sePuedePonerBarco(int pPos, Direccion pDir, int pTipoBarco)
+    {
+        /** Si es posible colocar el barco con esos parametros, devuelve un ArrayL<int> con las posiciones, si no devuelve null **/
+        //TODO pone el barco en la this.FLOTA (no se si esta sin terminar)
         ArrayList<Integer> posisBarco = new ArrayList<Integer>();
         int x = pPos%10;
         int y = pPos/10;
+
         if (pDir == Direccion.Arriba && y-pTipoBarco+1>=0) { //Arriba
             for (int i=0; i<pTipoBarco; i++) {
                 posisBarco.add(10*(y-i)+x);
@@ -47,17 +59,21 @@ public abstract class Jugador
 
         return posisBarco;
 
-        //TODO pone el barco en Combate (esta sin terminar)
+        //TODO pone el barco en Combate (no se si esta sin terminar)
     }
     
-    public boolean actuar(int pPos, Arma pArma) 
+    public void actuar(int pPos, Arma pArma)
     {
-    	return false;
+
     }
-    
-    public boolean flotaHundida()
+
+    public void anadirBarco(int pPos, Direccion pDir, int pTipoBarco)
+    {
+
+    }
+
+    public boolean tieneLaFlotaHundida()
     {
     	return (this.flota.flotaHundida());
     }
-
 }
