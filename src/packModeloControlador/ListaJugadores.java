@@ -38,7 +38,7 @@ public class ListaJugadores
 	public boolean jugarRonda(int pPos, Arma pArma)	//TODO JAVA 8 (aunque sean solo 2 jugadores, hay que pensar en grande como dijo Ander)
 	{
 		this.listaJ.get(0).actuar(pPos,pArma);
-		this.listaJ.get(1).actuar(pPos,pArma);
+		this.listaJ.get(1).actuar(pPos,pArma);		//pPos y pArma no se van a utilizar en el Rival
 
 		return this.partidaTerminada();
 	}
