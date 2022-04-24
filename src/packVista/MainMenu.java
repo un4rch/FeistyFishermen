@@ -5,10 +5,6 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -22,8 +18,12 @@ import packModeloControlador.Dificultad;
 import packModeloControlador.ModeloTablero;
 //import packVista.BaseTablero.Controlador;
 
-public class MainMenu extends JFrame implements Observer
+public class MainMenu extends JFrame
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame mainMenu = null;
 	private ButtonGroup difGroup = null;
 	private Controlador controlador;
@@ -32,8 +32,7 @@ public class MainMenu extends JFrame implements Observer
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainMenu frame = new MainMenu(ModeloTablero.getMiModeloTablero());
-					
+					MainMenu frame = new MainMenu();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,10 +40,8 @@ public class MainMenu extends JFrame implements Observer
 		});
 	}
 	
-	public MainMenu(Observable gestorTablebro)
+	public MainMenu()
 	{
-		gestorTablebro.addObserver(this);
-		
 		this.mainMenu = new JFrame();
 		mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel menu = new JPanel(new BorderLayout());
@@ -85,10 +82,6 @@ public class MainMenu extends JFrame implements Observer
 		mainMenu.setVisible(true);
 	}
 	
-	public void update(Observable obserable, Object arg) {
-		
-	}
-	
 	private Controlador getControlador() {
 		if (controlador==null)
 		{
@@ -97,11 +90,10 @@ public class MainMenu extends JFrame implements Observer
 		return controlador;
 	}
 	
-	private class Controlador implements MouseListener,ActionListener {
+	private class Controlador implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getActionCommand().equals("Play")) {
 				
 				String dif = "";
@@ -124,44 +116,8 @@ public class MainMenu extends JFrame implements Observer
 					BaseTablero frame = new BaseTablero(ModeloTablero.getMiModeloTablero());
 					frame.setVisible(true);
 					//Cerrar mainMenu
-					
-				
 			  }
 			}
-			
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		
-	}
-	
+		}		
+	}	
 }
