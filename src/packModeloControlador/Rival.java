@@ -66,11 +66,11 @@ public class Rival extends Jugador
 
         if (unArma.equals(Arma.Bomba) || unArma.equals(Arma.Misil) || unArma.equals(Arma.Radar))   //ATAQUE
         {
-            Combate.getMiCombate().atacar(unaPos, unArma);
+            Combate.getMiCombate().atacar(unaPos, unArma, false);
         }
         else if (unArma.equals(Arma.Escudo) || unArma.equals(Arma.Reparacion))    //DEFENSA
         {
-            Combate.getMiCombate().defensa(unaPos, unArma);
+            Combate.getMiCombate().defensa(unaPos, unArma, false);
         }
     }
 
