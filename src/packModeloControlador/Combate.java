@@ -110,4 +110,119 @@ public class Combate {
     	}
     	//return sePuedeColocar;
     }
+
+    public void defensa(int pPos, Arma pArma, boolean esUsuario) {
+    	int x = pPos%10;
+		int y = pPos/10;
+		
+    	if (esUsuario)  
+    	{
+    		if (pArma.equals(Arma.Escudo)) // si se quiere poner escudo en una casilla en la que haya un barco
+    		{
+    			if (this.tableroUsuario[x][y].equals(Casilla.Barco))
+    			{
+    				this.tableroUsuario[x][y] = Casilla.Escudo;
+    			}
+    			else
+    			{
+    				System.out.println("¡No puedes poner escudos en el agua!");
+    			}
+    			
+    		}
+    		else if (pArma.equals(Arma.Reparacion)) 
+    		{
+    			System.out.println("Función no disponible actualmente");  // sprint 3
+    		}
+    	}
+    	else
+    	{
+    		if (pArma.equals(Arma.Escudo)) // si se quiere poner escudo en una casilla en la que haya un barco
+    		{
+    			if (this.tableroRival[x][y].equals(Casilla.Barco))
+    			{
+    				this.tableroRival[x][y] = Casilla.Escudo;
+    			}    		
+    			else
+    			{
+    				// no sé si habría que poner algo aquí
+    			}
+    		}
+    		else if (pArma.equals(Arma.Reparacion)) 
+    		{
+    			// sprint 3
+    		}
+    	}
+    }
+    
+    public void atacar(int pPos, Arma pArma, boolean esUsuario) {
+    	int x = pPos%10;
+		int y = pPos/10;
+		
+    	if (esUsuario)  
+    	{
+    		if (pArma.equals(Arma.Bomba))
+    		{
+    			if (this.tableroRival[x][y].equals(Casilla.Barco))
+    			{
+    				this.tableroRival[x][y] = Casilla.Tocado;
+    			}
+    			else if (this.tableroRival[x][y].equals(Casilla.EscudoDanado))
+    			{
+    				this.tableroRival[x][y] = Casilla.Barco;
+    			}
+    			else if (this.tableroRival[x][y].equals(Casilla.Escudo))
+    			{
+    				this.tableroRival[x][y] = Casilla.EscudoDanado; 
+    			}
+    		}
+    		else if (pArma.equals(Arma.Misil))
+    		{
+    			if (this.tableroRival[x][y].equals(Casilla.Barco))
+    			{
+    				this.tableroRival[x][y] = Casilla.Hundido;
+    			}
+    			else if ( (this.tableroRival[x][y].equals(Casilla.Escudo)) || (this.tableroRival[x][y].equals(Casilla.EscudoDanado)) )
+    			{
+    				this.tableroRival[x][y] = Casilla.Barco;
+    			}
+    		}
+    		else if (pArma.equals(Arma.Radar))
+    		{
+    			//TODO
+    		}
+    	}
+    	else
+    	{
+    		if (pArma.equals(Arma.Bomba))
+    		{
+    			if (this.tableroUsuario[x][y].equals(Casilla.Barco))
+    			{
+    				this.tableroUsuario[x][y] = Casilla.Tocado;
+    			}
+    			else if (this.tableroUsuario[x][y].equals(Casilla.EscudoDanado))
+    			{
+    				this.tableroUsuario[x][y] = Casilla.Barco;
+    			}
+    			else if (this.tableroUsuario[x][y].equals(Casilla.Escudo))
+    			{
+    				this.tableroUsuario[x][y] = Casilla.EscudoDanado; 
+    			}
+    		}
+    		else if (pArma.equals(Arma.Misil))
+    		{
+    			if (this.tableroUsuario[x][y].equals(Casilla.Barco))
+    			{
+    				this.tableroUsuario[x][y] = Casilla.Hundido;
+    			}
+    			else if ( (this.tableroUsuario[x][y].equals(Casilla.Escudo)) || (this.tableroUsuario[x][y].equals(Casilla.EscudoDanado)) )
+    			{
+    				this.tableroUsuario[x][y] = Casilla.Barco;
+    			}
+    		}
+    		else if (pArma.equals(Arma.Radar))
+    		{
+    			//TODO
+    		}
+    	}
+    }
 }
