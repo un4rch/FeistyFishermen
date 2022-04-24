@@ -3,16 +3,13 @@ package packModeloControlador;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observable;
 import java.util.Random;
 
 import packVista.PopupGanador;
 
-public class ModeloTablero extends Observable {
+public class ModeloTablero {
 
     private static ModeloTablero miModeloTablero;
-    private ListaBarcos listaBarcosJugador;
-    private ListaBarcos listaBarcosEnemigo;
     private int tipoBarco; //Longitud del barco
     private Direccion direccion;
     private Arma tipoArma;
@@ -22,10 +19,7 @@ public class ModeloTablero extends Observable {
 
     private ModeloTablero()
     {
-        this.listaBarcosJugador = new ListaBarcos();
-        this.listaBarcosEnemigo = new ListaBarcos();
-		//this.ponerBarcosEnemigo();
-		this.partidaLista = false;
+        this.partidaLista = false;
 		this.partidaTerminada = false;
     }
 
@@ -54,30 +48,10 @@ public class ModeloTablero extends Observable {
     	this.dificultad = dif;
     }
 
-	public boolean partidaLista()
-	{
-		return this.partidaLista;
-	}
-
-    public boolean verSiHayGanador() //Recorre las 2 listas de barcos y devuelve un booleano que indica si la partida ha terminado, ademÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡s de indicar por pantalla quiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©n es el ganador
-    {
-    	boolean ganador = false;
-        if(listaBarcosJugador.flotaHundida())     //Ha ganado el Enemigo
-        {
-        	ganador = true;
-        	setChanged();
-    		notifyObservers(false);
-        }
-        else if(listaBarcosEnemigo.flotaHundida())     //Ha ganado el Jugador
-        {
-        	ganador = true;
-        	setChanged();
-    		notifyObservers(true);
-        }
-        return ganador;    //Devuelve el booleano que indica si ha de terminar la partida
+    public boolean partidaLista() {
+    	return this.partidaLista;
     }
-    
-    public void rivalAtaca() {	//TODO hay que pasar esto a los metodos actuar(), armaAleatoria() y posAleatoria() de la clase Rival
+    /*public void rivalAtaca() {	//TODO hay que pasar esto a los metodos actuar(), armaAleatoria() y posAleatoria() de la clase Rival
     	int pos = 0;
     	Tupla posAleatoria;
     	boolean posRandom = true;
@@ -93,12 +67,12 @@ public class ModeloTablero extends Observable {
     		posRandom = false;
     	}
     	
-    	/*try {
+    	try {
     		System.out.println("La IA esta pensando"); //Ponerlo en la pantalla no consola
     		Thread.sleep(500);
     	} catch (Exception e) {
     		
-    	}*/
+    	}
     	
     	if (posRandom) {
     		pos = new Random().nextInt(99);
@@ -119,7 +93,7 @@ public class ModeloTablero extends Observable {
     		setChanged();
     		notifyObservers(pos+"_f");
     	}
-    }
+    }*/
     
     public void casillaRivalPulsada(int pPos) {       //Si en esta posicion hay un barco, hay que cambiarlo a tocado (de momento porque solo hay bombas), si hay un barco devolver rojo y si hay agua devolver azul
 		//if (!partidaTerminada)
