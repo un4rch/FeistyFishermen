@@ -2,8 +2,9 @@ package packModeloControlador;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
-public class ListaJugadores
+public class ListaJugadores extends Observable
 {
 	private static ListaJugadores miLista;
 	private ArrayList<Jugador> listaJ;
@@ -37,9 +38,12 @@ public class ListaJugadores
 	 */
 	public boolean jugarRonda(int pPos, Arma pArma)	//TODO JAVA 8 (aunque sean solo 2 jugadores, hay que pensar en grande como dijo Ander)
 	{
-		this.listaJ.get(0).actuar(pPos,pArma);
-		this.listaJ.get(1).actuar(pPos,pArma);		//pPos y pArma no se van a utilizar en el Rival
-
+		Iterator<Jugador> itr = this.listaJ.iterator();
+		while (itr.hasNext())
+		{
+			Jugador jAct = itr.next();
+			jAct.actuar(pPos, pArma); //pPos y pArma no se van a utilizar en el Rival
+		}
 		return this.partidaTerminada();
 	}
 	
@@ -51,12 +55,29 @@ public class ListaJugadores
 	{
 		boolean hayGanador = false;
 		Iterator<Jugador> itr = this.listaJ.iterator();
+		int cont = 0;
 		while (itr.hasNext() && !hayGanador)
 		{
 			Jugador act = itr.next();
 			hayGanador = act.tieneLaFlotaHundida();
+			if (!hayGanador)
+			{
+				cont++;
+			}
 		}
 		//al final de cada ronda se mira a ver si alguno de los jugadores se ha quedado sin casillas sin tocar/hundir
+		if (hayGanador)
+		{
+			setChanged();
+			if (cont == 0)
+			{
+				notifyObservers(true);
+			}
+			else
+			{
+				notifyObservers(false);
+			}
+		}
 		return hayGanador;
 	}
 }
