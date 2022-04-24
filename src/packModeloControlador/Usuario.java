@@ -32,11 +32,11 @@ public class Usuario extends Jugador
 
         if (pArma.equals(Arma.Bomba) || pArma.equals(Arma.Misil) || pArma.equals(Arma.Radar))   //ATAQUE
         {
-            Combate.getMiCombate().atacar(pPos, pArma);
+            Combate.getMiCombate().atacar(pPos, pArma, true);
         }
         else if (pArma.equals(Arma.Escudo) || pArma.equals(Arma.Reparacion))    //DEFENSA
         {
-            Combate.getMiCombate().defensa(pPos, pArma);
+            Combate.getMiCombate().defensa(pPos, pArma, true);
         }
     }
 
