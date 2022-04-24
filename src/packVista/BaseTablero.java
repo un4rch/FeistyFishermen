@@ -227,11 +227,6 @@ public class BaseTablero extends JFrame implements Observer {
 				((JLabel)e.getComponent()).setForeground(Color.GREEN);
 			} else if (listaUsuario.contains((JLabel)e.getComponent())) {
 				packModeloControlador.ModeloTablero.getMiModeloTablero().casillaUsuarioPulsada(listaUsuario.indexOf((JLabel)e.getComponent()));
-				/*tipoBarco.clearSelection();
-				for (JLabel direccion : listaDirecciones) {
-					direccion.setForeground(Color.BLACK);
-				}
-				ModeloTablero.getMiModeloTablero().setDireccion(null);*/
 			} else if (listaRival.contains((JLabel)e.getComponent())) {
 				if (!ModeloTablero.getMiModeloTablero().partidaLista()) { //No se han puesto los barcos usuario
 					System.out.println("Para atacar hay que poner todos los barcos");
@@ -293,34 +288,94 @@ public class BaseTablero extends JFrame implements Observer {
 	/**
 	 * Se reciben los datos del observable para actualizarlos en la vista
 	 */
-	public void update(Observable obserable, Object arg) {
-		if (arg instanceof ArrayList) {
-			for (Integer pos : (ArrayList<Integer>)arg) { //Update barcos en la vista
+	public void update(Observable obserable, Object arg) 
+	{
+		if (arg instanceof ArrayList) 
+		{
+			for (Integer pos : (ArrayList<Integer>)arg) 
+			{ //Update barcos en la vista
 				listaUsuario.get(pos).setBackground(Color.WHITE);
 			}
-		} else if (arg instanceof Tupla) {
-			if (((Tupla)arg).estaTocado()) {
-				listaRival.get(((Tupla)arg).getPos()).setBackground(Color.RED);
-			}
-			else {
-				listaRival.get(((Tupla)arg).getPos()).setBackground(Color.BLUE);
-			}
-		} else if (arg instanceof String) {
-			String[] posis = ((String)arg).split("_");
-			if (posis[1].equals("t")) {
-				listaUsuario.get(Integer.parseInt(posis[0])).setBackground(Color.RED);
-			}
-			else
+		} 
+		else if (arg instanceof Boolean) 
+		{
+			try 
 			{
-				listaUsuario.get(Integer.parseInt(posis[0])).setBackground(Color.GREEN);
-			}
-		} else if (arg instanceof Boolean) {
-			try {
 				PopupGanador frame = new PopupGanador((boolean)arg);
 				frame.setVisible(true);
-			} catch (Exception e) {
+			} catch (Exception e) 
+			{
 				e.printStackTrace();
 			}	
+		}
+		else if (arg instanceof String) {
+			String[] posis = ((String)arg).split("_");
+			if (posis[2].equals("A"))
+			{
+				if (posis[0].equals("0"))
+				{
+					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.cyan);
+				}
+				else
+				{
+					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.blue);
+				}
+			}
+			else if (posis[2].equals("B"))
+			{
+				if (posis[0].equals("0"))
+				{
+					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.white);
+				}
+				else
+				{
+					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.white);
+				}
+			}
+			else if (posis[2].equals("E"))
+			{
+				if (posis[0].equals("0"))
+				{
+					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.orange);
+				}
+				else
+				{
+					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.orange);
+				}
+			}
+			else if (posis[2].equals("ED"))
+			{
+				if (posis[0].equals("0"))
+				{
+					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.yellow);
+				}
+				else
+				{
+					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.yellow);
+				}
+			}
+			else if (posis[2].equals("T"))
+			{
+				if (posis[0].equals("0"))
+				{
+					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.red);
+				}
+				else
+				{
+					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.red);
+				}
+			}
+			else //posis[2].equals("H")
+			{
+				if (posis[0].equals("0"))
+				{
+					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.black);
+				}
+				else
+				{
+					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.black);
+				}
+			}
 		}
 	}
 
