@@ -2,7 +2,6 @@ package packModeloControlador;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 public class ListaBarcos {
 	private ArrayList<Barco> listaBarcos;
@@ -87,15 +86,17 @@ public class ListaBarcos {
 		return valido;
 	}
 	
-	public Barco getBarcoAleatorio() {
+	/*public Barco getBarcoAleatorio() 
+	{
 		return this.listaBarcos.get(new Random().nextInt(this.listaBarcos.size()-1));
-	}
+	}*/
 
-	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos habÃ­a un Barco
+	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos habia un Barco
 	{
 		//ve si hay barco en esa pos
 		Iterator<Barco> itr = this.getIterador();
         boolean enc = false;
+        boolean hecho = false;
         Barco unBarco = null;
         while(itr.hasNext() && !enc)
         {
@@ -108,10 +109,30 @@ public class ListaBarcos {
 		//si hay barco en la pos lo toca
 		if(enc)
 		{
-			unBarco.tocar(pPos);
+			hecho = unBarco.tocar(pPos);
 		}
-
+		if(hecho)
+		{
+			this.restarCasillas(1);
+		}
 		return(enc);
+	}
+	
+	public boolean estaHundido(int pPos)
+	{
+		boolean hundido = false;
+		boolean encontrado = false;
+		Iterator<Barco> itr = this.getIterador();
+		while (itr.hasNext() && !encontrado)
+		{
+			Barco act = itr.next();
+			if (act.tieneEstaPos(pPos))
+			{
+				encontrado = true;
+				hundido = act.estaHundido();
+			}
+		}
+		return hundido;
 	}
 
 	public boolean tieneAlgunAdyacente(ArrayList<Integer> barco, Direccion dir) { //pos = yx
