@@ -31,6 +31,28 @@ public class ListaBarcos {
 	{
 		return (this.cantCasillas <= 0);
 	}
+	
+	public boolean partidaLista()
+	{
+		return (this.listaBarcos.size()==10);
+	}
+	
+	public ArrayList<Integer> perteneceA(int pPos)
+	{
+		Iterator<Barco> itr = this.getIterador();
+		boolean encontrado = false;
+		ArrayList<Integer> posis = new ArrayList<Integer>();
+		while (itr.hasNext() && !encontrado)
+		{
+			Barco act = itr.next();
+			if (act.tieneEstaPos(pPos))
+			{
+				encontrado = true;
+				posis = act.getPosis();
+			}
+		}
+		return posis;
+	}
 
 	public void anadirBarco(ArrayList<Integer> pPosiciones)
 	{
