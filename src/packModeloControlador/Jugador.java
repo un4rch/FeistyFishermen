@@ -78,4 +78,12 @@ public abstract class Jugador
     {
     	return (this.flota.flotaHundida());
     }
+    
+    public void tocar(Integer pPos) {
+    	this.flota.tocarBarco(pPos);
+    }
+    
+    public boolean estaTocado(Integer pPos) {
+    	return this.flota.estaTocado(pPos);
+    }
 }
