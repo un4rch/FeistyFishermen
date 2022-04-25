@@ -1,6 +1,5 @@
 package packModeloControlador;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Usuario extends Jugador
@@ -18,11 +17,15 @@ public class Usuario extends Jugador
         if (this.getFlota().comprobarCantidad(pTipo))
         {
             ArrayList<Integer> unBarco = super.sePuedePonerBarco(pPos,pDir,pTipo);
-            if (unBarco != null && Combate.getMiCombate().comprobarAdyacentes(unBarco, true)) //Si se puede poner el barco teniendo en cuenta los adyacentes
+            if (unBarco != null && !Combate.getMiCombate().comprobarAdyacentes(unBarco, true)) //Si se puede poner el barco teniendo en cuenta los adyacentes
             {
                 Combate.getMiCombate().colocarBarco(unBarco, true); //true porque es el turno del Usuario
                 this.getFlota().anadirBarco(unBarco);
             }
+        }
+        if (this.getFlota().partidaLista())
+        {
+        	ModeloTablero.getMiModeloTablero().empezarPartida();
         }
     }
 
