@@ -28,6 +28,11 @@ public abstract class Jugador
     {
         this.flota.restarCasillas(pCant);
     }
+    
+    public boolean estaHundido(int pPos)
+    {
+    	return this.flota.estaHundido(pPos);
+    }
 
     public ArrayList<Integer> sePuedePonerBarco(int pPos, Direccion pDir, int pTipoBarco)
     {
@@ -58,19 +63,11 @@ public abstract class Jugador
         }
 
         return posisBarco;
-
-        //TODO pone el barco en Combate (no se si esta sin terminar)
     }
     
-    public void actuar(int pPos, Arma pArma)
-    {
+    public void actuar(int pPos, Arma pArma){}
 
-    }
-
-    public void anadirBarco(int pPos, Direccion pDir, int pTipoBarco)
-    {
-
-    }
+    public void anadirBarco(int pPos, Direccion pDir, int pTipoBarco){}
 
     public boolean tieneLaFlotaHundida()
     {
