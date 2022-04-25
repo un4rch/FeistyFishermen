@@ -2,107 +2,175 @@ package packModeloControlador;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
-public abstract class Barco
-{
-	
-	private ArrayList<Tupla> info;
+public class ListaBarcos {
+	private ArrayList<Barco> listaBarcos;
+	private int cantCasillas;
 
-	public Barco(ArrayList<Integer> posiciones)
+	public ListaBarcos() {
+		this.listaBarcos = new ArrayList<Barco>();
+		this.cantCasillas = 0;
+	}
+
+	private Iterator<Barco> getIterador()
 	{
-		this.info = new ArrayList<Tupla>();
-		Iterator<Integer> itr = posiciones.iterator();
-		while(itr.hasNext())
-		{
-			Integer act = itr.next();
-			info.add(new Tupla(act,false));
-		}
+		return this.listaBarcos.iterator();
+	}
+
+	public void sumarCasillas(int pCant)
+	{
+		this.cantCasillas += pCant;
+	}
+
+	public void restarCasillas(int pCant)
+	{
+		this.cantCasillas -= pCant;
+	}
+
+	public boolean flotaHundida()
+	{
+		return (this.cantCasillas <= 0);
 	}
 	
-	public ArrayList<Integer> getPosis() {
+	public boolean partidaLista()
+	{
+		return (this.listaBarcos.size()==10);
+	}
+	
+	public ArrayList<Integer> perteneceA(int pPos)
+	{
+		Iterator<Barco> itr = this.getIterador();
+		boolean encontrado = false;
 		ArrayList<Integer> posis = new ArrayList<Integer>();
-		Iterator<Tupla> itr = this.info.iterator();
-		while (itr.hasNext())
+		while (itr.hasNext() && !encontrado)
 		{
-			Tupla act = itr.next();
-			posis.add(act.getPos());
+			Barco act = itr.next();
+			if (act.tieneEstaPos(pPos))
+			{
+				encontrado = true;
+				posis = act.getPosis();
+			}
 		}
 		return posis;
 	}
-	
-	public boolean estaHundido() 
+
+	public void anadirBarco(ArrayList<Integer> pPosiciones)
 	{
-		Iterator<Tupla> itr = this.info.iterator();
-		boolean salir = false;
-		
-		while(itr.hasNext() && !salir)
+		int tamano = pPosiciones.size();
+		if(tamano == 1)
 		{
-			Tupla unaTupla = itr.next();
-			salir = !unaTupla.estaTocado();
+			this.listaBarcos.add(new Fragata(pPosiciones));
 		}
-		return !salir; 
-	}
-	
-	public boolean tieneEstaPos(int pPos)
-	{
-		Iterator<Tupla> itr = this.info.iterator();
-		boolean enc = false;
-		while(itr.hasNext() && !enc)
+		else if(tamano == 2)
 		{
-			Tupla unaTupla = itr.next();
-			enc = unaTupla.tieneEstaPos(pPos);
+			this.listaBarcos.add(new Destructor(pPosiciones));
 		}
-		return enc;
-	}
-	
-	public Tupla getPosAleatoria() 
-	{
-		return this.info.get(new Random().nextInt(this.info.size()));
-	}
-	
-	public boolean tocar(int pPos)
-	{
-		Tupla unaTupla = buscarPos(pPos);
-		boolean hecho = false;
-		if (unaTupla != null && !unaTupla.estaTocado())
+		else if(tamano == 3)
 		{
-			unaTupla.tocar();
-			hecho = true;
+			this.listaBarcos.add(new Submarino(pPosiciones));
 		}
-		return hecho;
-	}
-			
-	private Tupla buscarPos(int pPos)  // si la posiciones dadas coinciden con las de una Tupla, la devuelve.
-	{											   // en caso contrario devuelve null.
-		Iterator<Tupla> itr = this.info.iterator();     // pasar a java8 ****
-		boolean enc = false;
-		Tupla unaTupla = null;
-		
-		while (!enc && itr.hasNext())
+		else if(tamano == 4)
 		{
-			unaTupla = itr.next();
-			if (unaTupla.getPos() == pPos)
-			if(true)
+			this.listaBarcos.add(new Portaaviones(pPosiciones));
+		}
+		cantCasillas = cantCasillas + tamano;		
+	}
+
+	public boolean comprobarCantidad(int tipoBarco) //Comprueba que no haya mas barcos de los posibles de cada tipo
+	{
+		boolean valido=true;
+		int cont=4-(tipoBarco-1);
+		Iterator<Barco> itr=this.listaBarcos.iterator();
+		while (itr.hasNext() && valido) //TODO JAVA 8 y todos los else if se pueden meter como un OR en la misma expr
+		{
+			Barco unBarco = itr.next();
+			if(tipoBarco==1 && Fragata.class.isInstance(unBarco))
 			{
-				enc = true;
+				cont--;
+			}
+			else if(tipoBarco==2 && Destructor.class.isInstance(unBarco))
+			{
+				cont--;
+			}
+			else if(tipoBarco==3 && Submarino.class.isInstance(unBarco))
+			{
+				cont--;
+			}
+			else if(tipoBarco==4 && Portaaviones.class.isInstance(unBarco))
+			{
+				cont--;
+			}
+			if (cont==0)
+			{
+				valido=false;		//No puede meter mas barcos
 			}
 		}
-		
-		if (enc) {   return unaTupla;  }
-		else	 {   return null;	   }
-		
+		return valido;
 	}
 	
-	/**
-	 * 
-	 * @return Devuelve las posiciones adyacentes al barco
-	 */
-	public boolean estaEnPosAdyacente(ArrayList<Integer> posisBarco) {
-		boolean esAdyacente = false;
-		/*if (this.posiciones) {
-			
-		}*/
-		return esAdyacente;
+	/*public Barco getBarcoAleatorio() 
+	{
+		return this.listaBarcos.get(new Random().nextInt(this.listaBarcos.size()-1));
+	}*/
+
+	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos habia un Barco
+	{
+		//ve si hay barco en esa pos
+		Iterator<Barco> itr = this.getIterador();
+        boolean enc = false;
+        boolean hecho = false;
+        Barco unBarco = null;
+        while(itr.hasNext() && !enc)
+        {
+            unBarco = itr.next();
+            if(unBarco.tieneEstaPos(pPos))
+            {
+                enc = true;
+            }
+        }
+		//si hay barco en la pos lo toca
+		if(enc)
+		{
+			hecho = unBarco.tocar(pPos);
+		}
+		if(hecho)
+		{
+			this.restarCasillas(1);
+		}
+		return(enc);
 	}
+	
+	public boolean estaHundido(int pPos)
+	{
+		boolean hundido = false;
+		boolean encontrado = false;
+		Iterator<Barco> itr = this.getIterador();
+		while (itr.hasNext() && !encontrado)
+		{
+			Barco act = itr.next();
+			if (act.tieneEstaPos(pPos))
+			{
+				encontrado = true;
+				hundido = act.estaHundido();
+			}
+		}
+		return hundido;
+	}
+
+	public boolean estaTocado(Integer pPos) {
+		boolean tocado = false;
+		boolean encontrado = false;
+		Iterator<Barco> itr = this.getIterador();
+		while (itr.hasNext() && !encontrado)
+		{
+			Barco act = itr.next();
+			if (act.tieneEstaPos(pPos))
+			{
+				encontrado = true;
+				tocado = act.estaTocado(pPos);
+			}
+		}
+		return tocado;
+	}
+
 }
