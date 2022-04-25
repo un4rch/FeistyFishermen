@@ -48,8 +48,9 @@ public class BaseTablero extends JFrame implements Observer {
 	 */
 
 
-	public BaseTablero(Observable gestorTablebro) {
+	public BaseTablero(Observable gestorTablebro,Observable gestorJugadores) {
 		gestorTablebro.addObserver(this);
+		gestorJugadores.addObserver(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 596, 426);
 		main = new JPanel();
