@@ -46,8 +46,8 @@ public class Combate {
     }*/
     
     /**
-     * Mira a ver si un barco tiene algún adyacente al querer colocarlo
-     * Se puede mejorar el método ya que se repiten alguno cálculos
+     * Mira a ver si un barco tiene algÃºn adyacente al querer colocarlo
+     * Se puede mejorar el mÃ©todo ya que se repiten alguno cÃ¡lculos
      * @param pPosis Posiciones del barco a querer introducir
      * @param turno Turno del usuario (true) o del rival (false)
      * @return Si tiene adyacentes devuelve true, sino false
@@ -96,67 +96,103 @@ public class Combate {
      * @return devuelve si se ha podido poner barco
      */
     public void colocarBarco(ArrayList<Integer> pPosis, boolean turno) {
-    	boolean sePuedeColocar = this.comprobarAdyacentes(pPosis, turno);
-    	if (sePuedeColocar) {
-    		for (Integer pos : pPosis) {
-    			int x = pos%10;
-        		int y = pos/10;
-        		if (turno) {
-        			this.tableroUsuario[y][x] = Casilla.Barco;
-        		} else {
-        			this.tableroRival[y][x] = Casilla.Barco;
-        		}
-    		}
+    	for (Integer pos : pPosis) {
+    		int x = pos%10;
+        	int y = pos/10;
+        	if (turno) {
+        		this.tableroUsuario[y][x] = Casilla.Barco;
+        	} else {
+        		this.tableroRival[y][x] = Casilla.Barco;
+        	}
     	}
-    	//return sePuedeColocar;
     }
 
     public void defensa(int pPos, Arma pArma, boolean esUsuario) {
     	int x = pPos%10;
 		int y = pPos/10;
 		
-    	if (esUsuario)  
-    	{
-    		if (pArma.equals(Arma.Escudo)) // si se quiere poner escudo en una casilla en la que haya un barco
-    		{
-    			if (this.tableroUsuario[x][y].equals(Casilla.Barco))
-    			{
-    				this.tableroUsuario[x][y] = Casilla.Escudo;
-    			}
-    			else
-    			{
-    				System.out.println("¡No puedes poner escudos en el agua!");
-    			}
-    			
-    		}
-    		else if (pArma.equals(Arma.Reparacion)) 
-    		{
-    			System.out.println("Función no disponible actualmente");  // sprint 3
-    		}
-    	}
-    	else
-    	{
-    		if (pArma.equals(Arma.Escudo)) // si se quiere poner escudo en una casilla en la que haya un barco
-    		{
-    			if (this.tableroRival[x][y].equals(Casilla.Barco))
-    			{
-    				this.tableroRival[x][y] = Casilla.Escudo;
-    			}    		
-    			else
-    			{
-    				// no sé si habría que poner algo aquí
-    			}
-    		}
-    		else if (pArma.equals(Arma.Reparacion)) 
-    		{
-    			// sprint 3
-    		}
-    	}
+		boolean enteroReparado = false;
+		
+		if (esUsuario) {
+			while (!enteroReparado) {
+				if (pArma.equals(Arma.Escudo)) {
+					if (this.tableroUsuario[x][y].equals(Casilla.Barco)) {
+						this.tableroUsuario[x][y] = Casilla.Escudo;
+					} else {
+						System.out.println("No puedes poner escudos en el agua");
+					}
+				} else if (pArma.equals(Arma.Reparacion)) {
+					//TODO
+				}
+				
+				if (tableroUsuario[y-1][x-1] != Casilla.Agua) {
+					x = x-1;
+					y = y-1;
+				} else if (tableroUsuario[y-1][x] != Casilla.Agua) {
+					y = y-1;
+				} else if (tableroUsuario[y-1][x+1] != Casilla.Agua) {
+					x = x+1;
+					y = y-1;
+				} else if (tableroUsuario[y][x-1] != Casilla.Agua) {
+					x = x-1;
+				} else if (tableroUsuario[y][x+1] != Casilla.Agua) {
+					x = x+1;
+				} else if (tableroUsuario[y+1][x-1] != Casilla.Agua) {
+					x = x-1;
+					y = y+1;
+				} else if (tableroUsuario[y+1][x] != Casilla.Agua) {
+					y = y+1;
+				} else if (tableroUsuario[y+1][x+1] != Casilla.Agua) {
+					x = x+1;
+					y = y+1;
+				} else {
+					enteroReparado = true;
+				}
+			}
+		} else {
+			while (!enteroReparado) {
+				if (pArma.equals(Arma.Escudo)) {
+					if (this.tableroRival[x][y].equals(Casilla.Barco)) {
+						this.tableroRival[x][y] = Casilla.Escudo;
+					} else {
+						System.out.println("No puedes poner escudos en el agua");
+					}
+				} else if (pArma.equals(Arma.Reparacion)) {
+					//TODO
+				}
+				
+				if (tableroRival[y-1][x-1] != Casilla.Agua) {
+					x = x-1;
+					y = y-1;
+				} else if (tableroRival[y-1][x] != Casilla.Agua) {
+					y = y-1;
+				} else if (tableroRival[y-1][x+1] != Casilla.Agua) {
+					x = x+1;
+					y = y-1;
+				} else if (tableroRival[y][x-1] != Casilla.Agua) {
+					x = x-1;
+				} else if (tableroRival[y][x+1] != Casilla.Agua) {
+					x = x+1;
+				} else if (tableroRival[y+1][x-1] != Casilla.Agua) {
+					x = x-1;
+					y = y+1;
+				} else if (tableroRival[y+1][x] != Casilla.Agua) {
+					y = y+1;
+				} else if (tableroRival[y+1][x+1] != Casilla.Agua) {
+					x = x+1;
+					y = y+1;
+				} else {
+					enteroReparado = true;
+				}
+			}
+		}
     }
     
     public void atacar(int pPos, Arma pArma, boolean esUsuario) {
     	int x = pPos%10;
 		int y = pPos/10;
+		
+		boolean enteroAtacado = false;
 		
     	if (esUsuario)  
     	{
@@ -190,6 +226,30 @@ public class Combate {
     		{
     			//TODO
     		}
+    		
+    		if (tableroRival[y-1][x-1] != Casilla.Agua) {
+				x = x-1;
+				y = y-1;
+			} else if (tableroRival[y-1][x] != Casilla.Agua) {
+				y = y-1;
+			} else if (tableroRival[y-1][x+1] != Casilla.Agua) {
+				x = x+1;
+				y = y-1;
+			} else if (tableroRival[y][x-1] != Casilla.Agua) {
+				x = x-1;
+			} else if (tableroRival[y][x+1] != Casilla.Agua) {
+				x = x+1;
+			} else if (tableroRival[y+1][x-1] != Casilla.Agua) {
+				x = x-1;
+				y = y+1;
+			} else if (tableroRival[y+1][x] != Casilla.Agua) {
+				y = y+1;
+			} else if (tableroRival[y+1][x+1] != Casilla.Agua) {
+				x = x+1;
+				y = y+1;
+			} else {
+				enteroAtacado = true;
+			}
     	}
     	else
     	{
@@ -223,6 +283,30 @@ public class Combate {
     		{
     			//TODO
     		}
+    		
+    		if (tableroUsuario[y-1][x-1] != Casilla.Agua) {
+				x = x-1;
+				y = y-1;
+			} else if (tableroUsuario[y-1][x] != Casilla.Agua) {
+				y = y-1;
+			} else if (tableroUsuario[y-1][x+1] != Casilla.Agua) {
+				x = x+1;
+				y = y-1;
+			} else if (tableroUsuario[y][x-1] != Casilla.Agua) {
+				x = x-1;
+			} else if (tableroUsuario[y][x+1] != Casilla.Agua) {
+				x = x+1;
+			} else if (tableroUsuario[y+1][x-1] != Casilla.Agua) {
+				x = x-1;
+				y = y+1;
+			} else if (tableroUsuario[y+1][x] != Casilla.Agua) {
+				y = y+1;
+			} else if (tableroUsuario[y+1][x+1] != Casilla.Agua) {
+				x = x+1;
+				y = y+1;
+			} else {
+				enteroAtacado = true;
+			}
     	}
     }
 }
