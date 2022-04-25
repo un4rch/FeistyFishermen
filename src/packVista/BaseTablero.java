@@ -374,7 +374,7 @@ public class BaseTablero extends JFrame implements Observer {
 				}
 				else
 				{
-					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.black);
+					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.black);
 				}
 			}
 		}
