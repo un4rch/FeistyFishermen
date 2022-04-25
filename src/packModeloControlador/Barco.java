@@ -32,10 +32,7 @@ public abstract class Barco
 		while(itr.hasNext() && !salir)
 		{
 			Tupla unaTupla = itr.next();
-			if(! unaTupla.estaTocado())
-			{
-				salir = true;
-			}
+			salir = !unaTupla.estaTocado();
 		}
 		return !salir; 
 	}
@@ -44,8 +41,6 @@ public abstract class Barco
 	{
 		Iterator<Tupla> itr = this.info.iterator();
 		boolean enc = false;
-
-		
 		while(itr.hasNext() && !enc)
 		{
 			Tupla unaTupla = itr.next();
@@ -54,17 +49,21 @@ public abstract class Barco
 		return enc;
 	}
 	
-	public Tupla getPosAleatoria() {
+	public Tupla getPosAleatoria() 
+	{
 		return this.info.get(new Random().nextInt(this.info.size()));
 	}
 	
-	public void tocar(int pPos)
+	public boolean tocar(int pPos)
 	{
 		Tupla unaTupla = buscarPos(pPos);
-		if (unaTupla != null)
+		boolean hecho = false;
+		if (unaTupla != null && !unaTupla.estaTocado())
 		{
 			unaTupla.tocar();
+			hecho = true;
 		}
+		return hecho;
 	}
 			
 	private Tupla buscarPos(int pPos)  // si la posiciones dadas coinciden con las de una Tupla, la devuelve.
@@ -99,18 +98,4 @@ public abstract class Barco
 		}*/
 		return esAdyacente;
 	}
-
-	//	public boolean atacarBarco(int pX, int pY)  // si las posiciones dadas tocan un barco, devuelve True y pone el atributo tocado del Barco a True.
-//	{											// en caso contrario devuelve False y deja el atributo como estaba.
-//		boolean haTocado = false;
-//		Tupla tuplaTocada = buscarPosiciones(pX, pY);
-//		if (tuplaTocada != null)
-//		{
-//			tuplaTocada.complementarTocado();
-//			haTocado = true;
-//		}
-//		return haTocado;
-//	}
-//	
-//
 }
