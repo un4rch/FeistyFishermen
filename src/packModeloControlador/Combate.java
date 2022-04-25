@@ -45,6 +45,9 @@ public class Combate extends Observable{
     		int aux = xInit;
     		xInit = xFin;
     		xFin = aux;
+		aux = yInit;
+		yInit = yFin;
+		yFin = aux;
     	} //Sino Abajo o Derecha (no se cambia nada)
     	for (int i = xInit; i<=xFin; i++) {
 			for (int j = yInit; j<=yFin; j++) {
