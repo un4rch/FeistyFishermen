@@ -49,14 +49,15 @@ public class Combate extends Observable{
     		yInit = yFin;
     		yFin = aux;
     	} //Sino Abajo o Derecha (no se cambia nada)
-    	if (xInit-1>=0 && xFin+1<=9 && yInit-1>=0 && yFin+1<=9) {
     		for (int i = xInit-1; i<=xFin+1; i++) {
     			for (int j = yInit-1; j<=yFin+1; j++) {
-        			if ((turno && !this.tableroUsuario[i][j].equals(Casilla.Agua)) || (!turno && !this.tableroRival[i][j].equals(Casilla.Agua))) {
-    					esAdyacenye = true;
+    				if (i>=0 && j>=0 && i<=9 && j<=9)
+    				{
+    					if ((turno && !this.tableroUsuario[j][i].equals(Casilla.Agua)) || (!turno && !this.tableroRival[j][i].equals(Casilla.Agua))) {
+        					esAdyacenye = true;
         			}
-        		}
-    		}
+    			}
+        	}
     	}
     	return esAdyacenye;
     }
@@ -69,6 +70,7 @@ public class Combate extends Observable{
      */
     public void colocarBarco(ArrayList<Integer> pPosis, boolean turno) {
     	for (Integer pos : pPosis) {
+    		System.out.println(pos);
     		int x = pos%10;
         	int y = pos/10;
         	if (turno) {
@@ -77,6 +79,8 @@ public class Combate extends Observable{
         		this.tableroRival[y][x] = Casilla.Barco;
         	}
     	}
+    	setChanged();
+    	notifyObservers(pPosis);
     }
 
     public void defensa(int pPos, Arma pArma, boolean esUsuario) {
@@ -90,9 +94,9 @@ public class Combate extends Observable{
 			{
 				if (pArma.equals(Arma.Escudo)) 
 				{
-					if (this.tableroUsuario[x][y].equals(Casilla.Barco) || this.tableroUsuario[x][y].equals(Casilla.Tocado)) 
+					if (this.tableroUsuario[y][x].equals(Casilla.Barco) || this.tableroUsuario[x][y].equals(Casilla.Tocado)) 
 					{
-						this.tableroUsuario[x][y] = Casilla.Escudo;
+						this.tableroUsuario[y][x] = Casilla.Escudo;
 						setChanged();
 						notifyObservers("0_"+(y*10+x)+"_E");
 					} 
@@ -104,6 +108,7 @@ public class Combate extends Observable{
 				else if (pArma.equals(Arma.Reparacion)) 
 				{
 					//TODO
+					enteroReparado=true;
 				}
 				
 				if (y>0 && tableroUsuario[y-1][x] != Casilla.Agua) 
