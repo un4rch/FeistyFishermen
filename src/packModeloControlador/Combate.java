@@ -47,7 +47,7 @@ public class Combate extends Observable{
     		xFin = aux;
     	} //Sino Abajo o Derecha (no se cambia nada)
     	for (int i = xInit; i<=xFin; i++) {
-			for (int j = xInit; j<=xFin; j++) {
+			for (int j = yInit; j<=yFin; j++) {
     			if ((turno && !this.tableroUsuario[i][j].equals(Casilla.Agua)) || (!turno && !this.tableroRival[i][j].equals(Casilla.Agua))) {
 					esAdyacenye = true;
     			}
