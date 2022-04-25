@@ -60,7 +60,7 @@ public class Rival extends Jugador
 
     public void actuar(int p1, Arma p2) //No se van a usar los parametros, es para que funcione la herencia
     {
-        /**  **/
+        /**  lo mismo que usuario, pero elige el arma y posición de forma random **/
         Arma unArma = this.armaAleatoria();
         int unaPos = this.posAleatoria();
 
@@ -76,12 +76,15 @@ public class Rival extends Jugador
 
     private Arma armaAleatoria() //TODO genera un arma aleatoria (estaria bien hacer lista a la IA para que si no tiene ningun barco tocado no elija reparar por ejemplo)
     {
-        //TODO
+    	int num = new Random().nextInt(Arma.values().length -1);
+    	return Arma.values()[num];
     }
 
     private int posAleatoria()
     {
-        //TODO
+    	int num = new Random().nextInt(99);   //TODO hacerlo menos random
+    	return num;
     }
 
 }
+
