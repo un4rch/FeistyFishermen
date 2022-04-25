@@ -71,11 +71,11 @@ public class ListaJugadores extends Observable
 			setChanged();
 			if (cont == 0)
 			{
-				notifyObservers(true);
+				notifyObservers(false);
 			}
 			else
 			{
-				notifyObservers(false);
+				notifyObservers(true);
 			}
 		}
 		return hayGanador;
