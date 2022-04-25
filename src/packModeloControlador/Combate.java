@@ -29,47 +29,30 @@ public class Combate extends Observable{
         return Combate.miCombate;
     }
     
-    /**
-     * Mira a ver si un barco tiene algÃºn adyacente al querer colocarlo
-     * Se puede mejorar el mÃ©todo ya que se repiten alguno cÃ¡lculos
+   /**
+     * Mira a ver si un barco tiene algun adyacente al querer colocarlo
      * @param pPosis Posiciones del barco a querer introducir
      * @param turno Turno del usuario (true) o del rival (false)
      * @return Si tiene adyacentes devuelve true, sino false
      */
     public boolean comprobarAdyacentes(ArrayList<Integer> pPosis, boolean turno) {
     	boolean esAdyacenye = false;
-    	for (Integer pos : pPosis) {
-    		int x = pos%10;
-    		int y = pos/10;
-    		if (x >= 0 && x <= 9 && y >= 0 && y <= 9) {
-    			if (turno) {
-        			if ((tableroUsuario[y-1][x-1] != Casilla.Agua) || 
-        				(tableroUsuario[y-1][x] != Casilla.Agua) ||
-        				(tableroUsuario[y-1][x+1] != Casilla.Agua) ||
-        				(tableroUsuario[y][x-1] != Casilla.Agua) || 
-        				(tableroUsuario[y][x] != Casilla.Agua) ||
-        				(tableroUsuario[y][x+1] != Casilla.Agua) ||
-        				(tableroUsuario[y+1][x-1] != Casilla.Agua) || 
-        				(tableroUsuario[y+1][x] != Casilla.Agua) ||
-        				(tableroUsuario[y+1][x+1] != Casilla.Agua)) {
-        					esAdyacenye = true;
-        			}
-        		} else {
-        			if ((tableroRival[y-1][x-1] != Casilla.Agua) || 
-            			(tableroRival[y-1][x] != Casilla.Agua) ||
-            			(tableroRival[y-1][x+1] != Casilla.Agua) ||
-            			(tableroRival[y][x-1] != Casilla.Agua) || 
-            			(tableroRival[y][x] != Casilla.Agua) ||
-            			(tableroRival[y][x+1] != Casilla.Agua) ||
-            			(tableroRival[y+1][x-1] != Casilla.Agua) || 
-            			(tableroRival[y+1][x] != Casilla.Agua) ||
-            			(tableroRival[y+1][x+1] != Casilla.Agua)) {
-            				esAdyacenye = true;
-            			}
-        		}
+    	int xInit = pPosis.get(0)%10;
+    	int yInit = pPosis.get(0)/10;
+    	int xFin = pPosis.get(pPosis.size()-1)%10;
+    	int yFin = pPosis.get(pPosis.size()-1)/10;
+    	if (yInit>=yFin && xInit>=xFin) { //Arriba o Izquierda (se les da la vuelta para que los vertices sean arriba-izq y abajo-der)
+    		int aux = xInit;
+    		xInit = xFin;
+    		xFin = aux;
+    	} //Sino Abajo o Derecha (no se cambia nada)
+    	for (int i = xInit; i<=xFin; i++) {
+			for (int j = xInit; j<=xFin; j++) {
+    			if ((turno && !this.tableroUsuario[i][j].equals(Casilla.Agua)) || (!turno && !this.tableroRival[i][j].equals(Casilla.Agua))) {
+					esAdyacenye = true;
+    			}
     		}
-    		
-    	}
+		}
     	return esAdyacenye;
     }
     
