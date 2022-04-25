@@ -43,7 +43,7 @@ public class Rival extends Jugador
 
             ArrayList<Integer> unBarco = super.sePuedePonerBarco(pos, dir, pTipo);	//Si devuelve null significa que no se puede poner el barco (porque no es posible ponerlo en esas posiciones)
 
-            if(unBarco != null && Combate.getMiCombate().comprobarAdyacentes(unBarco, false))
+            if(unBarco != null && !Combate.getMiCombate().comprobarAdyacentes(unBarco, false))
             {
                 Combate.getMiCombate().colocarBarco(unBarco, false); //false porque es el turno del rival
                 this.getFlota().anadirBarco(unBarco);
@@ -60,7 +60,7 @@ public class Rival extends Jugador
 
     public void actuar(int p1, Arma p2) //No se van a usar los parametros, es para que funcione la herencia
     {
-        /**  lo mismo que usuario, pero elige el arma y posición de forma random **/
+        /**  lo mismo que usuario, pero elige el arma y posiciÃ³n de forma random **/
         Arma unArma = this.armaAleatoria();
         int unaPos = this.posAleatoria();
 
@@ -87,4 +87,3 @@ public class Rival extends Jugador
     }
 
 }
-
