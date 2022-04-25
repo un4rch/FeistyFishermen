@@ -14,6 +14,8 @@ public class ListaJugadores extends Observable
 		listaJ = new ArrayList<Jugador>();
 		listaJ.add(new Usuario());
 		listaJ.add(new Rival());
+
+		this.listaJ.get(1).anadirBarco(1, Direccion.Abajo, 1);
 	}
 	
 	public static ListaJugadores getMiListaJ()
