@@ -14,9 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import packModeloControlador.Combate;
 import packModeloControlador.Dificultad;
+import packModeloControlador.ListaJugadores;
 import packModeloControlador.ModeloTablero;
-//import packVista.BaseTablero.Controlador;
 
 public class MainMenu extends JFrame
 {
@@ -113,7 +114,7 @@ public class MainMenu extends JFrame
 						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Demente);
 					}
 					mainMenu.setVisible(false);
-					BaseTablero frame = new BaseTablero(ModeloTablero.getMiModeloTablero());
+					BaseTablero frame = new BaseTablero(ListaJugadores.getMiListaJ(),Combate.getMiCombate());
 					frame.setVisible(true);
 					//Cerrar mainMenu
 			  }
