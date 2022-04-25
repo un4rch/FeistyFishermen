@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 
 import packModeloControlador.Combate;
 import packModeloControlador.Dificultad;
+import packModeloControlador.Direccion;
 import packModeloControlador.ListaJugadores;
 import packModeloControlador.ModeloTablero;
 
