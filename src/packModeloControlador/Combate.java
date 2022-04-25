@@ -117,9 +117,9 @@ public class Combate extends Observable{
 				} else {
 					if (pArma.equals(Arma.Escudo)) 
 					{
-						if (!this.tableroRival[x][y].equals(Casilla.Hundido))
+						if (!this.tableroRival[y][x].equals(Casilla.Hundido))
 						{
-							this.tableroRival[x][y] = Casilla.Escudo;
+							this.tableroRival[y][x] = Casilla.Escudo;
 						}
 						else 
 						{
@@ -196,7 +196,7 @@ public class Combate extends Observable{
 	    					notifyObservers("1_"+(y*10+x)+"_H");
 						}
         			}
-        			else if ( (this.tableroRival[y][x].equals(Casilla.Escudo)) || (this.tableroRival[x][y].equals(Casilla.EscudoDanado)) )
+        			else if ( (this.tableroRival[y][x].equals(Casilla.Escudo)) || (this.tableroRival[y][x].equals(Casilla.EscudoDanado)) )
         			{
         				for (Integer pos : barco) {
         					x = pPos%10;
@@ -273,7 +273,7 @@ public class Combate extends Observable{
 	    					notifyObservers("0_"+(y*10+x)+"_H");
 						}
         			}
-        			else if ( (this.tableroUsuario[y][x].equals(Casilla.Escudo)) || (this.tableroUsuario[x][y].equals(Casilla.EscudoDanado)) )
+        			else if ( (this.tableroUsuario[y][x].equals(Casilla.Escudo)) || (this.tableroUsuario[y][x].equals(Casilla.EscudoDanado)) )
         			{
         				for (Integer pos : barco) {
         					x = pPos%10;
