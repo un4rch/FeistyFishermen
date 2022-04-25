@@ -20,8 +20,15 @@ public abstract class Barco
 		}
 	}
 	
-	public int getTamano() {
-		return (this.info.size());
+	public ArrayList<Integer> getPosis() {
+		ArrayList<Integer> posis = new ArrayList<Integer>();
+		Iterator<Tupla> itr = this.info.iterator();
+		while (itr.hasNext())
+		{
+			Tupla act = itr.next();
+			posis.add(act.getPos());
+		}
+		return posis;
 	}
 	
 	public boolean estaHundido() 
