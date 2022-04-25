@@ -33,6 +33,11 @@ public abstract class Jugador
     {
     	return this.flota.estaHundido(pPos);
     }
+    
+    public ArrayList<Integer> perteneceA(int pPos)
+    {
+    	return (this.getFlota().perteneceA(pPos));
+    }
 
     public ArrayList<Integer> sePuedePonerBarco(int pPos, Direccion pDir, int pTipoBarco)
     {
