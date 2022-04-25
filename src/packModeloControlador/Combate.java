@@ -82,218 +82,220 @@ public class Combate extends Observable{
     	setChanged();
     	notifyObservers(pPosis);
     }
-
+    
     public void defensa(int pPos, Arma pArma, boolean esUsuario) {
-    	int x = pPos%10;
-		int y = pPos/10;
-		
-		boolean enteroReparado = false;
+    	ArrayList<Integer> barco;
 		
 		if (esUsuario) {
-			while (!enteroReparado)
-			{
-				if (pArma.equals(Arma.Escudo)) 
-				{
-					if (this.tableroUsuario[y][x].equals(Casilla.Barco) || this.tableroUsuario[x][y].equals(Casilla.Tocado)) 
+			barco = ListaJugadores.getMiListaJ().getUnJugador(0).perteneceA(pPos);
+		} else {
+			barco = ListaJugadores.getMiListaJ().getUnJugador(1).perteneceA(pPos);
+		}
+		
+		if (!barco.isEmpty()) {
+			for (Integer pos : barco) {
+				int x = pos%10;
+				int y = pos/10;
+				if (esUsuario) {
+					if (pArma.equals(Arma.Escudo)) 
 					{
-						this.tableroUsuario[y][x] = Casilla.Escudo;
-						setChanged();
-						notifyObservers("0_"+(y*10+x)+"_E");
+						if (!this.tableroUsuario[y][x].equals(Casilla.Hundido)) 
+						{
+							this.tableroUsuario[y][x] = Casilla.Escudo;
+							setChanged();
+							notifyObservers("0_"+(y*10+x)+"_E");
+						} 
+						else 
+						{
+							System.out.println("No puedes proteger un barco hundido");
+						}
 					} 
-					else 
+					else if (pArma.equals(Arma.Reparacion)) 
 					{
-						System.out.println("No puedes poner escudos en el agua");
+						//TODO
 					}
-				} 
-				else if (pArma.equals(Arma.Reparacion)) 
-				{
-					//TODO
-					enteroReparado=true;
-				}
-				
-				if (y>0 && tableroUsuario[y-1][x] != Casilla.Agua) 
-				{
-					y = y-1;
-				}
-				else if (x>0 && tableroUsuario[y][x-1] != Casilla.Agua) 
-				{
-					x = x-1;
-				} 
-				else if (x<9 && tableroUsuario[y][x+1] != Casilla.Agua)
-				{
-					x = x+1;
-				}
-				else if (y<9 && tableroUsuario[y+1][x] != Casilla.Agua) 
-				{
-					y = y+1;
-				}
-				else 
-				{
-					enteroReparado = true;
+				} else {
+					if (pArma.equals(Arma.Escudo)) 
+					{
+						if (!this.tableroRival[x][y].equals(Casilla.Hundido))
+						{
+							this.tableroRival[x][y] = Casilla.Escudo;
+						}
+						else 
+						{
+							System.out.println("No puedes proteger un barco hundido");
+						}
+					} 
+					else if (pArma.equals(Arma.Reparacion)) 
+					{
+						//TODO
+					}
 				}
 			}
-		} 
-		else 
-		{
-			while (!enteroReparado) 
-			{
-				if (pArma.equals(Arma.Escudo)) 
-				{
-					if (this.tableroRival[x][y].equals(Casilla.Barco) || this.tableroRival[x][y].equals(Casilla.Tocado))
-					{
-						this.tableroRival[x][y] = Casilla.Escudo;
-					} 
-					else 
-					{
-						System.out.println("No puedes poner escudos en el agua");
-					}
-				} 
-				else if (pArma.equals(Arma.Reparacion)) 
-				{
-					//TODO
-				}
-				
-				if (y>0 && tableroRival[y-1][x] != Casilla.Agua) 
-				{
-					y = y-1;
-				} 
-				else if ( x>0 && tableroRival[y][x-1] != Casilla.Agua) 
-				{
-					x = x-1;
-				} 
-				else if ( x<9 && tableroRival[y][x+1] != Casilla.Agua) 
-				{
-					x = x+1;
-				} 
-				else if ( y<9 && tableroRival[y+1][x] != Casilla.Agua) 
-				{
-					y = y+1;
-				} 
-				else 
-				{
-					enteroReparado = true;
-				}
-			}
+		} else {
+			System.out.println("No puedes poner escudos en el agua");
 		}
     }
-    
+
     public void atacar(int pPos, Arma pArma, boolean esUsuario) {
     	int x = pPos%10;
 		int y = pPos/10;
+    	ArrayList<Integer> barco;
 		
-		boolean enteroAtacado = false;
-		
-    	if (esUsuario)  
-    	{
-    		while (!enteroAtacado) {
-    			if (pArma.equals(Arma.Bomba))
-        		{
-        			if (this.tableroRival[x][y].equals(Casilla.Barco))
+		if (esUsuario) {
+			barco = ListaJugadores.getMiListaJ().getUnJugador(1).perteneceA(pPos);
+			if (!barco.isEmpty()) {
+				if (pArma.equals(Arma.Bomba)) {
+					if (this.tableroRival[y][x].equals(Casilla.Barco))
         			{
-        				this.tableroRival[x][y] = Casilla.Tocado;
+        				this.tableroRival[y][x] = Casilla.Tocado;
+        				ListaJugadores.getMiListaJ().getUnJugador(1).tocar(pPos);
+        				setChanged();
+        				notifyObservers("1_"+(y*10+x)+"_T");
+        				if (ListaJugadores.getMiListaJ().getUnJugador(1).estaHundido(pPos)) {
+        					for (Integer pos : barco) {
+            					x = pPos%10;
+            					y = pPos/10;
+            					this.tableroRival[y][x] = Casilla.Hundido;
+            					setChanged();
+            					notifyObservers("1_"+(y*10+x)+"_H");
+            				}
+        				}
+        			} else if (this.tableroRival[y][x].equals(Casilla.EscudoDanado)) {
+        				for (Integer pos : barco) {
+        					x = pPos%10;
+        					y = pPos/10;
+        					if (ListaJugadores.getMiListaJ().getUnJugador(1).estaTocado(pos)) {
+        						this.tableroRival[y][x] = Casilla.Tocado;
+        						setChanged();
+            					notifyObservers("1_"+(y*10+x)+"_T");
+        					} else {
+        						this.tableroRival[y][x] = Casilla.Barco;
+        						setChanged();
+            					notifyObservers("1_"+(y*10+x)+"_B");
+        					}
+        				}
+        			} else if (this.tableroRival[y][x].equals(Casilla.Escudo)) {
+        				for (Integer pos : barco) {
+        					x = pPos%10;
+        					y = pPos/10;
+        					this.tableroRival[y][x] = Casilla.EscudoDanado;
+        					setChanged();
+        					notifyObservers("1_"+(y*10+x)+"_ED");
+        				}
         			}
-        			else if (this.tableroRival[x][y].equals(Casilla.EscudoDanado))
+				} else if (pArma.equals(Arma.Misil)) {
+					if (this.tableroRival[y][x].equals(Casilla.Barco))
         			{
-        				this.tableroRival[x][y] = Casilla.Barco;
+						for (Integer pos : barco) {
+							x = pos%10;
+        					y = pos/10;
+							this.tableroRival[y][x] = Casilla.Hundido;
+							ListaJugadores.getMiListaJ().getUnJugador(1).tocar(pos);
+	        				setChanged();
+	    					notifyObservers("1_"+(y*10+x)+"_H");
+						}
         			}
-        			else if (this.tableroRival[x][y].equals(Casilla.Escudo))
+        			else if ( (this.tableroRival[y][x].equals(Casilla.Escudo)) || (this.tableroRival[x][y].equals(Casilla.EscudoDanado)) )
         			{
-        				this.tableroRival[x][y] = Casilla.EscudoDanado; 
+        				for (Integer pos : barco) {
+        					x = pPos%10;
+        					y = pPos/10;
+        					if (ListaJugadores.getMiListaJ().getUnJugador(1).estaTocado(pos)) {
+        						this.tableroRival[y][x] = Casilla.Tocado;
+        						setChanged();
+            					notifyObservers("1_"+(y*10+x)+"_T");
+        					} else {
+        						this.tableroRival[y][x] = Casilla.Barco;
+        						setChanged();
+            					notifyObservers("1_"+(y*10+x)+"_B");
+        					}
+        				}
         			}
-        		}
-        		else if (pArma.equals(Arma.Misil))
-        		{
-        			if (this.tableroRival[x][y].equals(Casilla.Barco))
+				} else if (pArma.equals(Arma.Radar)) {
+					//TODO
+				}
+			} else {
+				setChanged();
+				notifyObservers("1_"+(y*10+x)+"_A");
+			}
+		} else {
+			barco = ListaJugadores.getMiListaJ().getUnJugador(0).perteneceA(pPos);
+			if (!barco.isEmpty()) {
+				if (pArma.equals(Arma.Bomba)) {
+					if (this.tableroUsuario[y][x].equals(Casilla.Barco))
         			{
-        				this.tableroRival[x][y] = Casilla.Hundido;
+        				this.tableroUsuario[y][x] = Casilla.Tocado;
+        				ListaJugadores.getMiListaJ().getUnJugador(0).tocar(pPos);
+        				setChanged();
+        				notifyObservers("0_"+(y*10+x)+"_T");
+        				if (ListaJugadores.getMiListaJ().getUnJugador(0).estaHundido(pPos)) {
+        					for (Integer pos : barco) {
+            					x = pos%10;
+            					y = pos/10;
+            					this.tableroUsuario[y][x] = Casilla.Hundido;
+            					setChanged();
+            					notifyObservers("0_"+(y*10+x)+"_H");
+            				}
+        				}
+        			} else if (this.tableroUsuario[y][x].equals(Casilla.EscudoDanado)) {
+        				for (Integer pos : barco) {
+        					x = pos%10;
+        					y = pos/10;
+        					if (ListaJugadores.getMiListaJ().getUnJugador(0).estaTocado(pos)) {
+        						this.tableroUsuario[y][x] = Casilla.Tocado;
+        						setChanged();
+            					notifyObservers("0_"+(y*10+x)+"_T");
+        					} else {
+        						this.tableroUsuario[y][x] = Casilla.Barco;
+        						setChanged();
+            					notifyObservers("0_"+(y*10+x)+"_B");
+        					}
+        				}
+        			} else if (this.tableroUsuario[y][x].equals(Casilla.Escudo)) {
+        				for (Integer pos : barco) {
+        					x = pos%10;
+        					y = pos/10;
+        					this.tableroUsuario[y][x] = Casilla.EscudoDanado;
+        					setChanged();
+        					notifyObservers("0_"+(y*10+x)+"_ED");
+        				}
         			}
-        			else if ( (this.tableroRival[x][y].equals(Casilla.Escudo)) || (this.tableroRival[x][y].equals(Casilla.EscudoDanado)) )
+				} else if (pArma.equals(Arma.Misil)) {
+					if (this.tableroUsuario[y][x].equals(Casilla.Barco))
         			{
-        				this.tableroRival[x][y] = Casilla.Barco;
+						for (Integer pos : barco) {
+							x = pos%10;
+        					y = pos/10;
+							this.tableroUsuario[y][x] = Casilla.Hundido;
+							ListaJugadores.getMiListaJ().getUnJugador(0).tocar(pos);
+	        				setChanged();
+	    					notifyObservers("0_"+(y*10+x)+"_H");
+						}
         			}
-        		}
-        		else if (pArma.equals(Arma.Radar))
-        		{
-        			//TODO
-        		}
-        		
-        		if (y>0 && tableroRival[y-1][x] != Casilla.Agua) 
-    			{
-    				y = y-1;
-    			} 
-    			else if ( x>0 && tableroRival[y][x-1] != Casilla.Agua) 
-    			{
-    				x = x-1;
-    			} 
-    			else if ( x<9 && tableroRival[y][x+1] != Casilla.Agua) 
-    			{
-    				x = x+1;
-    			} 
-    			else if ( y<9 && tableroRival[y+1][x] != Casilla.Agua) 
-    			{
-    				y = y+1;
-    			} 
-    			else 
-    			{
-    				enteroAtacado = true;
-    			}
-    		}
-    	}
-    	else
-    	{
-    		while (!enteroAtacado) {
-    			if (pArma.equals(Arma.Bomba))
-        		{
-        			if (this.tableroUsuario[x][y].equals(Casilla.Barco))
+        			else if ( (this.tableroUsuario[y][x].equals(Casilla.Escudo)) || (this.tableroUsuario[x][y].equals(Casilla.EscudoDanado)) )
         			{
-        				this.tableroUsuario[x][y] = Casilla.Tocado;
+        				for (Integer pos : barco) {
+        					x = pPos%10;
+        					y = pPos/10;
+        					if (ListaJugadores.getMiListaJ().getUnJugador(0).estaTocado(pos)) {
+        						this.tableroUsuario[y][x] = Casilla.Tocado;
+        						setChanged();
+            					notifyObservers("0_"+(y*10+x)+"_T");
+        					} else {
+        						this.tableroUsuario[y][x] = Casilla.Barco;
+        						setChanged();
+            					notifyObservers("0_"+(y*10+x)+"_B");
+        					}
+        				}
         			}
-        			else if (this.tableroUsuario[x][y].equals(Casilla.EscudoDanado))
-        			{
-        				this.tableroUsuario[x][y] = Casilla.Barco;
-        			}
-        			else if (this.tableroUsuario[x][y].equals(Casilla.Escudo))
-        			{
-        				this.tableroUsuario[x][y] = Casilla.EscudoDanado; 
-        			}
-        		}
-        		else if (pArma.equals(Arma.Misil))
-        		{
-        			if (this.tableroUsuario[x][y].equals(Casilla.Barco))
-        			{
-        				this.tableroUsuario[x][y] = Casilla.Hundido;
-        			}
-        			else if ( (this.tableroUsuario[x][y].equals(Casilla.Escudo)) || (this.tableroUsuario[x][y].equals(Casilla.EscudoDanado)) )
-        			{
-        				this.tableroUsuario[x][y] = Casilla.Barco;
-        			}
-        		}
-        		else if (pArma.equals(Arma.Radar))
-        		{
-        			//TODO
-        		}
-        		
-        		if (y>0 && tableroUsuario[y-1][x] != Casilla.Agua) 
-    			{
-    				y = y-1;
-    			}
-    			else if (x>0 && tableroUsuario[y][x-1] != Casilla.Agua) 
-    			{
-    				x = x-1;
-    			} 
-    			else if (x<9 && tableroUsuario[y][x+1] != Casilla.Agua)
-    			{
-    				x = x+1;
-    			}
-    			else if (y<9 && tableroUsuario[y+1][x] != Casilla.Agua) 
-    			{
-    				y = y+1;
-    			}
-    			else 
-    			{
-    				enteroAtacado = true;
-    			}
-    		}
-    	}
+				} else if (pArma.equals(Arma.Radar)) {
+					//TODO
+				}
+			} else {
+				setChanged();
+				notifyObservers("0_"+(y*10+x)+"_A");
+			}
+		}
     }
 }
