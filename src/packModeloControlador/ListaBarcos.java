@@ -57,23 +57,11 @@ public class ListaBarcos {
 	public void anadirBarco(ArrayList<Integer> pPosiciones)
 	{
 		int tamano = pPosiciones.size();
-		if(tamano == 1)
-		{
-			this.listaBarcos.add(new Fragata(pPosiciones));
-		}
-		else if(tamano == 2)
-		{
-			this.listaBarcos.add(new Destructor(pPosiciones));
-		}
-		else if(tamano == 3)
-		{
-			this.listaBarcos.add(new Submarino(pPosiciones));
-		}
-		else if(tamano == 4)
-		{
-			this.listaBarcos.add(new Portaaviones(pPosiciones));
-		}
-		cantCasillas = cantCasillas + tamano;		
+
+		Barco unBarco = BarcoFactory.getMiBarcoFactory().crearBarco(pPosiciones);
+		this.listaBarcos.add(unBarco);
+
+		this.cantCasillas = this.cantCasillas + tamano;
 	}
 
 	public boolean comprobarCantidad(int tipoBarco) //Comprueba que no haya mas barcos de los posibles de cada tipo
