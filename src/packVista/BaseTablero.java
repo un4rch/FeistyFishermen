@@ -42,6 +42,15 @@ public class BaseTablero extends JFrame implements Observer {
 	private ArrayList<JLabel> listaRival;
 	private ArrayList<JLabel> listaUsuario;
 	private Controlador controlador = null;
+	private int fragDisp;
+	private int destDisp;
+	private int subDisp;
+	private int portDisp;
+	private JPanel barcos;
+	private JLabel labelPortDisp;
+	private JLabel labelSubDisp;
+	private JLabel labelDestDisp;
+	private JLabel labelFragDisp;
 
 	/**
 	 * Launch the application.
@@ -49,6 +58,10 @@ public class BaseTablero extends JFrame implements Observer {
 
 
 	public BaseTablero(Observable gestorTablebro,Observable gestorJugadores) {
+		this.fragDisp = 4;
+		this.destDisp = 3;
+		this.subDisp = 2;
+		this.portDisp = 1;
 		gestorTablebro.addObserver(this);
 		gestorJugadores.addObserver(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,32 +71,46 @@ public class BaseTablero extends JFrame implements Observer {
 		setContentPane(main);
 		main.setLayout(new BorderLayout(0, 0));
 		
-		JPanel barcos = new JPanel();
-		main.add(barcos, BorderLayout.EAST);
-		barcos.setLayout(new GridLayout(0, 1, 0, 0));
+		this.barcos = new JPanel();
+		main.add(this.barcos, BorderLayout.EAST);
+		this.barcos.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JRadioButton portaaviones = new JRadioButton("Portaaviones");
 		portaaviones.addActionListener(getControlador());
 		tipoBarco.add(portaaviones);
-		barcos.add(portaaviones);
+		this.barcos.add(portaaviones);
+
+		this.labelPortDisp = new JLabel("Disponibles: "+  this.portDisp +"/1");
+		this.barcos.add(this.labelPortDisp);
 		
 		JRadioButton submarino = new JRadioButton("Submarino");
 		submarino.addActionListener(getControlador());
 		tipoBarco.add(submarino);
-		barcos.add(submarino);
+		this.barcos.add(submarino);
 		
+		this.labelSubDisp = new JLabel("Disponibles: "+  this.subDisp +"/2");
+		this.barcos.add(this.labelSubDisp);
+
 		JRadioButton destructor = new JRadioButton("Destructor");
 		destructor.addActionListener(getControlador());
+		
 		tipoBarco.add(destructor);
-		barcos.add(destructor);
+		this.barcos.add(destructor);
+
+		this.labelDestDisp = new JLabel("Disponibles: " + this.destDisp + "/3");
+		this.barcos.add(this.labelDestDisp);
 		
 		JRadioButton fragata = new JRadioButton("Fragata");
 		fragata.addActionListener(getControlador());
+		
 		tipoBarco.add(fragata);
-		barcos.add(fragata);
+		this.barcos.add(fragata);
+		
+		this.labelFragDisp = new JLabel("Disponibles: " + this.fragDisp + "/4");
+		this.barcos.add(this.labelFragDisp);
 		
 		JPanel direcciones = new JPanel();
-		barcos.add(direcciones);
+		this.barcos.add(direcciones);
 		direcciones.setLayout(new GridLayout(3, 3, 0, 0));
 		this.listaDirecciones = new ArrayList<JLabel>();
 		
@@ -131,7 +158,7 @@ public class BaseTablero extends JFrame implements Observer {
 		inventario.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JButton tienda = new JButton("Tienda");
-		//Anadir event listener
+		tienda.addActionListener(controlador);
 		inventario.add(tienda);
 		
 		JLabel espacio = new JLabel("");
@@ -280,7 +307,9 @@ public class BaseTablero extends JFrame implements Observer {
 				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Misil);
 			} else if (e.getActionCommand().equals("Radar")) {
 				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Radar);
-			} 
+			} else if (e.getActionCommand().equals("Tienda")) {
+				//TODO
+			}
 			
 		}
 		
@@ -296,6 +325,48 @@ public class BaseTablero extends JFrame implements Observer {
 			for (Integer pos : (ArrayList<Integer>)arg) 
 			{ //Update barcos en la vista
 				listaUsuario.get(pos).setBackground(Color.WHITE);
+			}
+
+			int tamano = ((ArrayList) arg).size();
+			if (tamano==1)
+			{
+				this.fragDisp = this.fragDisp-1;
+				this.labelFragDisp.setText("Disponibles: " + this.fragDisp + "/4");
+				if (this.fragDisp == 0)
+				{
+					this.labelFragDisp.setForeground(Color.RED);
+				}
+			} else if (tamano==2)
+			{
+				this.destDisp = this.destDisp-1;
+				this.labelDestDisp.setText("Disponibles: " + this.destDisp + "/3");
+				if (this.destDisp == 0)
+				{
+					this.labelDestDisp.setForeground(Color.RED);
+				}
+			} else if (tamano==3)
+			{
+				this.subDisp = this.subDisp-1;
+				this.labelSubDisp.setText("Disponibles: " + this.subDisp + "/2");
+				if (this.subDisp == 0)
+				{
+					this.labelSubDisp.setForeground(Color.RED);
+				}
+			} else if (tamano==4)
+			{
+				this.portDisp = this.portDisp-1;
+				this.labelPortDisp.setText("Disponibles: " + this.portDisp + "/1");
+				if (this.portDisp == 0)
+				{
+					this.labelPortDisp.setForeground(Color.RED);
+				}
+			}
+			if (this.fragDisp == 0 && this.subDisp == 0 && this.destDisp == 0 && this.portDisp == 0) //partida lista se ocultan los labels
+			{				
+				this.barcos.remove(this.labelDestDisp);
+				this.barcos.remove(this.labelFragDisp);
+				this.barcos.remove(this.labelPortDisp);
+				this.barcos.remove(this.labelSubDisp);
 			}
 		} 
 		else if (arg instanceof Boolean) 
@@ -377,7 +448,7 @@ public class BaseTablero extends JFrame implements Observer {
 					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.black);
 				}
 			}
-		}
+		} 
 	}
 
 }
