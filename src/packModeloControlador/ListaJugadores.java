@@ -38,22 +38,17 @@ public class ListaJugadores extends Observable
 	 * @param pArma el arma que habia seleccionada
 	 * @return devuelve un booleano indicando si se ha terminado la partida
 	 */
-	public boolean jugarRonda(int pPos, Arma pArma)	//TODO JAVA 8 (aunque sean solo 2 jugadores, hay que pensar en grande como dijo Ander)
+	public boolean jugarRonda(int pPos, Arma pArma)
 	{
-		Iterator<Jugador> itr = this.listaJ.iterator();
-		while (itr.hasNext())
-		{
-			Jugador jAct = itr.next();
-			jAct.actuar(pPos, pArma); //pPos y pArma no se van a utilizar en el Rival
-		}
-		return this.partidaTerminada();
+		listaJ.stream().forEach(p->p.actuar(pPos,pArma));
+		return this.partidaTerminada();	
 	}
 	
 	/**
 	 * comprueba si el numero de casillas restantes de algun jugador es igual a 0
 	 * @return si algun jugador tiene 0 casillas restantes, se da por terminada la partida y se declara ganador
 	 */
-	private boolean partidaTerminada()	//TODO JAVA 8
+	private boolean partidaTerminada()
 	{
 		boolean hayGanador = false;
 		Iterator<Jugador> itr = this.listaJ.iterator();
