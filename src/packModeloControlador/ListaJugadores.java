@@ -80,18 +80,12 @@ public class ListaJugadores extends Observable
 
 	public void repartirDinero(int pRonda)
 	{
-		Iterator<Jugador> itr = this.listaJ.iterator();
-		while (itr.hasNext())
-		{
-			Jugador unJugador = itr.next();
-			unJugador.anadirDinero(pRonda);
-		}
+		this.listaJ.stream().forEach(j -> j.anadirDinero(pRonda));
 	}
 	
 	public boolean comprobarYRestarDineroUsuario(int pPrecio)
 	{
 		Usuario unUsuario = (Usuario) this.getUnJugador(0);
 		return unUsuario.comprobarYRestarDineroUsuario(pPrecio);
-	}
-	
+	}	
 }
