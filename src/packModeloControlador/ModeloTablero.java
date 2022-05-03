@@ -66,7 +66,7 @@ public class ModeloTablero {
     	{
     		if(!this.partidaLista)
 			{
-    			System.out.println("Â¡Tienes que terminar de poner tus barcos!");
+    			System.out.println("Tienes que terminar de poner tus barcos!");
 			}
 			else //Se ha pulsado la casilla para atacar
 			{
@@ -76,13 +76,13 @@ public class ModeloTablero {
 				}
 				else
 				{
-					System.out.println("Â¡No puedes poner una defensa al rival!");
+					System.out.println("No puedes poner una defensa al rival!");
 				}
 			}
     	}
     	else
     	{
-    		System.out.println("La partida ha terminado, si desea volver a jugar reinicie la aplicaciÃ³n.");
+    		System.out.println("La partida ha terminado, si desea volver a jugar reinicie la aplicaciÃƒÂ³n.");
     	}
     }
     
@@ -99,7 +99,7 @@ public class ModeloTablero {
 			}
 			else
 			{
-				System.out.println("Â¡No puedes atacarte a ti mismo!");
+				System.out.println("Ã‚Â¡No puedes atacarte a ti mismo!");
 			}
 		}
     }
