@@ -12,48 +12,23 @@ public abstract class Barco
 	public Barco(ArrayList<Integer> posiciones)
 	{
 		this.info = new ArrayList<Tupla>();
-		Iterator<Integer> itr = posiciones.iterator();
-		while(itr.hasNext())
-		{
-			Integer act = itr.next();
-			info.add(new Tupla(act,false));
-		}
+		posiciones.stream().forEach(p-> info.add(new Tupla(p,false)));
 	}
 	
 	public ArrayList<Integer> getPosis() {
 		ArrayList<Integer> posis = new ArrayList<Integer>();
-		Iterator<Tupla> itr = this.info.iterator();
-		while (itr.hasNext())
-		{
-			Tupla act = itr.next();
-			posis.add(act.getPos());
-		}
+		this.info.stream().forEach(p -> posis.add(p.getPos()));
 		return posis;
 	}
 	
 	public boolean estaHundido() 
 	{
-		Iterator<Tupla> itr = this.info.iterator();
-		boolean salir = false;
-		
-		while(itr.hasNext() && !salir)
-		{
-			Tupla unaTupla = itr.next();
-			salir = !unaTupla.estaTocado();
-		}
-		return !salir; 
+		return info.stream().allMatch(Tupla::estaTocado);
 	}
 	
 	public boolean tieneEstaPos(int pPos)
 	{
-		Iterator<Tupla> itr = this.info.iterator();
-		boolean enc = false;
-		while(itr.hasNext() && !enc)
-		{
-			Tupla unaTupla = itr.next();
-			enc = unaTupla.tieneEstaPos(pPos);
-		}
-		return enc;
+		return info.stream().anyMatch(t -> t.tieneEstaPos(pPos));
 	}
 	
 	public Tupla getPosAleatoria() 
@@ -75,7 +50,7 @@ public abstract class Barco
 			
 	private Tupla buscarPos(int pPos)  // si la posiciones dadas coinciden con las de una Tupla, la devuelve.
 	{											   // en caso contrario devuelve null.
-		Iterator<Tupla> itr = this.info.iterator();     // pasar a java8 ****
+		Iterator<Tupla> itr = this.info.iterator();
 		boolean enc = false;
 		Tupla unaTupla = null;
 		
@@ -94,25 +69,7 @@ public abstract class Barco
 		
 	}
 	
-	/**
-	 * 
-	 * @return Devuelve las posiciones adyacentes al barco
-	 */
-	public boolean estaEnPosAdyacente(ArrayList<Integer> posisBarco) {
-		boolean esAdyacente = false;
-		/*if (this.posiciones) {
-			
-		}*/
-		return esAdyacente;
-	}
-	
 	public boolean estaTocado(Integer pPos) {
-		boolean tocado = false;
-		Iterator<Tupla> itr = this.info.iterator();
-		while (itr.hasNext() && !tocado) {
-			Tupla tupla = itr.next();
-			tocado = tupla.estaTocado();
-		}
-		return tocado;
+		return this.info.stream().anyMatch(Tupla::estaTocado);
 	}
 }
