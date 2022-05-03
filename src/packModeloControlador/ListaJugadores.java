@@ -77,4 +77,21 @@ public class ListaJugadores extends Observable
 		}
 		return hayGanador;
 	}
+
+	public void repartirDinero(int pRonda)
+	{
+		Iterator<Jugador> itr = this.listaJ.iterator();
+		while (itr.hasNext())
+		{
+			Jugador unJugador = itr.next();
+			unJugador.anadirDinero(pRonda);
+		}
+	}
+	
+	public boolean comprobarYRestarDineroUsuario(int pPrecio)
+	{
+		Usuario unUsuario = (Usuario) this.getUnJugador(0);
+		return unUsuario.comprobarYRestarDineroUsuario(pPrecio);
+	}
+	
 }
