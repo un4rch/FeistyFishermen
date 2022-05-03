@@ -69,7 +69,7 @@ public class ListaBarcos {
 		boolean valido=true;
 		int cont=4-(tipoBarco-1);
 		Iterator<Barco> itr=this.listaBarcos.iterator();
-		while (itr.hasNext() && valido) //TODO JAVA 8 y todos los else if se pueden meter como un OR en la misma expr
+		while (itr.hasNext() && valido)
 		{
 			Barco unBarco = itr.next();
 			if(tipoBarco==1 && Fragata.class.isInstance(unBarco))
@@ -95,11 +95,6 @@ public class ListaBarcos {
 		}
 		return valido;
 	}
-	
-	/*public Barco getBarcoAleatorio() 
-	{
-		return this.listaBarcos.get(new Random().nextInt(this.listaBarcos.size()-1));
-	}*/
 
 	public boolean tocarBarco(int pPos) //Toca el barco de la pPos y devuelve un boolean que indica si en esa pos habia un Barco
 	{
@@ -111,10 +106,7 @@ public class ListaBarcos {
         while(itr.hasNext() && !enc)
         {
             unBarco = itr.next();
-            if(unBarco.tieneEstaPos(pPos))
-            {
-                enc = true;
-            }
+            enc = unBarco.tieneEstaPos(pPos);
         }
 		//si hay barco en la pos lo toca
 		if(enc)
