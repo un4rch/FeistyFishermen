@@ -63,15 +63,7 @@ public class Rival extends Jugador
         /**  lo mismo que usuario, pero elige el arma y posiciÃ³n de forma random **/
         Arma unArma = this.armaAleatoria();
         int unaPos = this.posAleatoria();
-
-        if (unArma.equals(Arma.Bomba) || unArma.equals(Arma.Misil) || unArma.equals(Arma.Radar))   //ATAQUE
-        {
-            Combate.getMiCombate().atacar(unaPos, unArma, false);
-        }
-        else if (unArma.equals(Arma.Escudo) || unArma.equals(Arma.Reparacion))    //DEFENSA
-        {
-            Combate.getMiCombate().defensa(unaPos, unArma, false);
-        }
+        Combate.getMiCombate().actuar(false, unaPos, unArma);
     }
 
     private Arma armaAleatoria() //TODO genera un arma aleatoria (estaria bien hacer lista a la IA para que si no tiene ningun barco tocado no elija reparar por ejemplo)
