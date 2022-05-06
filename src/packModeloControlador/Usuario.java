@@ -32,15 +32,7 @@ public class Usuario extends Jugador
     public void actuar(int pPos, Arma pArma)
     {
         /** Dada la pPos del tablero que ha tocado el jugador (suya o del enemigo) y el pArma que tiene seleccionada, actua de una manera u otra **/
-
-        if (pArma.equals(Arma.Bomba) || pArma.equals(Arma.Misil) || pArma.equals(Arma.Radar))   //ATAQUE
-        {
-            Combate.getMiCombate().atacar(pPos, pArma, true);
-        }
-        else if (pArma.equals(Arma.Escudo) || pArma.equals(Arma.Reparacion))    //DEFENSA
-        {
-            Combate.getMiCombate().defensa(pPos, pArma, true);
-        }
+        Combate.getMiCombate().actuar(true, pPos, pArma);
     }
 
 
