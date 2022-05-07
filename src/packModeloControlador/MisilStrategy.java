@@ -8,54 +8,34 @@ public class MisilStrategy implements ActuarStrategy {
 	public MisilStrategy() {}
 	
 	public void actuar(Integer pPos, boolean esUsuario) {
-    	ArrayList<Integer> barco;
-		
+		Integer esUsuarioInt;
 		if (esUsuario) {
-			barco = ListaJugadores.getMiListaJ().getUnJugador(1).perteneceA(pPos);
-			if (!barco.isEmpty()) {
-				if (Combate.getMiCombate().esCasilla(!esUsuario, pPos, Casilla.Barco))
-    			{
-					for (Integer pos : barco) {
-    					Combate.getMiCombate().setCasilla(!esUsuario, pos, Casilla.Hundido);
-						ListaJugadores.getMiListaJ().getUnJugador(1).tocar(pos);
+			esUsuarioInt = 1;
+		} else {
+			esUsuarioInt = 0;
+		}
+		ArrayList<Integer> barco;
+		barco = ListaJugadores.getMiListaJ().getUnJugador(esUsuarioInt).perteneceA(pPos);
+		if (!barco.isEmpty()) {
+			if (Combate.getMiCombate().esCasilla(!esUsuario, pPos, Casilla.Barco))
+			{
+				for (Integer pos : barco) {
+					Combate.getMiCombate().setCasilla(!esUsuario, pos, Casilla.Hundido);
+					ListaJugadores.getMiListaJ().getUnJugador(esUsuarioInt).tocar(pos);
+				}
+			}
+			else if ( (Combate.getMiCombate().esCasilla(!esUsuario, pPos, Casilla.Escudo)) || (Combate.getMiCombate().esCasilla(!esUsuario, pPos, Casilla.EscudoDanado)) )
+			{
+				for (Integer pos : barco) {
+					if (ListaJugadores.getMiListaJ().getUnJugador(esUsuarioInt).estaTocado(pos)) {
+						Combate.getMiCombate().setCasilla(!esUsuario, pos, Casilla.Tocado);
+					} else {
+						Combate.getMiCombate().setCasilla(!esUsuario, pos, Casilla.Barco);
 					}
-    			}
-    			else if ( (Combate.getMiCombate().esCasilla(!esUsuario, pPos, Casilla.Escudo)) || (Combate.getMiCombate().esCasilla(!esUsuario, pPos, Casilla.EscudoDanado)) )
-    			{
-    				for (Integer pos : barco) {
-    					if (ListaJugadores.getMiListaJ().getUnJugador(1).estaTocado(pos)) {
-    						Combate.getMiCombate().setCasilla(!esUsuario, pos, Casilla.Tocado);
-    					} else {
-    						Combate.getMiCombate().setCasilla(!esUsuario, pos, Casilla.Barco);
-    					}
-    				}
-    			}
-			} else {
-				Combate.getMiCombate().setCasilla(!esUsuario, pPos, Casilla.Agua);
+				}
 			}
 		} else {
-			barco = ListaJugadores.getMiListaJ().getUnJugador(0).perteneceA(pPos);
-			if (!barco.isEmpty()) {
-				if (Combate.getMiCombate().esCasilla(esUsuario, pPos, Casilla.Barco))
-    			{
-					for (Integer pos : barco) {
-    					Combate.getMiCombate().setCasilla(esUsuario, pos, Casilla.Hundido);
-						ListaJugadores.getMiListaJ().getUnJugador(0).tocar(pos);
-					}
-    			}
-				else if ( (Combate.getMiCombate().esCasilla(esUsuario, pPos, Casilla.Escudo)) || (Combate.getMiCombate().esCasilla(esUsuario, pPos, Casilla.EscudoDanado)) )
-    			{
-    				for (Integer pos : barco) {
-    					if (ListaJugadores.getMiListaJ().getUnJugador(0).estaTocado(pos)) {
-    						Combate.getMiCombate().setCasilla(esUsuario, pos, Casilla.Tocado);
-    					} else {
-    						Combate.getMiCombate().setCasilla(esUsuario, pos, Casilla.Barco);
-    					}
-    				}
-    			}
-			} else {
-				Combate.getMiCombate().setCasilla(esUsuario, pPos, Casilla.Agua);
-			}
+			Combate.getMiCombate().setCasilla(!esUsuario, pPos, Casilla.Agua);
 		}
 	}
 }
