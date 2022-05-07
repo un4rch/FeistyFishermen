@@ -83,6 +83,7 @@ public class Combate extends Observable{
     	notifyObservers(pPosis);
     }
     
+    
     public void actuar(boolean esUsuario, int pPos, Arma pArma) {
     	if (pArma.equals(Arma.Bomba)) {
     		this.herramienta = new BombaStrategy();
@@ -112,9 +113,11 @@ public class Combate extends Observable{
     	} else {
     		this.tableroRival[pPos/10][pPos%10] = pCasilla;
     	}
-    	String tipoCasilla = pCasilla.toString().charAt(0)+"";
+    	String tipoCasilla;
     	if (pCasilla.equals(Casilla.EscudoDanado)) {
     		tipoCasilla = "ED";
+    	} else {
+    		tipoCasilla = pCasilla.toString().charAt(0)+"";
     	}
     	Integer esUsuarioInt;
     	if (esUsuario) {
