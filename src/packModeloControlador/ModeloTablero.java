@@ -13,7 +13,6 @@ public class ModeloTablero {
     private int tipoBarco; //Longitud del barco
     private Direccion direccion;
     private Arma tipoArma;
-    private Dificultad dificultad;
     private boolean partidaLista;
     private boolean partidaTerminada;
 
@@ -45,10 +44,6 @@ public class ModeloTablero {
     
     public void setDireccion(Direccion dir) {
     	this.direccion = dir;
-    }
-    
-    public void setDificultad(Dificultad dif) {
-    	this.dificultad = dif;
     }
 
     public void empezarPartida() {
