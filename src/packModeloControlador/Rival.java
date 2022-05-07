@@ -5,6 +5,8 @@ import java.util.Random;
 
 public class Rival extends Jugador
 {
+    private Dificultad dificultad;
+    
     public Rival()
     {
         super();
@@ -31,6 +33,10 @@ public class Rival extends Jugador
         //4 barcos de longitud 1
         tipoBarco = 1;
         this.ponerBarcosAlAzar(4, tipoBarco);
+    }
+    
+    public void setDificultad(Dificultad dif) {
+    	this.dificultad = dif;
     }
 
     private void ponerBarcosAlAzar(int pCont, int pTipo)
