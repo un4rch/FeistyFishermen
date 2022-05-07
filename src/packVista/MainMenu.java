@@ -19,6 +19,7 @@ import packModeloControlador.Dificultad;
 import packModeloControlador.Direccion;
 import packModeloControlador.ListaJugadores;
 import packModeloControlador.ModeloTablero;
+import packModeloControlador.Rival;
 
 public class MainMenu extends JFrame
 {
@@ -105,14 +106,15 @@ public class MainMenu extends JFrame
 					dif = "";
 				}
 				if (!dif.equals("")) {
+					Rival rival = (Rival)ListaJugadores.getMiListaJ().getUnJugador(1);
 					if (dif.equals("Facil")) {
-						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Facil);
+						rival.setDificultad(Dificultad.Facil);
 					} else if (dif.equals("Medio")) {
-						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Medio);
+						rival.setDificultad(Dificultad.Medio);
 					} else if (dif.equals("Difil")) {
-						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Dificil);
+						rival.setDificultad(Dificultad.Dificil);
 					} else if (dif.equals("Demente")) {
-						ModeloTablero.getMiModeloTablero().setDificultad(Dificultad.Demente);
+						rival.setDificultad(Dificultad.Demente);
 					}
 					mainMenu.setVisible(false);
 					BaseTablero frame = new BaseTablero(ListaJugadores.getMiListaJ(),Combate.getMiCombate());
