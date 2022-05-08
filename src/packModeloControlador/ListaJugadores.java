@@ -41,6 +41,8 @@ public class ListaJugadores extends Observable
 	public boolean jugarRonda(int pPos, Arma pArma)
 	{
 		listaJ.stream().forEach(p->p.actuar(pPos,pArma));
+		setChanged();
+		notifyObservers('a');
 		return this.partidaTerminada();	
 	}
 	
@@ -86,6 +88,54 @@ public class ListaJugadores extends Observable
 	public boolean comprobarYRestarDineroUsuario(int pPrecio)
 	{
 		Usuario unUsuario = (Usuario) this.getUnJugador(0);
-		return unUsuario.comprobarYRestarDineroUsuario(pPrecio);
-	}	
+		Integer dineroActualUsuario = unUsuario.comprobarYRestarDineroUsuario(pPrecio);
+		
+		setChanged();
+		if (dineroActualUsuario<0)
+		{
+			return false;
+		}
+		else
+		{
+			notifyObservers(dineroActualUsuario);
+			return true;
+		}
+		
+	}
+	
+	public int getDineroUsuario()
+	{
+		Usuario unUsuario = (Usuario) this.getMiListaJ().getUnJugador(0);
+		return unUsuario.getDineroUsuario();
+	}
+	
+	public Arsenal getArsenalUsuario()
+	{
+		Usuario unUsuario = (Usuario) this.getMiListaJ().getUnJugador(0);
+		return unUsuario.getArsenal();		
+	}
+	
+	public boolean consumirArma(Arma pArma, boolean pEsUsuario)
+	{
+		if (pEsUsuario)
+		{
+			return this.getUnJugador(0).consumirArma(pArma);
+		}
+		else
+		{
+			return  this.getUnJugador(1).consumirArma(pArma);
+		}
+	}
+	
+	public void comprarArma(Arma pArma, boolean pEsUsuario)
+	{
+		if (pEsUsuario)
+		{
+			this.getUnJugador(0).comprarArma(pArma);
+		}
+		else
+		{
+			this.getUnJugador(1).comprarArma(pArma);			
+		}
+	}
 }
