@@ -155,6 +155,8 @@ public class Combate extends Observable{
 	    	}
 	    	setChanged();
 			notifyObservers(esUsuarioInt+"_"+(pos)+"_"+tipoCasilla);
+		setChanged();
+		notifyObservers('R');
 		}
     }
 }
