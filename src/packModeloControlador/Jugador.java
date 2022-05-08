@@ -14,6 +14,21 @@ public abstract class Jugador
         this.tesoreria = 0;
     }
 
+    protected int getTesoreria()
+    {
+    	return this.tesoreria;
+    }
+
+    protected Arsenal getArsenal()
+    {
+    	return this.arsenal;
+    }
+    
+    protected void restarTesoreria(int pPrecio)
+    {
+    	this.tesoreria = this.tesoreria - pPrecio;
+    }
+    
     protected ListaBarcos getFlota()
     {
         return this.flota;
@@ -85,5 +100,46 @@ public abstract class Jugador
     
     public boolean estaTocado(Integer pPos) {
     	return this.flota.estaTocado(pPos);
+    }
+    
+    public void anadirDinero(int pRonda)
+    {
+    	this.tesoreria = this.tesoreria + (pRonda*20);
+    }
+    
+    public boolean consumirArma(Arma pArma)
+    {
+    	if (pArma.equals(Arma.Escudo))
+    	{
+    		return this.arsenal.consumirEscudo();
+    	}
+    	else if (pArma.equals(Arma.Radar))
+    	{
+    		return this.arsenal.consumirRadar();
+    	}
+    	else if (pArma.equals(Arma.Misil))
+    	{
+    		return this.arsenal.consumirMisil();
+    	}
+    	else
+    	{
+    		return false;
+    	}
+    }
+    
+    public void comprarArma(Arma pArma)
+    {
+    	if (pArma.equals(Arma.Escudo))
+    	{
+    		this.arsenal.anadirEscudos(1);
+    	}
+    	else if (pArma.equals(Arma.Radar))
+    	{
+    		this.arsenal.anadirRadares(1);
+    	}
+    	else if (pArma.equals(Arma.Misil))
+    	{
+    		this.arsenal.anadirMisiles(1);
+    	}
     }
 }
