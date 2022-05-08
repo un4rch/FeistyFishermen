@@ -81,7 +81,7 @@ public class ModeloTablero {
     	}
     	else
     	{
-    		System.out.println("La partida ha terminado, si desea volver a jugar reinicie la aplicaciÃƒÂ³n.");
+    		System.out.println("La partida ha terminado, si desea volver a jugar reinicie la aplicaciÃƒÆ’Ã‚Â³n.");
     	}
     }
     
@@ -98,7 +98,7 @@ public class ModeloTablero {
 			}
 			else
 			{
-				System.out.println("Ã‚Â¡No puedes atacarte a ti mismo!");
+				System.out.println("Ãƒâ€šÃ‚Â¡No puedes atacarte a ti mismo!");
 			}
 		}
     }
