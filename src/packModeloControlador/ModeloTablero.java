@@ -15,12 +15,14 @@ public class ModeloTablero {
     private Arma tipoArma;
     private boolean partidaLista;
     private boolean partidaTerminada;
+    private int ronda;
 
     private ModeloTablero()
     {
     	this.tipoArma = Arma.Bomba;
     	this.direccion = Direccion.Arriba;
     	this.tipoBarco = 1;
+	this.ronda = 0;
         this.partidaLista = false;
 		this.partidaTerminada = false;
     }
@@ -67,6 +69,8 @@ public class ModeloTablero {
 			{
 				if (this.tipoArma.equals(Arma.Bomba) || this.tipoArma.equals(Arma.Misil) || this.tipoArma.equals(Arma.Radar)) //si el arma seleccionada es correcta (de ataque) se juega la ronda
 				{
+					this.ronda = this.ronda + 1;
+					ListaJugadores.getMiListaJ().repartirDinero(this.ronda);
 					this.partidaTerminada = ListaJugadores.getMiListaJ().jugarRonda(pPos, this.tipoArma); //Al final de la ronda te dice si ha ganado alguien o no
 				}
 				else
@@ -97,5 +101,10 @@ public class ModeloTablero {
 				System.out.println("Ã‚Â¡No puedes atacarte a ti mismo!");
 			}
 		}
+    }
+	
+    public int getRonda()
+    {
+    	return this.ronda;
     }
 }
