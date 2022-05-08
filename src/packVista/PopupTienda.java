@@ -216,7 +216,6 @@ public class PopupTienda extends JFrame implements Observer{
 		if (arg instanceof Integer)
 		{
 			labelTesoreria.setText("Tesoreria: " + arg);
-			System.out.println("Update tes");
 		}
 		else if(arg instanceof Character)
 		{
@@ -225,11 +224,6 @@ public class PopupTienda extends JFrame implements Observer{
 				labelRonda.setText("Ronda: " + ModeloTablero.getMiModeloTablero().getRonda());
 				labelTesoreria.setText("Tesoreria: " + ListaJugadores.getMiListaJ().getDineroUsuario());
 			}
-			
-		}
-		else
-		{
-			System.out.println("Update popup fuera");
 		}
 		
 	}
