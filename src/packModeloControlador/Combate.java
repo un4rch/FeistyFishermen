@@ -97,6 +97,25 @@ public class Combate extends Observable{
     		this.herramienta = new ReparacionStrategy();
     	}
     	herramienta.actuar(pPos, esUsuario);
+    	
+    	
+    	
+    	if (pArma.equals(Arma.Misil) && esUsuario)
+    	{
+    		setChanged();
+    		notifyObservers('M');
+    	}
+    	else if (pArma.equals(Arma.Radar) && esUsuario)
+    	{
+    		setChanged();
+    		notifyObservers('R');
+    	}
+    	else if (pArma.equals(Arma.Escudo) && esUsuario)
+    	{
+    		setChanged();
+    		notifyObservers('E');
+    	}
+    	
     }
     
     public boolean esCasilla(boolean esUsuario, Integer pPos, Casilla pCasilla) {
@@ -155,8 +174,6 @@ public class Combate extends Observable{
 	    	}
 	    	setChanged();
 			notifyObservers(esUsuarioInt+"_"+(pos)+"_"+tipoCasilla);
-		setChanged();
-		notifyObservers('R');
 		}
     }
 }
