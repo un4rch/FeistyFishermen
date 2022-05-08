@@ -2,7 +2,7 @@ package packModeloControlador;
 
 import java.util.ArrayList;
 
-public class EscudoStrategy implements ActuarStrategy {
+public class EscudoStrategy implements ActuarStrategy extends Observable{
 	
 	public EscudoStrategy() {}
 	
@@ -20,6 +20,8 @@ public class EscudoStrategy implements ActuarStrategy {
 					if (!Combate.getMiCombate().esCasilla(esUsuario, pos, Casilla.Hundido)) 
 					{
 						Combate.getMiCombate().setCasilla(esUsuario, pos, Casilla.Escudo);
+						setChanged();
+						notifyObservers('E');
 					} 
 					else 
 					{
