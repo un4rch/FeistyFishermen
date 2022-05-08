@@ -481,21 +481,17 @@ public class BaseTablero extends JFrame implements Observer {
 		else if (arg instanceof Character)
 		{
 			Arsenal arsUsuario = ListaJugadores.getMiListaJ().getArsenalUsuario();
-			System.out.println(arg);
 			if (arg.equals('E')) //escudo
 			{
 				int escudos = arsUsuario.getEscudos();
 				escudosDisp.setText("Disponibles: " + escudos);
-				System.out.println("Entra a escudos: " + escudos);
 				if (escudos == 0)
 				{
 					this.escudosDisp.setForeground(Color.RED);
-					System.out.println("Quedan 0 escudos");
 				}
 				else
 				{
 					this.escudosDisp.setForeground(Color.BLACK);
-					System.out.println("Quedan varios escudos");
 				}
 			}
 			else if (arg.equals('R')) //radar
@@ -529,10 +525,6 @@ public class BaseTablero extends JFrame implements Observer {
 			{
 				//TODO
 			}
-		}
-		else
-		{
-			System.out.println(arg);	
 		}
 	}
 
