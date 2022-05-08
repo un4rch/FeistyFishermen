@@ -3,7 +3,7 @@ package packModeloControlador;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class MisilStrategy implements ActuarStrategy {
+public class MisilStrategy implements ActuarStrategy extends Observable{
 	
 	public MisilStrategy() {}
 	
@@ -37,5 +37,7 @@ public class MisilStrategy implements ActuarStrategy {
 		} else {
 			Combate.getMiCombate().setCasilla(!esUsuario, pPos, Casilla.Agua);
 		}
+		setChanged();
+		notifyObservers('M');
 	}
 }
