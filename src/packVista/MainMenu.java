@@ -117,7 +117,7 @@ public class MainMenu extends JFrame
 						rival.setDificultad(Dificultad.Demente);
 					}
 					mainMenu.setVisible(false);
-					BaseTablero frame = new BaseTablero(ListaJugadores.getMiListaJ(),Combate.getMiCombate());
+					BaseTablero frame = new BaseTablero(ListaJugadores.getMiListaJ(),Combate.getMiCombate(), Tienda.getTienda());
 					frame.setVisible(true);
 					//Cerrar mainMenu
 			  }
