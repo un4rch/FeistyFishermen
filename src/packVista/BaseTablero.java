@@ -1,4 +1,4 @@
-package packVista;
+  package packVista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,9 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import packModeloControlador.Arma;
+import packModeloControlador.Arsenal;
+import packModeloControlador.Combate;
 import packModeloControlador.Dificultad;
 import packModeloControlador.Direccion;
+import packModeloControlador.ListaJugadores;
 import packModeloControlador.ModeloTablero;
+import packModeloControlador.Tienda;
 
 import java.util.ArrayList;
 import packModeloControlador.Tupla;
@@ -51,19 +55,23 @@ public class BaseTablero extends JFrame implements Observer {
 	private JLabel labelSubDisp;
 	private JLabel labelDestDisp;
 	private JLabel labelFragDisp;
+	private JLabel escudosDisp;
+	private JLabel misilesDisp;
+	private JLabel radaresDisp;
 
 	/**
 	 * Launch the application.
 	 */
 
 
-	public BaseTablero(Observable gestorTablebro,Observable gestorJugadores) {
+	public BaseTablero(Observable gestorTablebro,Observable gestorJugadores, Observable tTienda) {
 		this.fragDisp = 4;
 		this.destDisp = 3;
 		this.subDisp = 2;
 		this.portDisp = 1;
 		gestorTablebro.addObserver(this);
 		gestorJugadores.addObserver(this);
+		tTienda.addObserver(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 596, 426);
 		main = new JPanel();
@@ -171,18 +179,30 @@ public class BaseTablero extends JFrame implements Observer {
 		
 		JRadioButton escudo = new JRadioButton("Escudo");
 		escudo.addActionListener(getControlador());
+		
+		JLabel bombasDisp = new JLabel("");
+		inventario.add(bombasDisp);
 		acciones.add(escudo);
 		inventario.add(escudo);
 		
 		JRadioButton misil = new JRadioButton("Misil");
 		misil.addActionListener(getControlador());
+		
+		escudosDisp = new JLabel("Disponibles: 1");
+		inventario.add(escudosDisp);
 		acciones.add(misil);
 		inventario.add(misil);
 		
 		JRadioButton radar = new JRadioButton("Radar");
 		radar.addActionListener(getControlador());
+		
+		misilesDisp = new JLabel("Disponibles: 2");
+		inventario.add(misilesDisp);
 		acciones.add(radar);
 		inventario.add(radar);
+		
+		radaresDisp = new JLabel("Disponibles: 1");
+		inventario.add(radaresDisp);
 		
 		JPanel tableros = new JPanel();
 		main.add(tableros, BorderLayout.CENTER);
@@ -308,7 +328,16 @@ public class BaseTablero extends JFrame implements Observer {
 			} else if (e.getActionCommand().equals("Radar")) {
 				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Radar);
 			} else if (e.getActionCommand().equals("Tienda")) {
-				//TODO
+				try 
+				{
+					int ronda = ModeloTablero.getMiModeloTablero().getRonda();
+					int tesoreria = ListaJugadores.getMiListaJ().getDineroUsuario();
+					PopupTienda frame = new PopupTienda(ronda,tesoreria,ListaJugadores.getMiListaJ(),Combate.getMiCombate(), Tienda.getTienda());
+					frame.setVisible(true);
+				} catch (Exception exc) 
+				{
+					exc.printStackTrace();
+				}	
 			}
 			
 		}
@@ -449,6 +478,62 @@ public class BaseTablero extends JFrame implements Observer {
 				}
 			}
 		} 
+		else if (arg instanceof Character)
+		{
+			Arsenal arsUsuario = ListaJugadores.getMiListaJ().getArsenalUsuario();
+			System.out.println(arg);
+			if (arg.equals('E')) //escudo
+			{
+				int escudos = arsUsuario.getEscudos();
+				escudosDisp.setText("Disponibles: " + escudos);
+				System.out.println("Entra a escudos: " + escudos);
+				if (escudos == 0)
+				{
+					this.escudosDisp.setForeground(Color.RED);
+					System.out.println("Quedan 0 escudos");
+				}
+				else
+				{
+					this.escudosDisp.setForeground(Color.BLACK);
+					System.out.println("Quedan varios escudos");
+				}
+			}
+			else if (arg.equals('R')) //radar
+			{
+				int radares = arsUsuario.getRadares();
+				radaresDisp.setText("Disponibles: " + radares);
+				if (radares == 0)
+				{
+					this.radaresDisp.setForeground(Color.RED);
+				}
+				else
+				{
+					this.radaresDisp.setForeground(Color.BLACK);
+				}
+			}
+			else if (arg.equals('M')) //misil
+			{
+				int misiles = arsUsuario.getMisiles();
+				misilesDisp.setText("Disponibles: " + misiles);
+				if (misiles == 0)
+				{
+					this.misilesDisp.setForeground(Color.RED);
+				}
+				else
+				{
+					this.misilesDisp.setForeground(Color.BLACK);
+				}
+				
+			}
+			else if (arg.equals('B')) //reparacion
+			{
+				//TODO
+			}
+		}
+		else
+		{
+			System.out.println(arg);	
+		}
 	}
 
 }
