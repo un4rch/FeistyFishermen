@@ -36,4 +36,27 @@ public class Usuario extends Jugador
     }
 
 
+
+    public int comprobarYRestarDineroUsuario(int pPrecio)
+	{
+    	int comprado = -99;
+    	int dineros = super.getTesoreria();
+    	if (dineros >= pPrecio)
+    	{
+    		super.restarTesoreria(pPrecio);
+    		comprado = super.getTesoreria();
+    	}
+		return comprado;
+	}
+    
+    public int getDineroUsuario()
+    {
+    	return super.getTesoreria();
+    }
+    
+    public Arsenal getArsenal()
+    {
+    	return super.getArsenal();
+    }
+
 }
