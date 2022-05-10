@@ -98,7 +98,8 @@ public class ModeloTablero {
 			}
 			else
 			{
-				System.out.println("Ãƒâ€šÃ‚Â¡No puedes atacarte a ti mismo!");
+				System.out.println(this.tipoArma.toString());
+				System.out.println("No puedes atacarte a ti mismo!");
 			}
 		}
     }

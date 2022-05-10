@@ -4,12 +4,14 @@ public class Arsenal{
     private int radares;  //El int es la cantidad que hay de ese arma
     private int escudos;
     private int misiles;
+    private int reparaciones;
 
     public Arsenal()
     {
         this.radares = 1;
         this.escudos = 1;
         this.misiles = 2;
+        this.reparaciones = 2;
     }
 
     public int getRadares()
@@ -27,6 +29,10 @@ public class Arsenal{
     	return this.misiles;
     }
     
+    public int getReparaciones()
+    {
+    	return this.reparaciones;
+    }    
     
     public void anadirRadares(int pCant)
     {

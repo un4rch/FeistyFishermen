@@ -42,7 +42,19 @@ public abstract class Barco
 		boolean hecho = false;
 		if (unaTupla != null && !unaTupla.estaTocado())
 		{
-			unaTupla.tocar();
+			unaTupla.setEstado(true);
+			hecho = true;
+		}
+		return hecho;
+	}
+	
+	public boolean reparar(int pPos)
+	{
+		Tupla unaTupla = buscarPos(pPos);
+		boolean hecho = false;
+		if (unaTupla != null && unaTupla.estaTocado())
+		{
+			unaTupla.setEstado(false);
 			hecho = true;
 		}
 		return hecho;

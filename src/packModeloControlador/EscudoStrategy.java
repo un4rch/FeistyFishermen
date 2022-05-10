@@ -11,34 +11,22 @@ public class EscudoStrategy implements ActuarStrategy{
 		ArrayList<Integer> barco;
 		int esUsuarioInt;
 		if (esUsuario) {
-			barco = ListaJugadores.getMiListaJ().getUnJugador(0).perteneceA(pPos);
 			esUsuarioInt = 0;
 		} else {
-			barco = ListaJugadores.getMiListaJ().getUnJugador(1).perteneceA(pPos);
+			
 			esUsuarioInt = 1;
 		}
+		barco = ListaJugadores.getMiListaJ().getUnJugador(esUsuarioInt).perteneceA(pPos);
 		
 		if (!barco.isEmpty() && ListaJugadores.getMiListaJ().getUnJugador(esUsuarioInt).getArsenal().consumirEscudo()) {
 			for (Integer pos : barco) {
-				if (esUsuario) {
-					
-					if (!Combate.getMiCombate().esCasilla(esUsuario, pos, Casilla.Hundido)) 
-					{
-						Combate.getMiCombate().setCasilla(esUsuario, pos, Casilla.Escudo);
-					} 
-					else 
-					{
-						System.out.println("No puedes proteger un barco hundido");
-					}
-				} else {
-					if (!Combate.getMiCombate().esCasilla(!esUsuario, pos, Casilla.Hundido))
-					{
-						Combate.getMiCombate().setCasilla(!esUsuario, pos, Casilla.Escudo);
-					}
-					else 
-					{
-						System.out.println("No puedes proteger un barco hundido");
-					}
+				if (!Combate.getMiCombate().esCasilla(esUsuario, pos, Casilla.Hundido)) 
+				{
+					Combate.getMiCombate().setCasilla(esUsuario, pos, Casilla.Escudo);
+				} 
+				else 
+				{
+					System.out.println("No puedes proteger un barco hundido");
 				}
 			}
 		} else {

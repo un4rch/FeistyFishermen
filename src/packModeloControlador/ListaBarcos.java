@@ -120,6 +120,30 @@ public class ListaBarcos {
 		return(enc);
 	}
 	
+	public boolean reparar(int pPos)
+	{
+		//ve si hay barco en esa pos
+				Iterator<Barco> itr = this.getIterador();
+		        boolean enc = false;
+		        boolean hecho = false;
+		        Barco unBarco = null;
+		        while(itr.hasNext() && !enc)
+		        {
+		            unBarco = itr.next();
+		            enc = unBarco.tieneEstaPos(pPos);
+		        }
+				//si hay barco en la pos lo toca
+				if(enc)
+				{
+					hecho = unBarco.reparar(pPos);
+				}
+				if(hecho)
+				{
+					this.sumarCasillas(1);
+				}
+				return(enc);
+	}
+	
 	public boolean estaHundido(int pPos)
 	{
 		boolean hundido = false;

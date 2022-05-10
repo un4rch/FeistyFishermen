@@ -20,6 +20,7 @@ import packModeloControlador.Direccion;
 import packModeloControlador.ListaJugadores;
 import packModeloControlador.ModeloTablero;
 import packModeloControlador.Rival;
+import packModeloControlador.Tienda;
 
 public class MainMenu extends JFrame
 {

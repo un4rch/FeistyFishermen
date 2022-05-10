@@ -98,6 +98,10 @@ public abstract class Jugador
     	this.flota.tocarBarco(pPos);
     }
     
+    public void reparar(Integer pPos) {
+    	this.flota.reparar(pPos);
+    }
+    
     public boolean estaTocado(Integer pPos) {
     	return this.flota.estaTocado(pPos);
     }

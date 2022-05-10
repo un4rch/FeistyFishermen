@@ -58,6 +58,7 @@ public class BaseTablero extends JFrame implements Observer {
 	private JLabel escudosDisp;
 	private JLabel misilesDisp;
 	private JLabel radaresDisp;
+	private JLabel reparacionDisp;
 
 	/**
 	 * Launch the application.
@@ -204,6 +205,13 @@ public class BaseTablero extends JFrame implements Observer {
 		radaresDisp = new JLabel("Disponibles: 1");
 		inventario.add(radaresDisp);
 		
+		JRadioButton reparacion = new JRadioButton("Reparacion");
+		reparacion.addActionListener(getControlador());
+		reparacionDisp = new JLabel("Disponibles: 2");
+		acciones.add(reparacion);
+		inventario.add(reparacion);
+		inventario.add(reparacionDisp);
+		
 		JPanel tableros = new JPanel();
 		main.add(tableros, BorderLayout.CENTER);
 		tableros.setLayout(new GridLayout(2, 1, 0, 0));
@@ -327,6 +335,8 @@ public class BaseTablero extends JFrame implements Observer {
 				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Misil);
 			} else if (e.getActionCommand().equals("Radar")) {
 				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Radar);
+			} else if (e.getActionCommand().equals("Reparacion")) {
+				ModeloTablero.getMiModeloTablero().setTipoArma(Arma.Reparacion);
 			} else if (e.getActionCommand().equals("Tienda")) {
 				try 
 				{
@@ -523,7 +533,16 @@ public class BaseTablero extends JFrame implements Observer {
 			}
 			else if (arg.equals('B')) //reparacion
 			{
-				//TODO
+				int reparaciones = arsUsuario.getReparaciones();
+				reparacionDisp.setText("Disponibles: " + reparaciones);
+				if (reparaciones == 0)
+				{
+					this.reparacionDisp.setForeground(Color.RED);
+				}
+				else
+				{
+					this.reparacionDisp.setForeground(Color.BLACK);
+				}
 			}
 		}
 	}

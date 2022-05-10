@@ -22,9 +22,9 @@ public class Tupla
 		return this.tocado;
 	}
 	
-	public void tocar()
+	public void setEstado(boolean pEstado)
 	{
-		this.tocado = true;
+		this.tocado = pEstado;
 	}
 	
 	public boolean tieneEstaPos(int pPos)
