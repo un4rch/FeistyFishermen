@@ -1,10 +1,7 @@
   package packVista;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import packModeloControlador.Arma;
@@ -18,16 +15,6 @@ import packModeloControlador.Tienda;
 
 import java.util.ArrayList;
 import packModeloControlador.Tupla;
-
-import java.awt.GridLayout;
-import javax.swing.JRadioButton;
-import javax.swing.SpringLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.SwingConstants;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -363,7 +350,8 @@ public class BaseTablero extends JFrame implements Observer {
 		{
 			for (Integer pos : (ArrayList<Integer>)arg) 
 			{ //Update barcos en la vista
-				listaUsuario.get(pos).setBackground(Color.WHITE);
+				JLabel jl = listaUsuario.get(pos);
+				this.ponerImagenBarco(jl);
 			}
 
 			int tamano = ((ArrayList) arg).size();
@@ -426,6 +414,7 @@ public class BaseTablero extends JFrame implements Observer {
 				if (posis[0].equals("0"))
 				{
 					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.cyan);
+
 				}
 				else
 				{
@@ -436,55 +425,65 @@ public class BaseTablero extends JFrame implements Observer {
 			{
 				if (posis[0].equals("0"))
 				{
-					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.white);
+					JLabel jl = listaUsuario.get(Integer.parseInt(posis[1]));
+					this.ponerImagenBarco(jl);
 				}
 				else
 				{
-					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.white);
+					JLabel jl = listaRival.get(Integer.parseInt(posis[1]));
+					this.ponerImagenBarco(jl);
 				}
 			}
 			else if (posis[2].equals("E"))
 			{
 				if (posis[0].equals("0"))
 				{
-					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.orange);
+					JLabel jl = listaUsuario.get(Integer.parseInt(posis[1]));
+					this.ponerImagenEscudo(jl);
 				}
 				else
 				{
-					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.orange);
+					JLabel jl = listaRival.get(Integer.parseInt(posis[1]));
+					this.ponerImagenEscudo(jl);
 				}
 			}
 			else if (posis[2].equals("ED"))
 			{
 				if (posis[0].equals("0"))
 				{
-					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.yellow);
+					JLabel jl = listaUsuario.get(Integer.parseInt(posis[1]));
+					this.ponerImagenEscudoTocado(jl);
 				}
 				else
 				{
-					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.yellow);
+					JLabel jl = listaRival.get(Integer.parseInt(posis[1]));
+					this.ponerImagenEscudoTocado(jl);
 				}
 			}
 			else if (posis[2].equals("T"))
 			{
 				if (posis[0].equals("0"))
 				{
-					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.red);
+					JLabel jl = listaUsuario.get(Integer.parseInt(posis[1]));
+					this.ponerImagenTocadoUsuario(jl);
 				}
 				else
 				{
-					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.red);
+					JLabel jl = listaRival.get(Integer.parseInt(posis[1]));
+					this.ponerImagenTocadoRival(jl);
 				}
 			}
 			else //posis[2].equals("H")
 			{
 				if (posis[0].equals("0"))
 				{
-					listaUsuario.get(Integer.parseInt(posis[1])).setBackground(Color.black);
+					JLabel jl = listaUsuario.get(Integer.parseInt(posis[1]));
+					this.ponerImagenHundido(jl);
 				}
 				else
 				{
-					listaRival.get(Integer.parseInt(posis[1])).setBackground(Color.black);
+					JLabel jl = listaRival.get(Integer.parseInt(posis[1]));
+					this.ponerImagenHundido(jl);
 				}
 			}
 		} 
@@ -545,6 +544,60 @@ public class BaseTablero extends JFrame implements Observer {
 				}
 			}
 		}
+	}
+
+	private void ponerImagenBarco(JLabel jl)
+	{
+		ImageIcon cross = new ImageIcon(this.getClass().getResource("Barco.png"));
+		ImageIcon crossAdj = new ImageIcon(cross.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+		jl.setIcon(crossAdj);
+		jl.setHorizontalAlignment(JLabel.CENTER);
+		jl.setVerticalAlignment(JLabel.CENTER);
+	}
+
+	private void ponerImagenTocadoUsuario(JLabel jl)
+	{
+		ImageIcon cross = new ImageIcon(this.getClass().getResource("TocadoUsuario.gif"));
+		ImageIcon crossAdj = new ImageIcon(cross.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+		jl.setIcon(crossAdj);
+		jl.setHorizontalAlignment(JLabel.CENTER);
+		jl.setVerticalAlignment(JLabel.CENTER);
+	}
+
+	private void ponerImagenTocadoRival(JLabel jl)
+	{
+		ImageIcon cross = new ImageIcon(this.getClass().getResource("TocadoRival.gif"));
+		ImageIcon crossAdj = new ImageIcon(cross.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+		jl.setIcon(crossAdj);
+		jl.setHorizontalAlignment(JLabel.CENTER);
+		jl.setVerticalAlignment(JLabel.CENTER);
+	}
+
+	private void ponerImagenHundido(JLabel jl)
+	{
+		ImageIcon cross = new ImageIcon(this.getClass().getResource("Hundido.png"));
+		ImageIcon crossAdj = new ImageIcon(cross.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+		jl.setIcon(crossAdj);
+		jl.setHorizontalAlignment(JLabel.CENTER);
+		jl.setVerticalAlignment(JLabel.CENTER);
+	}
+
+	private void ponerImagenEscudo(JLabel jl)
+	{
+		ImageIcon cross = new ImageIcon(this.getClass().getResource("Escudo.png"));
+		ImageIcon crossAdj = new ImageIcon(cross.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+		jl.setIcon(crossAdj);
+		jl.setHorizontalAlignment(JLabel.CENTER);
+		jl.setVerticalAlignment(JLabel.CENTER);
+	}
+
+	private void ponerImagenEscudoTocado(JLabel jl)
+	{
+		ImageIcon cross = new ImageIcon(this.getClass().getResource("EscudoTocado.png"));
+		ImageIcon crossAdj = new ImageIcon(cross.getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+		jl.setIcon(crossAdj);
+		jl.setHorizontalAlignment(JLabel.CENTER);
+		jl.setVerticalAlignment(JLabel.CENTER);
 	}
 
 }
