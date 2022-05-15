@@ -112,69 +112,17 @@ public class PopupTienda extends JFrame implements Observer{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			boolean sePuedeComprar = false;
-			boolean tieneDinero = false;
-			if (e.getActionCommand().equals("40 \uD83D\uDCB0")) {
-				sePuedeComprar = Tienda.getTienda().sePuedeComprar("Escudo");
-				if (sePuedeComprar) 
-					{
-						tieneDinero = ListaJugadores.getMiListaJ().comprobarYRestarDineroUsuario(40);
-						if (tieneDinero) {
-							Tienda.getTienda().comprarArma(Arma.Escudo, true);
-							System.out.println("Escudo comprado");
-						}
-						else
-						{
-				    		System.out.println("Dinero insuficiente");
-						}
-			
-					}
-				else
-				{
-					System.out.println("No quedan escudos en la tienda");
-				}
-				
-			} else if (e.getActionCommand().equals("100 \uD83D\uDCB0")){
-				sePuedeComprar = Tienda.getTienda().sePuedeComprar("Misil");
-				if (sePuedeComprar) 
-					{
-						tieneDinero = ListaJugadores.getMiListaJ().comprobarYRestarDineroUsuario(100);
-						if (tieneDinero) {
-							Tienda.getTienda().comprarArma(Arma.Misil, true);
-							System.out.println("Misil comprado");
-						}
-						else
-						{
-				    		System.out.println("Dinero insuficiente");
-						}
-			
-					}
-				else
-				{
-					System.out.println("No quedan misiles en la tienda");
-				}
+			if (e.getActionCommand().equals("40 \uD83D\uDCB0")) 
+			{
+				Tienda.getTienda().comprar("Escudo");
+			} 
+			else if (e.getActionCommand().equals("100 \uD83D\uDCB0"))
+			{
+				Tienda.getTienda().comprar("Misil");
 			}
 			else if (e.getActionCommand().equals("300 \uD83D\uDCB0")) {
-				sePuedeComprar = Tienda.getTienda().sePuedeComprar("Radar");
-				if (sePuedeComprar) 
-					{
-						tieneDinero = ListaJugadores.getMiListaJ().comprobarYRestarDineroUsuario(300);
-						if (tieneDinero) {
-							Tienda.getTienda().comprarArma(Arma.Radar, true);
-							System.out.println("Radar comprado");
-						}
-						else
-						{
-				    		System.out.println("Dinero insuficiente");
-						}
-					}
-				else
-				{
-					System.out.println("No quedan radares en la tienda");
-				}
+				Tienda.getTienda().comprar("Radar");
 			}
-				
-			
 		}
 
 		@Override
