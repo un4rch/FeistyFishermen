@@ -30,6 +30,53 @@ public class Tienda  extends Observable{
 		return Tienda.miTienda;
 	}
 	
+	public void comprar(String pNombreArma)
+	{
+		if (this.sePuedeComprar(pNombreArma)) 
+			{
+				if (pNombreArma=="Escudo") 
+				{
+					if (ListaJugadores.getMiListaJ().comprobarYRestarDineroUsuario(40)) 
+					{
+						this.comprarArma(Arma.Escudo, true);
+						System.out.println("Escudo comprado");
+					}
+					else
+					{
+						System.out.println("Dinero insuficiente");
+					}
+				}
+				else if (pNombreArma=="Misil")
+				{
+					if (ListaJugadores.getMiListaJ().comprobarYRestarDineroUsuario(100)) 
+					{
+						this.comprarArma(Arma.Misil, true);
+						System.out.println("Misil comprado");
+					}
+					else
+					{
+			    		System.out.println("Dinero insuficiente");
+					}
+				}
+				else if (pNombreArma=="Radar")
+				{
+					if (ListaJugadores.getMiListaJ().comprobarYRestarDineroUsuario(300)) 
+					{
+						this.comprarArma(Arma.Radar, true);
+						System.out.println("Radar comprado");
+					}
+					else
+					{
+			    		System.out.println("Dinero insuficiente");
+					}
+				}
+			}
+		else
+		{
+			System.out.println("No queda stock en la tienda D,:");
+		}
+	}
+	
 	public boolean comprarArma(Arma pArma, boolean pEsUsuario) // se ha comprobado antes si se puede comprar
 	{
 		boolean sePuede = true;
@@ -88,4 +135,3 @@ public class Tienda  extends Observable{
 	}
 	
 }
-
