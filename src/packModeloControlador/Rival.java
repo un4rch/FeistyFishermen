@@ -66,7 +66,24 @@ public class Rival extends Jugador
 
     public void actuar(int p1, Arma p2) //No se van a usar los parametros, es para que funcione la herencia
     {
-        /**  lo mismo que usuario, pero elige el arma y posiciÃ³n de forma random **/
+        /**  lo mismo que usuario, pero elige el arma y posiciÃƒÂ³n de forma random. Dependiendo del número obtenido, el rival accede a la tienda **/
+    	int unNum = new Random().nextInt(9);
+    	if (unNum == 5)
+    	{
+    		Tienda.getTienda().comprar("Escudo", false);
+    	}
+    	else if (unNum == 7)
+    	{
+    		Tienda.getTienda().comprar("Misil", false);
+    	}
+    	else if (unNum == 3)
+    	{
+    		Tienda.getTienda().comprar("Radar", false);
+    	}
+    	else if (unNum == 1)
+    	{
+    		Tienda.getTienda().comprar("Reparacion", false);
+    	}
         Arma unArma = this.armaAleatoria();
         int unaPos = this.posAleatoria();
         Combate.getMiCombate().actuar(false, unaPos, unArma);
@@ -84,4 +101,16 @@ public class Rival extends Jugador
     	return num;
     }
 
+    public int comprobarYRestarDineroRival(int pPrecio)
+   	{
+       	int comprado = -99;
+       	int dineros = super.getTesoreria();
+       	if (dineros >= pPrecio)
+       	{
+       		super.restarTesoreria(pPrecio);
+       		comprado = super.getTesoreria();
+       	}
+   		return comprado;
+   	}
+    
 }
