@@ -48,6 +48,11 @@ public class Arsenal{
     {
         this.misiles = this.misiles + pCant;
     }
+    
+    public void anadirReparaciones(int pCant)
+    {
+        this.reparaciones = this.reparaciones + pCant;
+    }
 
     public boolean consumirMisil()
     {
@@ -81,6 +86,17 @@ public class Arsenal{
     	}
     	return consumido;
     }
+    
+    public boolean consumirReparacion()
+    {
+    	boolean consumido = false;
+    	if (this.tieneSuficientesReparaciones())
+    	{
+    		this.reparaciones--;
+    		consumido = true;
+    	}
+    	return consumido;
+    }
 
     public boolean tieneSuficientesRadares()
     {
@@ -110,5 +126,15 @@ public class Arsenal{
         	tieneMisiles = true;
         }
         return tieneMisiles;
+    }
+    
+    public boolean tieneSuficientesReparaciones()
+    {
+        boolean tieneReparaciones = false;
+        if(this.reparaciones >= 1)
+        {
+        	tieneReparaciones = true;
+        }
+        return tieneReparaciones;
     }
 }
