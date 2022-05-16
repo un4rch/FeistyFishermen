@@ -46,6 +46,21 @@ public class BaseTablero extends JFrame implements Observer {
 	private JLabel misilesDisp;
 	private JLabel radaresDisp;
 	private JLabel reparacionDisp;
+	private JRadioButton bomba;
+	private JRadioButton escudo;
+	private JRadioButton misil;
+	private JRadioButton radar;
+	private JRadioButton reparacion;
+	private JRadioButton portaaviones;
+	private JRadioButton submarino;
+	private JRadioButton destructor;
+	private JRadioButton fragata;
+	private JLabel arriba;
+	private JLabel abajo;
+	private JLabel izquierda;
+	private JLabel derecha;
+	private JPanel inventario;
+	private JLabel bombasDisp;
 
 	/**
 	 * Launch the application.
@@ -71,7 +86,7 @@ public class BaseTablero extends JFrame implements Observer {
 		main.add(this.barcos, BorderLayout.EAST);
 		this.barcos.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JRadioButton portaaviones = new JRadioButton("Portaaviones");
+		portaaviones = new JRadioButton("Portaaviones");
 		portaaviones.addActionListener(getControlador());
 		tipoBarco.add(portaaviones);
 		this.barcos.add(portaaviones);
@@ -79,7 +94,7 @@ public class BaseTablero extends JFrame implements Observer {
 		this.labelPortDisp = new JLabel("Disponibles: "+  this.portDisp +"/1");
 		this.barcos.add(this.labelPortDisp);
 		
-		JRadioButton submarino = new JRadioButton("Submarino");
+		submarino = new JRadioButton("Submarino");
 		submarino.addActionListener(getControlador());
 		tipoBarco.add(submarino);
 		this.barcos.add(submarino);
@@ -87,7 +102,7 @@ public class BaseTablero extends JFrame implements Observer {
 		this.labelSubDisp = new JLabel("Disponibles: "+  this.subDisp +"/2");
 		this.barcos.add(this.labelSubDisp);
 
-		JRadioButton destructor = new JRadioButton("Destructor");
+		destructor = new JRadioButton("Destructor");
 		destructor.addActionListener(getControlador());
 		
 		tipoBarco.add(destructor);
@@ -96,7 +111,7 @@ public class BaseTablero extends JFrame implements Observer {
 		this.labelDestDisp = new JLabel("Disponibles: " + this.destDisp + "/3");
 		this.barcos.add(this.labelDestDisp);
 		
-		JRadioButton fragata = new JRadioButton("Fragata");
+		fragata = new JRadioButton("Fragata");
 		fragata.addActionListener(getControlador());
 		
 		tipoBarco.add(fragata);
@@ -113,7 +128,7 @@ public class BaseTablero extends JFrame implements Observer {
 		JLabel blank1 = new JLabel("");
 		direcciones.add(blank1);
 		
-		JLabel arriba = new JLabel("A");
+		arriba = new JLabel("A");
 		arriba.setHorizontalAlignment(SwingConstants.CENTER);
 		arriba.addMouseListener(getControlador());
 		direcciones.add(arriba);
@@ -122,7 +137,7 @@ public class BaseTablero extends JFrame implements Observer {
 		JLabel blank2 = new JLabel("");
 		direcciones.add(blank2);
 		
-		JLabel izquierda = new JLabel("<--");
+		izquierda = new JLabel("<--");
 		izquierda.setHorizontalAlignment(SwingConstants.CENTER);
 		izquierda.addMouseListener(getControlador());
 		direcciones.add(izquierda);
@@ -131,7 +146,7 @@ public class BaseTablero extends JFrame implements Observer {
 		JLabel blank3 = new JLabel("");
 		direcciones.add(blank3);
 		
-		JLabel derecha = new JLabel("-->");
+		derecha = new JLabel("-->");
 		derecha.setHorizontalAlignment(SwingConstants.CENTER);
 		derecha.addMouseListener(getControlador());
 		direcciones.add(derecha);
@@ -140,7 +155,7 @@ public class BaseTablero extends JFrame implements Observer {
 		JLabel blank4 = new JLabel("");
 		direcciones.add(blank4);
 		
-		JLabel abajo = new JLabel("V");
+		abajo = new JLabel("V");
 		abajo.setHorizontalAlignment(SwingConstants.CENTER);
 		abajo.addMouseListener(getControlador());
 		direcciones.add(abajo);
@@ -149,7 +164,7 @@ public class BaseTablero extends JFrame implements Observer {
 		JLabel blank5 = new JLabel("");
 		direcciones.add(blank5);
 		
-		JPanel inventario = new JPanel();
+		inventario = new JPanel();
 		main.add(inventario, BorderLayout.WEST);
 		inventario.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -160,20 +175,20 @@ public class BaseTablero extends JFrame implements Observer {
 		JLabel espacio = new JLabel("");
 		inventario.add(espacio);
 		
-		JRadioButton bomba = new JRadioButton("Bomba");
+		bomba = new JRadioButton("Bomba");
 		bomba.addActionListener(getControlador());
 		acciones.add(bomba);
 		inventario.add(bomba);
 		
-		JRadioButton escudo = new JRadioButton("Escudo");
+		escudo = new JRadioButton("Escudo");
 		escudo.addActionListener(getControlador());
 		
-		JLabel bombasDisp = new JLabel("");
+		bombasDisp = new JLabel("");
 		inventario.add(bombasDisp);
 		acciones.add(escudo);
 		inventario.add(escudo);
 		
-		JRadioButton misil = new JRadioButton("Misil");
+		misil = new JRadioButton("Misil");
 		misil.addActionListener(getControlador());
 		
 		escudosDisp = new JLabel("Disponibles: 1");
@@ -181,7 +196,7 @@ public class BaseTablero extends JFrame implements Observer {
 		acciones.add(misil);
 		inventario.add(misil);
 		
-		JRadioButton radar = new JRadioButton("Radar");
+		radar = new JRadioButton("Radar");
 		radar.addActionListener(getControlador());
 		
 		misilesDisp = new JLabel("Disponibles: 2");
@@ -192,7 +207,7 @@ public class BaseTablero extends JFrame implements Observer {
 		radaresDisp = new JLabel("Disponibles: 1");
 		inventario.add(radaresDisp);
 		
-		JRadioButton reparacion = new JRadioButton("Reparacion");
+		reparacion = new JRadioButton("Reparacion");
 		reparacion.addActionListener(getControlador());
 		reparacionDisp = new JLabel("Disponibles: 2");
 		acciones.add(reparacion);
@@ -230,6 +245,18 @@ public class BaseTablero extends JFrame implements Observer {
 				usuario.add(lbl2);
 			}
 		}
+		bomba.setEnabled(false);
+		escudo.setEnabled(false);
+		misil.setEnabled(false);
+		radar.setEnabled(false);
+		reparacion.setEnabled(false);
+		
+		bombasDisp.setForeground(Color.LIGHT_GRAY);
+		escudosDisp.setForeground(Color.LIGHT_GRAY);
+		misilesDisp.setForeground(Color.LIGHT_GRAY);
+		radaresDisp.setForeground(Color.LIGHT_GRAY);
+		reparacionDisp.setForeground(Color.LIGHT_GRAY);
+		
 	}
 	
 	private Controlador getControlador() {
@@ -246,7 +273,7 @@ public class BaseTablero extends JFrame implements Observer {
 		public void mouseClicked(MouseEvent e) {
 			if (((JLabel)e.getComponent()).getText().equals("A")) {
 				ModeloTablero.getMiModeloTablero().setDireccion(Direccion.Arriba);
-				for (JLabel direccion : listaDirecciones) {
+				for (JLabel direccion : listaDirecciones) {								//TODO JAVA8
 					direccion.setForeground(Color.BLACK);
 				}
 				((JLabel)e.getComponent()).setForeground(Color.GREEN);
@@ -394,6 +421,28 @@ public class BaseTablero extends JFrame implements Observer {
 				this.barcos.remove(this.labelFragDisp);
 				this.barcos.remove(this.labelPortDisp);
 				this.barcos.remove(this.labelSubDisp);
+				
+				bomba.setEnabled(true);
+				escudo.setEnabled(true);
+				misil.setEnabled(true);
+				radar.setEnabled(true);
+				reparacion.setEnabled(true);
+				
+				portaaviones.setEnabled(false);
+				submarino.setEnabled(false);
+				destructor.setEnabled(false);
+				fragata.setEnabled(false);
+				
+				arriba.setEnabled(false);
+				abajo.setEnabled(false);
+				izquierda.setEnabled(false);
+				derecha.setEnabled(false);
+				
+				bombasDisp.setForeground(Color.BLACK);
+				escudosDisp.setForeground(Color.BLACK);
+				misilesDisp.setForeground(Color.BLACK);
+				radaresDisp.setForeground(Color.BLACK);
+				reparacionDisp.setForeground(Color.BLACK);
 			}
 		} 
 		else if (arg instanceof Boolean) 
