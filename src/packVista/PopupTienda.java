@@ -114,14 +114,14 @@ public class PopupTienda extends JFrame implements Observer{
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("40 \uD83D\uDCB0")) 
 			{
-				Tienda.getTienda().comprar("Escudo");
+				Tienda.getTienda().comprar("Escudo", true);
 			} 
 			else if (e.getActionCommand().equals("100 \uD83D\uDCB0"))
 			{
-				Tienda.getTienda().comprar("Misil");
+				Tienda.getTienda().comprar("Misil", true);
 			}
 			else if (e.getActionCommand().equals("300 \uD83D\uDCB0")) {
-				Tienda.getTienda().comprar("Radar");
+				Tienda.getTienda().comprar("Radar", true);
 			}
 		}
 
