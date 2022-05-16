@@ -66,7 +66,7 @@ public class Rival extends Jugador
 
     public void actuar(int p1, Arma p2) //No se van a usar los parametros, es para que funcione la herencia
     {
-        /**  lo mismo que usuario, pero elige el arma y posiciÃƒÂ³n de forma random. Dependiendo del número obtenido, el rival accede a la tienda **/
+        /**  lo mismo que usuario, pero elige el arma y posicion de forma random. Dependiendo del numero obtenido, el rival accede a la tienda **/
     	int unNum = new Random().nextInt(9);
     	if (unNum == 5)
     	{
