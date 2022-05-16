@@ -115,6 +115,11 @@ public class Combate extends Observable{
     		setChanged();
     		notifyObservers('E');
     	}
+    	else if (pArma.equals(Arma.Reparacion) && esUsuario)
+    	{
+    		setChanged();
+    		notifyObservers('B');
+    	}
     	
     }
     
