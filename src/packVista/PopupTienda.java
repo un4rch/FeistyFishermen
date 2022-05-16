@@ -134,7 +134,7 @@ public class PopupTienda extends JFrame implements Observer{
 		JPanel panelRadar = new JPanel();
 		getContentPane().add(panelRadar);
 		
-		JButton botonRadar = new JButton("500 \uD83D\uDCB0");
+		JButton botonRadar = new JButton("600 \uD83D\uDCB0");
 		panelRadar.add(botonRadar);
 		botonRadar.addActionListener(getControlador());
 		botonRadar.setForeground(new Color(0, 100, 0));
@@ -249,7 +249,7 @@ public class PopupTienda extends JFrame implements Observer{
 			{
 				Tienda.getTienda().comprar("Misil", true);
 			}
-			else if (e.getActionCommand().equals("500 \uD83D\uDCB0")) {
+			else if (e.getActionCommand().equals("600 \uD83D\uDCB0")) {
 				Tienda.getTienda().comprar("Radar", true);
 			}
 			else if (e.getActionCommand().equals("700 \uD83D\uDCB0")) {
