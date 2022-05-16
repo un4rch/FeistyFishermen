@@ -99,6 +99,7 @@ public abstract class Jugador
     }
     
     public void reparar(Integer pPos) {
+    	this.consumirArma(Arma.Reparacion);
     	this.flota.reparar(pPos);
     }
     
@@ -125,6 +126,10 @@ public abstract class Jugador
     	{
     		return this.arsenal.consumirMisil();
     	}
+    	else if (pArma.equals(Arma.Reparacion))
+    	{
+    		return this.arsenal.consumirReparacion();
+    	}
     	else
     	{
     		return false;
@@ -144,6 +149,10 @@ public abstract class Jugador
     	else if (pArma.equals(Arma.Misil))
     	{
     		this.arsenal.anadirMisiles(1);
+    	}
+    	else if (pArma.equals(Arma.Reparacion))
+    	{
+    		this.arsenal.anadirReparaciones(1);
     	}
     }
 }
