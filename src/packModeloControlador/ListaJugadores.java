@@ -103,6 +103,22 @@ public class ListaJugadores extends Observable
 		
 	}
 	
+	public boolean comprobarYRestarDineroRival(int pPrecio)
+	{
+		Rival unRival = (Rival) this.getUnJugador(1);
+		Integer dineroActualRival = unRival.comprobarYRestarDineroRival(pPrecio);
+		
+		if (dineroActualRival<0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+		
+	}
+	
 	public int getDineroUsuario()
 	{
 		Usuario unUsuario = (Usuario) this.getMiListaJ().getUnJugador(0);
