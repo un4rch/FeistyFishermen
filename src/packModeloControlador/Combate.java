@@ -6,7 +6,7 @@ import java.util.Observable;
 
 public class Combate extends Observable{
     private static Combate miCombate = null;
-    private ActuarStrategy herramienta;
+    private ActuarState herramienta;
     private Casilla[][] tableroUsuario;
     private Casilla[][] tableroRival;
 
@@ -86,15 +86,15 @@ public class Combate extends Observable{
     
     public void actuar(boolean esUsuario, int pPos, Arma pArma) {
     	if (pArma.equals(Arma.Bomba)) {
-    		this.herramienta = new BombaStrategy();
+    		this.herramienta = new BombaState();
     	} else if (pArma.equals(Arma.Misil)) {
-    		this.herramienta = new MisilStrategy();
+    		this.herramienta = new MisilState();
     	} else if (pArma.equals(Arma.Radar)) {
-    		this.herramienta = new RadarStrategy();
+    		this.herramienta = new RadarState();
     	} else if (pArma.equals(Arma.Escudo)) {
-    		this.herramienta = new EscudoStrategy();
+    		this.herramienta = new EscudoState();
     	} else if (pArma.equals(Arma.Reparacion)) {
-    		this.herramienta = new ReparacionStrategy();
+    		this.herramienta = new ReparacionState();
     	}
     	herramienta.actuar(pPos, esUsuario);
     	
